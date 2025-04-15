@@ -1,0 +1,28 @@
+<form [formGroup]="taxiForm" (ngSubmit)="onSubmit()">
+    <label for="matricula">Matrícula:</label>
+    <input id="matricula" formControlName="matricula" />
+  
+    <label for="marca">Marca:</label>
+    <select id="marca" formControlName="marca" (change)="onMarcaChange()">
+      <option value="" disabled selected>Escolha uma marca</option>
+      <option *ngFor="let marca of marcas" [value]="marca">{{ marca }}</option>
+    </select>
+  
+    <label for="modelo">Modelo:</label>
+    <select id="modelo" formControlName="modelo" [disabled]="modelos.length === 0">
+      <option value="" disabled selected>Escolha um modelo</option>
+      <option *ngFor="let modelo of modelos" [value]="modelo">{{ modelo }}</option>
+    </select>
+  
+    <label for="anoCompra">Ano de Compra:</label>
+    <input id="anoCompra" type="number" formControlName="anoCompra" />
+  
+    <label for="conforto">Conforto:</label>
+    <select id="conforto" formControlName="conforto">
+      <option value="básico">Básico</option>
+      <option value="luxo">Luxo</option>
+    </select>
+  
+    <button type="submit" [disabled]="!taxiForm.valid">Registar Táxi</button>
+  </form>
+  
