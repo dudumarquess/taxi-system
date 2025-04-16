@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.0.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "express-validator": "^7.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  }
+}
