@@ -1,0 +1,6 @@
+<h2>Motoristas</h2>
+<ul>
+  <li *ngFor="let motorista of motoristas">
+    Nome: {{ motorista.nome }} - Género: {{ motorista.genero }} - NIF: {{ motorista.nif }} - Ano de Nascimento: {{ motorista.anoNascimento }} - Carta de Condução: {{ motorista.numeroCartaConducao }} - Morada: {{ motorista.morada.rua }}, nº {{ motorista.morada.numeroPorta }}, {{ motorista.morada.localidade }}, {{ motorista.morada.codigoPostal }}
+  </li>
+</ul>
