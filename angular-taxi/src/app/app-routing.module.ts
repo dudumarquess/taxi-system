@@ -12,7 +12,9 @@ const routes: Routes = [
 
   { path: '', redirectTo: 'motoristas', pathMatch: 'full' },
   { path: 'motoristas', component: MotoristaListComponent },
-  { path: 'motoristas/novo', component: MotoristaFormComponent }
+  { path: 'motoristas/novo', component: MotoristaFormComponent },
+  
+  { path: 'precos/definir', component: PrecoFormComponent },
 ];
 
 @NgModule({

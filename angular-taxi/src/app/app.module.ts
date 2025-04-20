@@ -11,6 +11,7 @@ import { TaxiFormComponent } from './taxi-form/taxi-form.component';
 
 import { MotoristaListComponent } from './motorista-list/motorista-list.component';
 import { MotoristaFormComponent } from './motorista-form/motorista-form.component';
+import { PrecoFormComponent } from './preco-form/preco-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { MotoristaFormComponent } from './motorista-form/motorista-form.componen
     TaxiListComponent,
     TaxiFormComponent,
     MotoristaListComponent,
-    MotoristaFormComponent
+    MotoristaFormComponent,
+    PrecoComponent,
+    PrecoFormComponent
   ],
   imports: [
     BrowserModule,

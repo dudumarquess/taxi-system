@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const motoristaRoutes = require('./routes/motoristaRoutes');
+const precoRoutes = require('./routes/precoRoutes');
 let cors = require('cors');
 
 const app = express();
@@ -8,6 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/motoristas', motoristaRoutes);
+app.use('/precos', precoRoutes);
 
 
 

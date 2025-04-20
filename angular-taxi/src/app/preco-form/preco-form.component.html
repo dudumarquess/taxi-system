@@ -1,0 +1,15 @@
+<form [formGroup]="precoForm" (ngSubmit)="onSubmit()">
+    <label for="nivelConforto">Nível de Conforto:</label>
+    <select id="nivelConforto" formControlName="nivelConforto">
+      <option value="" disabled selected>Escolha o nível</option>
+      <option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</option>
+    </select>
+  
+    <label for="precoPorMinuto">Preço por Minuto:</label>
+    <input id="precoPorMinuto" type="number" formControlName="precoPorMinuto" />
+  
+    <label for="acrescimoNoturno">Acréscimo Noturno (%):</label>
+    <input id="acrescimoNoturno" type="number" formControlName="acrescimoNoturno" />
+  
+    <button type="submit" [disabled]="!precoForm.valid">Definir Preço</button>
+  </form>
