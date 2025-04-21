@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrecoService, Preco } from '../preco.service';
 
 @Component({
-  selector: 'app-preco-form',
-  templateUrl: './preco-form.component.html',
-  styleUrls: ['./preco-form.component.css']
+    selector: 'app-preco-form',
+    templateUrl: './preco-form.component.html',
+    styleUrls: ['./preco-form.component.css'],
+    standalone: false
 })
 export class PrecoFormComponent {
   precoForm: FormGroup;

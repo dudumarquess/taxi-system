@@ -1,0 +1,68 @@
+/* Porsche-inspired design for a compact navigation bar */
+nav {
+    background-color: #000; /* Sleek black background */
+    color: #fff; /* White text for contrast */
+    font-family: 'Porsche Next', sans-serif; /* Clean, modern font */
+    display: flex;
+    align-items: center;
+    padding: 5px 15px; /* Reduced padding for a smaller nav */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-bottom: 2px solid #e5c100; /* Porsche yellow accent */
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px; /* Reduced margin for compact spacing */
+    font-size: 14px; /* Slightly smaller font size */
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #e5c100; /* Porsche yellow on hover */
+}
+
+nav .logo {
+    font-size: 20px; /* Reduced logo size */
+    font-weight: bold;
+    color: #e5c100; /* Highlight the logo with Porsche yellow */
+}
+
+nav .menu {
+    display: flex;
+    align-items: center;
+}
+
+nav .menu a {
+    padding: 3px 8px; /* Smaller padding for menu items */
+    border-radius: 3px;
+}
+
+nav .menu a:hover {
+    background-color: #333; /* Subtle background change on hover */
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav .menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav .menu a {
+        margin: 3px 0; /* Reduced margin for smaller screens */
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/* Font for headers */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Porsche Next', sans-serif; /* Use Porsche-inspired font */
+    color: #000; /* Black color for headers */
+    margin: 10px 0;
+}

@@ -1,34 +1,53 @@
-<form [formGroup]="motoristaForm" (ngSubmit)="onSubmit()">
-  <label for="nome">Nome:</label>
-  <input id="nome" formControlName="nome" />
+<form (submit)="onSubmit($event)">
+  <p-text-field-wrapper label="Nome *">
+    <input type="text" name="nome" placeholder="Nome do motorista" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nomeError" class="error">{{ nomeError }}</p-text>
 
-  <label for="genero">Género:</label>
-  <select id="genero" formControlName="genero">
-    <option value="" disabled selected>Escolha o género</option>
-    <option value="masculino">Masculino</option>
-    <option value="feminino">Feminino</option>
-  </select>
+  <p-select name="genero" label="Género *">
+    <p-select-option value="" selected>Escolha o género</p-select-option>
+    <p-select-option value="masculino">Masculino</p-select-option>
+    <p-select-option value="feminino">Feminino</p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="generoError" class="error">{{ generoError }}</p-text>
 
-  <label for="nif">NIF:</label>
-  <input id="nif" type="number" formControlName="nif" />
+  <p-text-field-wrapper label="NIF *">
+    <input type="number" name="nif" placeholder="Ex: 123456789" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
 
-  <label for="anoNascimento">Ano de Nascimento:</label>
-  <input id="anoNascimento" type="number" formControlName="anoNascimento" />
+  <p-text-field-wrapper label="Ano de Nascimento *">
+    <input type="number" name="anoNascimento" placeholder="Ex: 1990" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="anoNascimentoError" class="error">{{ anoNascimentoError }}</p-text>
 
-  <label for="numeroCartaConducao">Número Carta de Condução:</label>
-  <input id="numeroCartaConducao" formControlName="numeroCartaConducao" />
+  <p-text-field-wrapper label="Número Carta de Condução *">
+    <input type="text" name="numeroCartaConducao" placeholder="Ex: X1234567" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="numeroCartaConducaoError" class="error">{{ numeroCartaConducaoError }}</p-text>
 
-  <div formGroupName="morada">
+  <div>
     <h3>Morada</h3>
-    <label for="rua">Rua:</label>
-    <input id="rua" formControlName="rua" />
+    <p-text-field-wrapper label="Rua *">
+      <input type="text" name="rua" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="ruaError" class="error">{{ ruaError }}</p-text>
 
-    <label for="numeroPorta">Número da Porta:</label>
-    <input id="numeroPorta" type='number' formControlName="numeroPorta" />
+    <p-text-field-wrapper label="Número da Porta *">
+      <input type="number" name="numeroPorta" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="numeroPortaError" class="error">{{ numeroPortaError }}</p-text>
 
-    <label for="codigoPostal">Código Postal:</label>
-    <input id="codigoPostal" formControlName="codigoPostal" />
+    <p-text-field-wrapper label="Código Postal *">
+      <input type="text" name="codigoPostal" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="codigoPostalError" class="error">{{ codigoPostalError }}</p-text>
+
+    <p-text-field-wrapper label="Localidade *">
+      <input type="text" name="localidade" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="localidadeError" class="error">{{ localidadeError }}</p-text>
   </div>
 
-  <button type="submit" [disabled]="!motoristaForm.valid">Registar Motorista</button>
+  <p-button type="submit">Registar Motorista</p-button>
 </form>

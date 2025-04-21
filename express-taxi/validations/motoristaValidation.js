@@ -11,7 +11,7 @@ exports.validarMotorista = async (dados) => {
     if (!/^\d{9}$/.test(dados.nif)) erros.push('NIF inválido');
   
     // RIA 11: Género deve ser um dos válidos
-    if (!['Masculino', 'Feminino'].includes(dados.genero)) erros.push('Género inválido');
+    if (!['masculino', 'feminino'].includes(dados.genero)) erros.push('Género inválido');
     
     // RIA 12: Número de carta de condução deve identificar o motorista
     // Verifica se o número da carta de condução já existe

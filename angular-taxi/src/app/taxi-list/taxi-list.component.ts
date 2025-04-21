@@ -4,9 +4,10 @@ import { TaxiService } from '../taxi.service';
 
 
 @Component({
-  selector: 'app-taxi-list',
-  templateUrl: './taxi-list.component.html',
-  styleUrls: ['./taxi-list.component.css']
+    selector: 'app-taxi-list',
+    templateUrl: './taxi-list.component.html',
+    styleUrls: ['./taxi-list.component.css'],
+    standalone: false
 })
 export class TaxiListComponent {
   taxis: Taxi[] = [];

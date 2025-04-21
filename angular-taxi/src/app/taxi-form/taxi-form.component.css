@@ -1,0 +1,13 @@
+/* Reduce the size of inputs */
+p-text-field-wrapper,
+p-select {
+  display: block;
+  margin-bottom: 10px; /* Add spacing between inputs */
+  max-width: 300px; /* Limit the width of inputs */
+}
+
+
+/* Add spacing between the "Conforto" input and the button */
+p-button {
+  margin-top: 20px; /* Add space above the button */
+}

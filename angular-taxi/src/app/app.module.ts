@@ -13,21 +13,25 @@ import { MotoristaListComponent } from './motorista-list/motorista-list.componen
 import { MotoristaFormComponent } from './motorista-form/motorista-form.component';
 import { PrecoFormComponent } from './preco-form/preco-form.component';
 
-import '@material/web/textfield/outlined-text-field.js';
-import '@material/web/select/outlined-select.js';
-import '@material/web/select/select-option.js';
-import '@material/web/button/filled-button.js';
+import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 
-@NgModule({ declarations: [
-        AppComponent,
-        TaxiListComponent,
-        TaxiFormComponent,
-        MotoristaListComponent,
-        MotoristaFormComponent,
-        PrecoFormComponent
-    ],
-    bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA], imports: [BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    TaxiListComponent,
+    TaxiFormComponent,
+    MotoristaListComponent,
+    MotoristaFormComponent,
+    PrecoFormComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    PorscheDesignSystemModule
+  ],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
 export class AppModule { }

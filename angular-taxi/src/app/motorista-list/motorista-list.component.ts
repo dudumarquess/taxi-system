@@ -4,9 +4,10 @@ import { MotoristaService } from '../motorista.service';
 
 
 @Component({
-  selector: 'app-motorista-list', 
-  templateUrl: './motorista-list.component.html', 
-  styleUrls: ['./motorista-list.component.css'] 
+    selector: 'app-motorista-list',
+    templateUrl: './motorista-list.component.html',
+    styleUrls: ['./motorista-list.component.css'],
+    standalone: false
 })
 export class MotoristaListComponent implements OnInit { 
   motoristas: Motorista[] = [];

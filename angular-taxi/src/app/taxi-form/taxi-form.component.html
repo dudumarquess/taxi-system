@@ -1,27 +1,31 @@
-<form [formGroup]="taxiForm" (ngSubmit)="onSubmit()">
-  <label for="matricula">Matrícula:</label>
-  <input id="matricula" formControlName="matricula" />
+<form (submit)="onSubmit($event)">
+  <p-text-field-wrapper label="Matrícula *" name="matricula">
+    <input type="text" name="matricula" placeholder="Ex: 12-34-AB" #matriculaInput />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="matriculaError" class="error">{{ matriculaError }}</p-text>
 
-  <label for="marca">Marca:</label>
-  <select id="marca" formControlName="marca" (change)="onMarcaChange()">
-    <option value="" disabled selected>Escolha uma marca</option>
-    <option *ngFor="let marca of marcas" [value]="marca">{{ marca }}</option>
-  </select>
+  <p-select name="marca" label="Marca *">
+    <p-select-option value="">Escolha uma marca</p-select-option>
+    <p-select-option *ngFor="let marca of marcas" [value]="marca">{{ marca }}</p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="marcaError" class="error">{{ marcaError }}</p-text>
 
-  <label for="modelo">Modelo:</label>
-  <select id="modelo" formControlName="modelo" [disabled]="modelos.length === 0">
-    <option value="" disabled selected>Escolha um modelo</option>
-    <option *ngFor="let modelo of modelos" [value]="modelo">{{ modelo }}</option>
-  </select>
+  <p-select name="modelo" label="Modelo *">
+    <p-select-option value="">Escolha um modelo</p-select-option>
+    <p-select-option *ngFor="let modelo of modelos" [value]="modelo">{{ modelo }}</p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="modeloError" class="error">{{ modeloError }}</p-text>
 
-  <label for="anoCompra">Ano de Compra:</label>
-  <input id="anoCompra" type="number" formControlName="anoCompra" />
+  <p-text-field-wrapper label="Ano de Compra *" name="ano_compra">
+    <input type="number" name="ano_compra" placeholder="2025" #anoCompraInput />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="anoCompraError" class="error">{{ anoCompraError }}</p-text>
 
-  <label for="conforto">Conforto:</label>
-  <select id="conforto" formControlName="conforto">
-    <option value="básico">Básico</option>
-    <option value="luxo">Luxo</option>
-  </select>
+  <p-select name="nivel_conforto" label="Conforto *">
+    <p-select-option value="básico">Básico</p-select-option>
+    <p-select-option value="luxuoso">Luxuoso</p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="nivelConfortoError" class="error">{{ nivelConfortoError }}</p-text>
 
-  <button type="submit" [disabled]="!taxiForm.valid">Registar Táxi</button>
+  <p-button type="submit">Registar Táxi</p-button>
 </form>
