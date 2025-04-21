@@ -1,0 +1,37 @@
+<form [formGroup]="custoForm" (ngSubmit)="onSubmit()">
+    <label for="nivelConforto">Nível de Conforto:</label>
+    <select id="nivelConforto" formControlName="nivelConforto">
+      <option value="" disabled selected>Escolha o nível</option>
+      <option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</option>
+    </select>
+  
+    <label for="inicio">Início da Viagem:</label>
+    <input id="inicio" type="datetime-local" formControlName="inicio" />
+  
+    <label for="fim">Fim da Viagem:</label>
+    <input id="fim" type="datetime-local" formControlName="fim" />
+  
+    <button type="submit" [disabled]="!custoForm.valid">Calcular Custo</button>
+  </form>
+  
+  <div *ngIf="custoTotal">
+    <p>{{ custoTotal }}</p>
+  </div><form [formGroup]="custoForm" (ngSubmit)="onSubmit()">
+    <label for="nivelConforto">Nível de Conforto:</label>
+    <select id="nivelConforto" formControlName="nivelConforto">
+      <option value="" disabled selected>Escolha o nível</option>
+      <option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</option>
+    </select>
+  
+    <label for="inicio">Início da Viagem:</label>
+    <input id="inicio" type="datetime-local" formControlName="inicio" />
+  
+    <label for="fim">Fim da Viagem:</label>
+    <input id="fim" type="datetime-local" formControlName="fim" />
+  
+    <button type="submit" [disabled]="!custoForm.valid">Calcular Custo</button>
+  </form>
+  
+  <div *ngIf="custoTotal">
+    <p>{{ custoTotal }}</p>
+  </div>

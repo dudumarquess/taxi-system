@@ -12,6 +12,7 @@ import { TaxiFormComponent } from './taxi-form/taxi-form.component';
 import { MotoristaListComponent } from './motorista-list/motorista-list.component';
 import { MotoristaFormComponent } from './motorista-form/motorista-form.component';
 import { PrecoFormComponent } from './preco-form/preco-form.component';
+import { CalcularCustoViagemComponent } from './calcular-custo-viagem/calcular-custo-viagem.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PrecoFormComponent } from './preco-form/preco-form.component';
     MotoristaListComponent,
     MotoristaFormComponent,
     PrecoComponent,
-    PrecoFormComponent
+    PrecoFormComponent,
+    CalcularCustoViagemComponent
   ],
   imports: [
     BrowserModule,
