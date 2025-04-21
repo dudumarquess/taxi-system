@@ -23,12 +23,8 @@ import { PorscheDesignSystemModule } from '@porsche-design-system/components-ang
     TaxiFormComponent,
     MotoristaListComponent,
     MotoristaFormComponent,
-<<<<<<< HEAD
-    PrecoFormComponent
-=======
     PrecoFormComponent,
     CalcularCustoViagemComponent
->>>>>>> 976245d50221673d5b0b8ef9860e20b6c28d5e44
   ],
   imports: [
     BrowserModule,

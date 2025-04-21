@@ -5,7 +5,8 @@ import { PrecoService } from '../preco.service';
 @Component({
   selector: 'app-calcular-custo-viagem',
   templateUrl: './calcular-custo-viagem.component.html',
-  styleUrls: ['./calcular-custo-viagem.component.css']
+  styleUrls: ['./calcular-custo-viagem.component.css'],
+  standalone: false
 })
 export class CalcularCustoViagemComponent {
   custoForm: FormGroup;
