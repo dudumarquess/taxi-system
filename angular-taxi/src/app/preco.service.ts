@@ -24,4 +24,8 @@ export class PrecoService {
   listarPrecos(): Observable<Preco[]> {
     return this.http.get<Preco[]>(this.precosUrl);
   }
+
+  calcularCustoViagem(dados: { nivelConforto: string; inicio: string; fim: string }): Observable<any> {
+    return this.http.post<any>(`${this.precosUrl}/calcular-custo`, dados);
+  }
 }
