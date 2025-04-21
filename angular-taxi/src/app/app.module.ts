@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +13,11 @@ import { MotoristaListComponent } from './motorista-list/motorista-list.componen
 import { MotoristaFormComponent } from './motorista-form/motorista-form.component';
 import { PrecoFormComponent } from './preco-form/preco-form.component';
 
+import '@material/web/textfield/outlined-text-field.js';
+import '@material/web/select/outlined-select.js';
+import '@material/web/select/select-option.js';
+import '@material/web/button/filled-button.js';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +25,6 @@ import { PrecoFormComponent } from './preco-form/preco-form.component';
     TaxiFormComponent,
     MotoristaListComponent,
     MotoristaFormComponent,
-    PrecoComponent,
     PrecoFormComponent
   ],
   imports: [
@@ -30,6 +34,7 @@ import { PrecoFormComponent } from './preco-form/preco-form.component';
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class AppModule { }

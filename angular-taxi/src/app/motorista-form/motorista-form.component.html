@@ -1,34 +1,34 @@
 <form [formGroup]="motoristaForm" (ngSubmit)="onSubmit()">
-    <label for="nome">Nome:</label>
-    <input id="nome" formControlName="nome" />
-  
-    <label for="genero">Género:</label>
-    <select id="genero" formControlName="genero">
-      <option value="" disabled selected>Escolha o género</option>
-      <option value="masculino">Masculino</option>
-      <option value="feminino">Feminino</option>
-    </select>
-  
-    <label for="nif">NIF:</label>
-    <input id="nif" type="number" formControlName="nif" />
-  
-    <label for="anoNascimento">Ano de Nascimento:</label>
-    <input id="anoNascimento" type="number" formControlName="anoNascimento" />
-  
-    <label for="numeroCartaConducao">Número Carta de Condução:</label>
-    <input id="numeroCartaConducao" formControlName="numeroCartaConducao" />
-  
-    <div formGroupName="morada">
-      <h3>Morada</h3>
-      <label for="rua">Rua:</label>
-      <input id="rua" formControlName="rua" />
-  
-      <label for="numeroPorta">Número da Porta:</label>
-      <input id="numeroPorta" type='number' formControlName="numeroPorta" />
-  
-      <label for="codigoPostal">Código Postal:</label>
-      <input id="codigoPostal" formControlName="codigoPostal" />
-    </div>
-  
-    <button type="submit" [disabled]="!motoristaForm.valid">Registar Motorista</button>
-  </form>
+  <label for="nome">Nome:</label>
+  <input id="nome" formControlName="nome" />
+
+  <label for="genero">Género:</label>
+  <select id="genero" formControlName="genero">
+    <option value="" disabled selected>Escolha o género</option>
+    <option value="masculino">Masculino</option>
+    <option value="feminino">Feminino</option>
+  </select>
+
+  <label for="nif">NIF:</label>
+  <input id="nif" type="number" formControlName="nif" />
+
+  <label for="anoNascimento">Ano de Nascimento:</label>
+  <input id="anoNascimento" type="number" formControlName="anoNascimento" />
+
+  <label for="numeroCartaConducao">Número Carta de Condução:</label>
+  <input id="numeroCartaConducao" formControlName="numeroCartaConducao" />
+
+  <div formGroupName="morada">
+    <h3>Morada</h3>
+    <label for="rua">Rua:</label>
+    <input id="rua" formControlName="rua" />
+
+    <label for="numeroPorta">Número da Porta:</label>
+    <input id="numeroPorta" type='number' formControlName="numeroPorta" />
+
+    <label for="codigoPostal">Código Postal:</label>
+    <input id="codigoPostal" formControlName="codigoPostal" />
+  </div>
+
+  <button type="submit" [disabled]="!motoristaForm.valid">Registar Motorista</button>
+</form>

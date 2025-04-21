@@ -3,7 +3,7 @@ export interface Taxi {
     matricula: string;
     marca: string;
     modelo: string;
-    anoCompra: number;
-    conforto: 'basico' | 'luxuoso';
+    ano_compra: number;
+    nivel_conforto: 'básico' | 'luxuoso';
     createdAt?: Date;
 }

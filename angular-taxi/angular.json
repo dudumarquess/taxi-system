@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-taxi:build:production"
+              "buildTarget": "angular-taxi:build:production"
             },
             "development": {
-              "browserTarget": "angular-taxi:build:development"
+              "buildTarget": "angular-taxi:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-taxi:build"
+            "buildTarget": "angular-taxi:build"
           }
         },
         "test": {

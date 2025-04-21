@@ -3,14 +3,15 @@ const Taxi = require("../models/taxiModel");
 const asyncHandler = require("express-async-handler");
 
 exports.taxi_get_all = asyncHandler(async (req, res) => {
-    const allTaxis = await Taxi.find({}, "_id matricula")
+    const allTaxis = await Taxi.find({})
         .sort({ _id: 1 })
-        .exec()
+        .exec();
+
     res.status(200).json(allTaxis);
-})
+});
 
 exports.taxi_post = asyncHandler(async (req, res) => {
-    const {matricula, marca, modelo, ano_compra, nivel_conforto, quilometragem_total} = req.body;
+    const {matricula, marca, modelo, ano_compra, nivel_conforto, quilometragem} = req.body;
 
     const mat = matricula.toUpperCase().trim();
 
@@ -36,7 +37,7 @@ exports.taxi_post = asyncHandler(async (req, res) => {
         modelo: modelo,
         ano_compra: ano_compra,
         nivel_conforto: nivel_conforto,
-        quilometragem_total: quilometragem_total,
+        quilometragem: quilometragem,
     });
 
     const savedTaxi = await newTaxi.save();
@@ -49,7 +50,7 @@ function validarMatricula(matricula) {
 
     // Regex that verifies if it is in format XX-XX-XX
     const regex = /^([A-Z0-9]{2})-([A-Z0-9]{2})-([A-Z0-9]{2})$/;
-    const match = normalizada.match(regex);
+    const match = matricula.match(regex);
     if (!match) return false;
 
     //Put the matricula into groups
