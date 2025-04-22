@@ -4,6 +4,6 @@ const precoController = require('../controllers/precoController');
 
 router.post('/definir', precoController.definirPreco);
 router.get('/', precoController.listarPrecos);
-router.post('/calcular-custo', precoController.calcularCustoViagem);
+router.post('/calcular_custo', precoController.calcularCustoViagem);
 
 module.exports = router;

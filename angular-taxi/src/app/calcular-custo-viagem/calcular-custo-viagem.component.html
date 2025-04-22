@@ -1,37 +1,36 @@
-<form [formGroup]="custoForm" (ngSubmit)="onSubmit()">
-    <label for="nivelConforto">Nível de Conforto:</label>
-    <select id="nivelConforto" formControlName="nivelConforto">
-      <option value="" disabled selected>Escolha o nível</option>
-      <option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</option>
-    </select>
-  
-    <label for="inicio">Início da Viagem:</label>
-    <input id="inicio" type="datetime-local" formControlName="inicio" />
-  
-    <label for="fim">Fim da Viagem:</label>
-    <input id="fim" type="datetime-local" formControlName="fim" />
-  
-    <button type="submit" [disabled]="!custoForm.valid">Calcular Custo</button>
-  </form>
-  
-  <div *ngIf="custoTotal">
-    <p>{{ custoTotal }}</p>
-  </div><form [formGroup]="custoForm" (ngSubmit)="onSubmit()">
-    <label for="nivelConforto">Nível de Conforto:</label>
-    <select id="nivelConforto" formControlName="nivelConforto">
-      <option value="" disabled selected>Escolha o nível</option>
-      <option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</option>
-    </select>
-  
-    <label for="inicio">Início da Viagem:</label>
-    <input id="inicio" type="datetime-local" formControlName="inicio" />
-  
-    <label for="fim">Fim da Viagem:</label>
-    <input id="fim" type="datetime-local" formControlName="fim" />
-  
-    <button type="submit" [disabled]="!custoForm.valid">Calcular Custo</button>
-  </form>
-  
-  <div *ngIf="custoTotal">
-    <p>{{ custoTotal }}</p>
+<form (submit)="onSubmit($event)">
+  <p-select name="nivelConforto" label="Nível de Conforto *">
+    <p-select-option value="">Selecione o nível</p-select-option>
+    <p-select-option *ngFor="let nivel of niveisConforto" [value]="nivel">
+      {{ nivel }}
+    </p-select-option>
+  </p-select>
+
+  <p-text-field-wrapper label="Início - Data *">
+    <input type="date" name="inicioData" />
+  </p-text-field-wrapper>
+
+  <p-text-field-wrapper label="Início - Hora *">
+    <input type="time" name="inicioHora" />
+  </p-text-field-wrapper>
+
+  <p-text-field-wrapper label="Fim - Data *">
+    <input type="date" name="fimData" />
+  </p-text-field-wrapper>
+
+
+  <p-text-field-wrapper label="Fim - Hora *">
+    <input type="time" name="fimHora" />
+  </p-text-field-wrapper>
+
+
+  <p-button type="submit">Calcular Preço</p-button>
+
+  <div *ngIf="custoTotal" class="success">
+    <strong>Custo Total:</strong> {{ custoTotal }}
   </div>
+
+  <div *ngIf="erro" class="error">
+    <strong>Erro:</strong> {{ erro }}
+  </div>
+</form>

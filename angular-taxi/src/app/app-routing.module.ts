@@ -19,7 +19,7 @@ const routes: Routes = [
 
   { path: 'precos', component: PrecosListComponent },
   { path: 'precos/definir', component: PrecoFormComponent },
-  { path: 'calcular-custo', component: CalcularCustoViagemComponent },
+  { path: 'calcular_custo', component: CalcularCustoViagemComponent },
 ];
 
 @NgModule({

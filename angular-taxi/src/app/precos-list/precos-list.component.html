@@ -1,0 +1,22 @@
+<h2>Preços</h2>
+<p-link>
+  <a [href]="'/precos/definir'">Definir Novo Preço</a>
+</p-link>
+
+<p-table>
+  <p-table-head>
+    <p-table-head-row>
+      <p-table-head-cell>Nível de Conforto</p-table-head-cell>
+      <p-table-head-cell>Preço por Minuto (€)</p-table-head-cell>
+      <p-table-head-cell>Acréscimo Noturno (%)</p-table-head-cell>
+    </p-table-head-row>
+  </p-table-head>
+
+  <p-table-body>
+    <p-table-row *ngFor="let preco of precos">
+      <p-table-cell>{{ preco.nivelConforto }}</p-table-cell>
+      <p-table-cell>{{ preco.precoPorMinuto | number:'1.2-2' }}</p-table-cell>
+      <p-table-cell>{{ preco.acrescimoNoturno }}%</p-table-cell>
+    </p-table-row>
+  </p-table-body>
+</p-table>
