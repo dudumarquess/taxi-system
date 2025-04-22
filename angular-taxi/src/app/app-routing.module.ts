@@ -6,6 +6,7 @@ import { MotoristaListComponent } from './motorista-list/motorista-list.componen
 import { MotoristaFormComponent } from './motorista-form/motorista-form.component';
 import { PrecoFormComponent } from './preco-form/preco-form.component';
 import { CalcularCustoViagemComponent } from './calcular-custo-viagem/calcular-custo-viagem.component';
+import { PrecosListComponent } from './precos-list/precos-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'taxis', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'motoristas', pathMatch: 'full' },
   { path: 'motoristas', component: MotoristaListComponent },
   { path: 'motoristas/novo', component: MotoristaFormComponent },
-  
+
+  { path: 'precos', component: PrecosListComponent },
   { path: 'precos/definir', component: PrecoFormComponent },
   { path: 'calcular-custo', component: CalcularCustoViagemComponent },
 ];

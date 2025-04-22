@@ -10,8 +10,18 @@ exports.taxi_get_all = asyncHandler(async (req, res) => {
     res.status(200).json(allTaxis);
 });
 
+exports.taxi_delete = asyncHandler(async (req, res) => {
+    const taxi = await Taxi.findByIdAndDelete(req.params.id).exec();
+    if (!Taxi) {
+        const err = new Error("Taxi not found");
+        res.status(404).json({err})
+    }
+    else
+        res.status(200).json({})
+})
+
 exports.taxi_post = asyncHandler(async (req, res) => {
-    const {matricula, marca, modelo, ano_compra, nivel_conforto, quilometragem} = req.body;
+    const {matricula, marca, modelo, ano_compra, nivel_conforto, quilometragem_total} = req.body;
 
     const mat = matricula.toUpperCase().trim();
 
@@ -37,7 +47,7 @@ exports.taxi_post = asyncHandler(async (req, res) => {
         modelo: modelo,
         ano_compra: ano_compra,
         nivel_conforto: nivel_conforto,
-        quilometragem: quilometragem,
+        quilometragem_total: quilometragem_total,
     });
 
     const savedTaxi = await newTaxi.save();

@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Preco {
-  nivelConforto: string;
-  precoPorMinuto: number;
-  acrescimoNoturno: number;
-}
+import { Preco } from './preco'
 
 @Injectable({
   providedIn: 'root'

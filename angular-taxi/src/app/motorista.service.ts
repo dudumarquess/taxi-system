@@ -8,8 +8,7 @@ import { Motorista } from './motorista';
 })
 export class MotoristaService {
 
-  private motoristaUrl = 'http://localhost:3000/motoristas' 
-  private motoristaNovoUrl = 'http://localhost:3000/motoristas/novo' 
+  private motoristaUrl = 'http://localhost:3000/motoristas'
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +17,6 @@ export class MotoristaService {
   }
 
   createMotorista(motorista: Motorista): Observable<Motorista> {
-    return this.http.post<Motorista>(this.motoristaNovoUrl, motorista);
+    return this.http.post<Motorista>(this.motoristaUrl, motorista);
   }
 }

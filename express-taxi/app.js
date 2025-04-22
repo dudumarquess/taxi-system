@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const taxiRouter = require('./routes/taxiRouter');
+const taxiRouter = require('./routes/taxiRoutes');
 const motoristaRoutes = require('./routes/motoristaRoutes');
 const precoRoutes = require('./routes/precoRoutes');
 let cors = require('cors');

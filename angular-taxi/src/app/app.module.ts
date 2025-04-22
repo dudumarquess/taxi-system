@@ -13,6 +13,7 @@ import { MotoristaListComponent } from './motorista-list/motorista-list.componen
 import { MotoristaFormComponent } from './motorista-form/motorista-form.component';
 import { PrecoFormComponent } from './preco-form/preco-form.component';
 import { CalcularCustoViagemComponent } from './calcular-custo-viagem/calcular-custo-viagem.component';
+import { PrecosListComponent } from "./precos-list/precos-list.component";
 
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 
@@ -24,13 +25,14 @@ import { PorscheDesignSystemModule } from '@porsche-design-system/components-ang
     MotoristaListComponent,
     MotoristaFormComponent,
     PrecoFormComponent,
+    PrecosListComponent,
     CalcularCustoViagemComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    PorscheDesignSystemModule
+    PorscheDesignSystemModule,
   ],
   providers: [provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent],

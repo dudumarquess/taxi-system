@@ -1,15 +1,19 @@
-<form [formGroup]="precoForm" (ngSubmit)="onSubmit()">
-    <label for="nivelConforto">Nível de Conforto:</label>
-    <select id="nivelConforto" formControlName="nivelConforto">
-      <option value="" disabled selected>Escolha o nível</option>
-      <option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</option>
-    </select>
-  
-    <label for="precoPorMinuto">Preço por Minuto:</label>
-    <input id="precoPorMinuto" type="number" formControlName="precoPorMinuto" />
-  
-    <label for="acrescimoNoturno">Acréscimo Noturno (%):</label>
-    <input id="acrescimoNoturno" type="number" formControlName="acrescimoNoturno" />
-  
-    <button type="submit" [disabled]="!precoForm.valid">Definir Preço</button>
-  </form>
+<form (submit)="onSubmit($event)">
+  <p-select name="nivel_conforto" label="Nível de Conforto *">
+    <p-select-option value="">Selecione o nível</p-select-option>
+    <p-select-option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="nivelConfortoError" class="error">{{ nivelConfortoError }}</p-text>
+
+  <p-text-field-wrapper label="Preço por Minuto (€) *" name="preco_por_minuto">
+    <input type="number" name="preco_por_minuto" placeholder="Ex: 0.50" step="0.01" min="0.01" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="precoPorMinutoError" class="error">{{ precoPorMinutoError }}</p-text>
+
+  <p-text-field-wrapper label="Acréscimo Noturno (%) *" name="acrescimo_noturno">
+    <input type="number" name="acrescimo_noturno" placeholder="Ex: 20" min="0" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="acrescimoNoturnoError" class="error">{{ acrescimoNoturnoError }}</p-text>
+
+  <p-button type="submit">Definir Preço</p-button>
+</form>
