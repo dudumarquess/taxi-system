@@ -30,15 +30,29 @@ export class CalcularCustoViagemComponent {
     const nivelConforto = formData.get('nivelConforto')?.toString() || '';
     const dataInicio = formData.get('inicioData')?.toString();
     const horaInicio = formData.get('inicioHora')?.toString();
-    const inicio = `${dataInicio}T${horaInicio}`;
+   
 
     const dataFim = formData.get('fimData')?.toString();
     const horaFim = formData.get('fimHora')?.toString();
+    
+    
+    if (!nivelConforto || !dataInicio || !horaInicio || !dataFim || !horaFim) {
+      this.erro = 'Todos os campos são obrigatórios.';
+      return;
+    }
+    
+    const inicio = `${dataInicio}T${horaInicio}`;
     const fim = `${dataFim}T${horaFim}`;
 
+    const inicioDate = new Date(inicio);
+    const fimDate = new Date(fim);
 
-    if (!nivelConforto || !inicio || !fim) {
-      this.erro = 'Todos os campos são obrigatórios.';
+    if (isNaN(inicioDate.getTime()) || isNaN(fimDate.getTime())) {
+      this.erro = 'Data ou hora inválida.'; 
+      return;     
+    }
+    if (inicioDate >= fimDate) {
+      this.erro = 'O horário de início deve ser anterior ao de fim.';
       return;
     }
 

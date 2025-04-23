@@ -6,10 +6,10 @@
 
   <p-select name="genero" label="Género *">
     <p-select-option value="" selected>Escolha o género</p-select-option>
-    <p-select-option value="masculino">Masculino</p-select-option>
-    <p-select-option value="feminino">Feminino</p-select-option>
+    <p-select-option value="Masculino">Masculino</p-select-option>
+    <p-select-option value="Feminino">Feminino</p-select-option>
   </p-select>
-  <p-text [size]="'small'" *ngIf="generoError" class="error">{{ generoError }}</p-text>
+  <p-text [size]="'small'" *ngIf="generoError" class="error"> {{ generoError }}</p-text>
 
   <p-text-field-wrapper label="NIF *">
     <input type="number" name="nif" placeholder="Ex: 123456789" />
@@ -38,11 +38,23 @@
     </p-text-field-wrapper>
     <p-text [size]="'small'" *ngIf="numeroPortaError" class="error">{{ numeroPortaError }}</p-text>
 
-    <p-text-field-wrapper label="Código Postal *">
-      <input type="text" name="codigoPostal" />
-    </p-text-field-wrapper>
-    <p-text [size]="'small'" *ngIf="codigoPostalError" class="error">{{ codigoPostalError }}</p-text>
+    <div class="codigo-postal-container">
+      <p-text-field-wrapper label="Código Postal *">
+        <input type="text" #codigoPostalInput name="codigoPostal" />
+      </p-text-field-wrapper>
+      <p-button type="button" (click)="buscarLocalidade(codigoPostalInput.value)">
+        Buscar
+      </p-button>
+    
+    </div>
+    <p-text id="localidade" *ngIf="localidade">Localidade: {{ localidade }}</p-text>
+    <p-text *ngIf="localidadeError">Erro: {{localidadeError}}</p-text>
+    <p-text [size]="'small'" *ngIf="codigoPostalError" class="error" >{{ codigoPostalError }}</p-text>
   </div>
 
-  <p-button type="submit">Registar Motorista</p-button>
+  <div class="submit">
+    <p-button type="submit">Registar Motorista</p-button>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">{{ generalError }}</p-text>
+  </div>
+  
 </form>

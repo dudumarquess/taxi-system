@@ -26,6 +26,22 @@ exports.registarMotorista = async (req, res) => {
       });
     }
 
+    const motoristaComMesmoNif = await Motorista.findOne({ nif: dados.nif });
+    if (motoristaComMesmoNif) {
+      return res.status(400).json({
+        erro: 'Nif já existe',
+        detalhes: 'nif',
+      });
+    }
+
+    const motoristaComMesmoNumeroCarta = await Motorista.findOne({ numeroCartaConducao: dados.numeroCartaConducao });
+    if (motoristaComMesmoNumeroCarta) {
+      return res.status(400).json({
+        erro: 'carta de condução já existe',
+        detalhes: 'numeroCartaConducao'
+      });
+    }
+
     // Fetch localidade based on postal code
     const localidade = await obterLocalidadePorCodigoPostal(dados.morada.codigoPostal);
     if (localidade === null) {

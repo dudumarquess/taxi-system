@@ -3,5 +3,4 @@ export interface Pessoa {
     nif: number
     nome: string;
     genero: string;
-    
 }

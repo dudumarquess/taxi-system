@@ -1,11 +1,15 @@
-<h1>{{ title }}</h1>
+<div class="header">
+  <img src="assets/taxi.png" alt="Logo Táxi" class="logo">
+  <h1>{{ title }}</h1>
+</div>
+
 <nav>
-  <a routerLink="/taxis">Lista de Táxis</a>
-  <br>
-  <a routerLink="/motoristas">Lista de Motoristas</a>
-  <br>
-  <a routerLink="/precos">Lista de Preços</a>
-  <br>
-  <a routerLink="/calcular_custo">Calcular custo de viagem</a>
+  <div class="menu">
+    <a routerLink="/taxis" routerLinkActive="active">Lista de Táxis</a>
+    <a routerLink="/motoristas" routerLinkActive="active">Lista de Motoristas</a>
+    <a routerLink="/precos" routerLinkActive="active">Lista de Preços</a>
+    <a routerLink="/calcular_custo" routerLinkActive="active">Calcular custo de viagem</a>
+  </div>
 </nav>
+
 <router-outlet></router-outlet>

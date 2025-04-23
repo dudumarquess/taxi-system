@@ -11,7 +11,8 @@ const TaxiSchema = new Schema ({
             values: ['luxuoso', 'básico'],
             message: '{VALUE} não é um nível de conforto válido'
         }, required: true},
-    quilometragem_total: {type: Number, required: false, min:[0, 'O valor deve ser positivo']}
+    quilometragem_total: {type: Number, required: false, min:[0, 'O valor deve ser positivo']},
+    createdAt: { type: Date, default: Date.now }
 });
 
 TaxiSchema.virtual("url").get(function () {

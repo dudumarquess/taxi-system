@@ -13,6 +13,16 @@ export class TaxiFormComponent {
   marcas = ['Toyota', 'Peugeot', 'Renault', 'Dacia', 'Mercedes', 'BMW', 'Volkswagen'];
   modelos: string[] = ['Corolla', 'Yaris', 'Prius', '208', '2008', '308', 'Clio', 'Megane', 'Captur', 'Logan', 'Lodgy', 'Sandero', 'A250', 'C300', 'G63', '320i', '530e', 'Golf', 'Polo', 'Passat'];
 
+  modelosPorMarca: { [marca: string]: string[] } = {
+    Toyota: ['Corolla', 'Yaris', 'Prius'],
+    Peugeot: ['208', '2008', '308'],
+    Renault: ['Clio', 'Megane', 'Captur'],
+    Dacia: ['Logan', 'Lodgy', 'Sandero'],
+    Mercedes: ['A250', 'C300', 'G63'],
+    BMW: ['320i', '530e'],
+    Volkswagen: ['Golf', 'Polo', 'Passat'],
+  };
+
   matriculaError: string | null = null;
   marcaError: string | null = null;
   modeloError: string | null = null;
@@ -52,7 +62,7 @@ export class TaxiFormComponent {
 
     const matriculaPattern = /^([A-Z]{2}|[0-9]{2})-([A-Z]{2}|[0-9]{2})-([A-Z]{2}|[0-9]{2})$/;
     if (!matriculaPattern.test(matricula)) {
-      this.matriculaError = 'Matrícula inválida. Deve estar no formato xx-yy-zz, onde cada grupo contém apenas letras ou números.';
+      this.matriculaError = 'Matrícula inválida. Deve estar no formato xx-yy-zz ou xxyyzz, onde cada grupo contém apenas letras ou números.';
       return;
     }
 
@@ -70,6 +80,11 @@ export class TaxiFormComponent {
 
     if (!modelo) {
       this.modeloError = 'Modelo é obrigatório.';
+      return;
+    }
+
+    if (!this.modelosPorMarca[marca.toString()]?.includes(modelo.toString())) {
+      this.modeloError = `Modelo inválido para a marca ${marca}.`;
       return;
     }
 

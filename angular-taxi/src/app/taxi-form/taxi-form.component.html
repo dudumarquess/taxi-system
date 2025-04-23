@@ -1,6 +1,6 @@
 <form (submit)="onSubmit($event)">
   <p-text-field-wrapper label="Matrícula *" name="matricula">
-    <input type="text" name="matricula" placeholder="Ex: 12-34-AB" #matriculaInput />
+    <input type="text" name="matricula" placeholder="Ex: 12-34-AB ou 1234AB" #matriculaInput />
   </p-text-field-wrapper>
   <p-text [size]="'small'" *ngIf="matriculaError" class="error">{{ matriculaError }}</p-text>
 

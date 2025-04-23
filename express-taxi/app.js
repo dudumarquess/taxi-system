@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const taxiRouter = require('./routes/taxiRoutes');
 const motoristaRoutes = require('./routes/motoristaRoutes');
 const precoRoutes = require('./routes/precoRoutes');
+const localidadeRoutes = require('./routes/localidadeRoutes');
 let cors = require('cors');
 var logger = require('morgan');
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/taxis', taxiRouter);
 app.use('/motoristas', motoristaRoutes);
 app.use('/precos', precoRoutes);
+app.use('/localidade', localidadeRoutes);
 
 
 

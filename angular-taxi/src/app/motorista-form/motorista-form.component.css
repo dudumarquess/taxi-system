@@ -11,3 +11,38 @@ p-select {
 p-button {
   margin-top: 20px; /* Add space above the button */
 }
+
+.codigo-postal-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap; 
+}
+
+.codigo-postal-container p-text-field-wrapper {
+  max-width: 200px;
+  margin: 0;
+}
+
+.codigo-postal-container p-button {
+  margin-top: 30px;
+  width: 40px;
+}
+
+#localidade {
+  font-size: 14px;
+  color: #333;
+}
+
+.submit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.submit p-text {
+  margin-top: 15px;
+}

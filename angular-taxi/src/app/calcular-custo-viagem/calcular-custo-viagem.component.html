@@ -23,14 +23,14 @@
     <input type="time" name="fimHora" />
   </p-text-field-wrapper>
 
-
-  <p-button type="submit">Calcular Preço</p-button>
-
-  <div *ngIf="custoTotal" class="success">
-    <strong>Custo Total:</strong> {{ custoTotal }}
+  <div class="submit">
+    <p-button type="submit">Calcular Preço</p-button> 
+    <p-text [size]="'small'" *ngIf="erro">{{erro}}</p-text>
+    <div *ngIf="custoTotal" class="success">
+      <strong>Custo Total:</strong> {{ custoTotal }}
+    </div>
   </div>
 
-  <div *ngIf="erro" class="error">
-    <strong>Erro:</strong> {{ erro }}
-  </div>
+  
+
 </form>

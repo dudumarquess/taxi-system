@@ -9,7 +9,7 @@ import { TaxiService } from '../taxi.service';
     styleUrls: ['./taxi-list.component.css'],
     standalone: false
 })
-export class TaxiListComponent {
+export class TaxiListComponent implements OnInit {
   taxis: Taxi[] = [];
 
   constructor(private taxiService: TaxiService) {}
