@@ -43,7 +43,7 @@ export class MotoristaFormComponent {
     const rua = formData.get('rua');
     const numeroPorta = formData.get('numeroPorta');
     const codigoPostal = formData.get('codigoPostal');
-    const localidade = formData.get('localidade');
+    
 
     // Reset error messages
     this.nomeError = null;
@@ -54,7 +54,6 @@ export class MotoristaFormComponent {
     this.ruaError = null;
     this.numeroPortaError = null;
     this.codigoPostalError = null;
-    this.localidadeError = null;
 
     // Validation checks
     if (!nome) {
@@ -98,18 +97,12 @@ export class MotoristaFormComponent {
       return;
     }
 
-    if (!localidade) {
-      this.localidadeError = 'O campo "Localidade" é obrigatório.';
-      return;
-    }
-
-
     const morada: Morada = {
       _id: '', // Default value for _id
       rua: rua.toString(),
       numeroPorta: parseInt(numeroPorta.toString(), 10),
       codigoPostal: codigoPostal.toString(),
-      localidade: localidade.toString(),
+      localidade: '', 
     };
 
     const motorista: Motorista = {
@@ -121,8 +114,23 @@ export class MotoristaFormComponent {
       morada: morada,
     };
 
-    this.motoristaService.createMotorista(motorista).subscribe(() => {
-      this.router.navigate(['/motoristas']);
-    });
+
+    this.motoristaService.createMotorista(motorista).subscribe(
+      () => {
+        // Redireciona para a lista de motoristas em caso de sucesso
+        this.router.navigate(['/motoristas']);
+      },
+      (error) => {
+        // Verifica se o erro é relacionado ao código postal
+        if (error.status === 400 && error.error.erro === 'Código postal inválido') {
+          this.codigoPostalError = 'Código postal não existente na base de dados. Tente outro.';
+        } else {
+          // Mensagem genérica para outros erros
+          this.codigoPostalError = 'Ocorreu um erro ao criar o motorista. Tente novamente.';
+        }
+        console.error('Erro ao criar motorista:', error);
+      }
+    );
+
   }
 }

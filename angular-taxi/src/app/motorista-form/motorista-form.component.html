@@ -42,11 +42,6 @@
       <input type="text" name="codigoPostal" />
     </p-text-field-wrapper>
     <p-text [size]="'small'" *ngIf="codigoPostalError" class="error">{{ codigoPostalError }}</p-text>
-
-    <p-text-field-wrapper label="Localidade *">
-      <input type="text" name="localidade" />
-    </p-text-field-wrapper>
-    <p-text [size]="'small'" *ngIf="localidadeError" class="error">{{ localidadeError }}</p-text>
   </div>
 
   <p-button type="submit">Registar Motorista</p-button>

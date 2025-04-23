@@ -1,6 +1,6 @@
 const Motorista = require('../models/motoristaModel');
 const { validarMotorista } = require('../validations/motoristaValidation');
-const { obterLocalidadePorCodigoPostal } = require('../services/localidadeService');
+const { obterLocalidadePorCodigoPostal } = require('../controllers/localidadeController');
 
 exports.registarMotorista = async (req, res) => {
   try {
@@ -28,7 +28,7 @@ exports.registarMotorista = async (req, res) => {
 
     // Fetch localidade based on postal code
     const localidade = await obterLocalidadePorCodigoPostal(dados.morada.codigoPostal);
-    if (!localidade) {
+    if (localidade === null) {
       console.error('Invalid Postal Code:', dados.morada.codigoPostal); // Log invalid postal code
       return res.status(400).json({
         erro: 'Código postal inválido',
