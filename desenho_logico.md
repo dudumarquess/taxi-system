@@ -8,18 +8,19 @@ Este documento descreve o desenho lógico da base de dados para o protótipo da 
 - `_id`: ObjectId
 - `nome`: String
 - `nif`: String (9 dígitos, positivo)
-- `genero`: String ("masculino" ou "feminino")
-- `ano_nascimento`: Number (>= 18 anos antes do ano atual)
-- `carta_conducao`: String (único)
+- `genero`: String ("Masculino" ou "Feminino")
+- `anoNascimento`: Number (>= 18 anos antes do ano atual)
+- `numeroCartaConducao`: String (único)
 - `morada_id`: ObjectId (referencia a `moradas`)
+- `createdAt`: Date
 
 --- 
 
 ## Coleção: moradas
 - `_id`: ObjectId
 - `rua`: String
-- `numero`: Number
-- `codigo_postal`: String
+- `numeroPorta`: Number
+- `codigoPostal`: String
 - `localidade`: String
 
 ---
@@ -30,21 +31,15 @@ Este documento descreve o desenho lógico da base de dados para o protótipo da 
 - `marca`: String
 - `modelo`: String
 - `ano_compra`: Number (anterior ou igual ao ano de qualquer turno)
-- `nivel_conforto`: String ("basico" ou "luxuoso")
+- `nivel_conforto`: String ("Basico" ou "Luxuoso")
 - `quilometragem_total`: Number (opcional e positiva)
+- `createdAt`: Date 
 
-## Coleção: turnos
+## Coleção: precos
 - `_id`: ObjectId
-- `motorista_id`: ObjectId (referencia a `motoristas`)
-- `taxi_id`: ObjectId (referencia a `taxis`)
-- `inicio`: Date
-- `fim`: Date
-- `preco_minuto`: Number (> 0)
-
-> - Restrições
-> - `inicio` < `fim`
-> - O `ano_compra` do taxi tem de ser <= ano do `inicio`
-> - Não pode haver interseção de períodos para o mesmo motorista ou taxi
+- `nivelConforto`: String ()
+- `precoPorMinuto`: Number (>= 0)
+- `acrescimoNoturno`: Number (>= 0)
 
 --- 
 
