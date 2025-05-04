@@ -1,0 +1,14 @@
+<nav>
+  <div class="menu-toggle" (click)="toggleMenu()">☰</div>
+  <div class="menu" [class.open]="isMenuOpen">
+    <a routerLink="/gestor/taxis" routerLinkActive="active" (click)="toggleMenu()">Lista de Táxis</a>
+    <a routerLink="/gestor/motoristas" routerLinkActive="active" (click)="toggleMenu()">Lista de Motoristas</a>
+    <a routerLink="/gestor/precos" routerLinkActive="active" (click)="toggleMenu()">Lista de Preços</a>
+    <a routerLink="/gestor/calcular_custo" routerLinkActive="active" (click)="toggleMenu()">Calcular custo de viagem</a>
+  </div>
+  <div class="logout">
+    <a routerLink="" routerLinkActive="active">Logout</a>
+  </div>    
+</nav>
+<router-outlet></router-outlet>
+  
