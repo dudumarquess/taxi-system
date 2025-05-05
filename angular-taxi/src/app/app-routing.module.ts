@@ -32,7 +32,7 @@ const routes: Routes = [
     ]
   },
   { path: 'motorista-login', component: MotoristaLoginComponent },
-  {path: 'motorista-dashboard', component: MotoristaDashboardComponent},
+  { path: 'motorista-dashboard', component: MotoristaDashboardComponent},
 ];
 
 @NgModule({

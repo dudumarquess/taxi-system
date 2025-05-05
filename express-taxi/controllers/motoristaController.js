@@ -84,3 +84,30 @@ exports.listarMotoristas = async (req, res) => {
     });
   }
 };
+
+exports.loginMotorista = async (req, res) => {
+  try {
+    const { nif } = req.body;
+    if (!nif) {
+      console.error("Erro: NIF não fornecido.");
+      return res.status(400).json({ message: "NIF é obrigatório." });
+    }
+
+    if (/^\d{9}$/.test(nif)) {
+      const motorista = await Motorista.findOne({ nif });
+      if (!motorista) {
+        console.error(`Erro: Motorista com NIF ${nif} não encontrado.`);
+        return res.status(404).json({ message: 'Motorista não encontrado' });
+      }
+
+      console.log(`Login bem-sucedido para o motorista com NIF ${nif}.`);
+      res.status(200).json({ motorista });
+    } else {
+      console.error(`Erro: NIF ${nif} é inválido. Deve ter 9 dígitos.`);
+      return res.status(400).json({ message: 'NIF inválido. Deve ter 9 dígitos.' });
+    }
+  } catch (error) {
+    console.error("Erro interno do servidor:", error);
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
+}

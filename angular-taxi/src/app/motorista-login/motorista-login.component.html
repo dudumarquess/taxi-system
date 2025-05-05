@@ -1,34 +1,38 @@
 <form (submit)="onLogin($event)">
-    <p-text-field-wrapper label="Digite o seu NIF">
-      <input
-        type="number"
-        name="nif"
-        placeholder="Ex: 123456789"
-      />
-    </p-text-field-wrapper>
-    <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
-  
-    <p-select
-        name="motoristaSelecionado"
-        label="Ou selecione sua conta"
-        [(ngModel)]="motoristaSelecionado"
-        >
-        <p-select-option [ngValue]="null" selected>Escolha um motorista</p-select-option>
-        <p-select-option
-            *ngFor="let motorista of motoristas"
-            [ngValue]="motorista"
-        >
-            {{ motorista.nome }} ({{ motorista.nif }})
-        </p-select-option>
-    </p-select>
-  
-    <p-text [size]="'small'" *ngIf="selecionadoError" class="error">
-      {{ selecionadoError }}
+  <!-- Campo NIF -->
+  <p-text-field-wrapper label="Digite o seu NIF">
+    <input
+      type="number"
+      name="nif"
+      placeholder="Ex: 123456789"
+    />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
+
+  <!-- Selecionar motorista -->
+  <p-select
+    name="motoristaSelecionado"
+    label="Ou selecione sua conta"
+  >
+    <p-select-option value="" selected>
+      Escolha um motorista
+    </p-select-option>
+    <p-select-option
+      *ngFor="let motorista of motoristas"
+      [value]="motorista.nif.toString()"
+    >
+      {{ motorista.nome }} ({{ motorista.nif }})
+    </p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="selecionadoError" class="error">
+    {{ selecionadoError }}
+  </p-text>
+
+  <!-- Botão e erros -->
+  <div class="submit">
+    <p-button type="submit">Entrar</p-button>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">
+      {{ generalError }}
     </p-text>
-  
-    <div class="submit">
-      <p-button type="submit">Entrar</p-button>
-      <p-text [size]="'small'" *ngIf="generalError" class="error">{{ generalError }}</p-text>
-    </div>
+  </div>
 </form>
-  

@@ -19,4 +19,8 @@ export class MotoristaService {
   createMotorista(motorista: Motorista): Observable<Motorista> {
     return this.http.post<Motorista>(this.motoristaUrl, motorista);
   }
+
+  loginMotorista(nif: string): Observable<Motorista> {
+    return this.http.post<Motorista>(this.motoristaUrl+"/login", { nif });
+  }
 }
