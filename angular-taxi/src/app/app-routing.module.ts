@@ -11,6 +11,10 @@ import { EscolherPerfilComponent } from './escolher-perfil/escolher-perfil.compo
 import { GestorComponent } from './gestor/gestor.component';
 import { MotoristaLoginComponent } from './motorista-login/motorista-login.component';
 import { MotoristaDashboardComponent } from './motorista-dashboard/motorista-dashboard.component';
+import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.component';
+import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
+import { RegistarViagemComponent } from './registar-viagem/registar-viagem.component';
+import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },
@@ -32,7 +36,17 @@ const routes: Routes = [
     ]
   },
   { path: 'motorista-login', component: MotoristaLoginComponent },
-  { path: 'motorista-dashboard', component: MotoristaDashboardComponent},
+  { 
+    path: 'motorista', 
+    component: MotoristaDashboardComponent,
+    children: [
+      { path: 'requisitar', component: RequisitarTaxiComponent },
+      { path: 'pedidos', component: PedidosPendentesComponent },
+      { path: 'registar-viagem', component: RegistarViagemComponent },
+      { path: 'viagens', component: ListaViagensComponent },
+      { path: '', redirectTo: 'requisitar', pathMatch: 'full' }
+    ]
+  }
 ];
 
 @NgModule({

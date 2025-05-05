@@ -30,9 +30,15 @@
 
   <!-- Botão e erros -->
   <div class="submit">
-    <p-button type="submit">Entrar</p-button>
+    <div class="button-container">
+      <p-button type="submit">Entrar</p-button>
+      <p-link>
+        <a [routerLink]="''">Voltar</a>
+      </p-link>
+    </div>
     <p-text [size]="'small'" *ngIf="generalError" class="error">
       {{ generalError }}
     </p-text>
   </div>
 </form>
+

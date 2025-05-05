@@ -8,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class MotoristaDashboardComponent {
 
+  isMenuOpen = false;
+
+  toggleMenu() {
+    if(this.isMenuOpen) {
+      this.isMenuOpen = false;
+    }
+    else {
+      this.isMenuOpen = true;
+    }
+  }
+
 }

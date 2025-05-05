@@ -1,128 +1,113 @@
-/* Porsche-inspired design for a compact navigation bar */
+/* Estilo base para o nav */
 nav {
-    background-color: #000; /* Sleek black background */
-    color: #fff; /* White text for contrast */
-    border-radius: 5px;
-    font-family: 'Porsche Next', sans-serif; /* Clean, modern font */
-    display: flex;
-    align-items: center;
-    padding: 5px 15px; /* Reduced padding for a smaller nav */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    border-bottom: 2px solid #e5c100; /* Porsche yellow accent */
+  background-color: #000; /* Fundo preto */
+  color: #fff; /* Texto branco */
+  border-radius: 5px;
+  font-family: 'Porsche Next', sans-serif;
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid #e5c100;
+  position: relative;
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px; /* Reduced margin for compact spacing */
-    font-size: 14px; /* Slightly smaller font size */
-    transition: color 0.3s ease;
-}
-
-nav a:hover {
-    color: #e5c100; /* Porsche yellow on hover */
-}
-
-nav .logo {
-    font-size: 20px; /* Reduced logo size */
-    font-weight: bold;
-    color: #e5c100; /* Highlight the logo with Porsche yellow */
-}
-
-nav .menu {
-    display: flex;
-    align-items: center;
-}
-
-nav .menu a {
-    padding: 3px 8px; /* Smaller padding for menu items */
-    border-radius: 3px;
+/* Links do menu */
+nav .menu a,
+nav .logout-desktop a {
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-decoration: none; /* Remove sublinhado */
+  color: white; /* Cor do texto */
+  transition: background-color 0.3s ease;
 }
 
 nav .menu a:hover {
-    background-color: #333; /* Subtle background change on hover */
+  background-color: #333;
 }
 
 nav .menu a.active {
-    color: #e5c100; /* Texto preto no fundo amarelo para contraste */
-    font-weight: bold;
+  color: #e5c100;
+  font-weight: bold;
 }
 
+/* Botão Logout */
 nav .logout {
-    margin-left: auto; /* Push logout button to the right */
-    padding: 5px 10px; /* Padding for the logout button */
-    color: #000; /* Black text for contrast */
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+  margin-left: auto;
+  padding: 5px 10px;
+  color: #000;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
+/* Menu hamburguer */
 nav .menu-toggle {
-    display: none; /* Initially hidden for larger screens */
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    margin-left: auto;
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto;
 }
-  
 
+/* Oculta/mostra logout certo conforme a tela */
+.logout-mobile {
+  display: none;
+}
+
+nav .logout-desktop {
+  margin-left: auto;
+  padding: 3px 8px; /* Mesmo padding dos outros links */
+}
+
+.logout-desktop a:hover {
+  background-color: #333; /* Mesmo efeito hover */
+}
+
+
+
+nav .menu a:hover,
+nav .logout-desktop a:hover {
+  background-color: #333; /* Mesmo efeito hover */
+}
+
+
+/* Estilo para telas pequenas */
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
     align-items: flex-start;
-    position: relative;
-    width: 90%; /* Garante que o menu ocupe toda a largura */
+    width: 100%;
+    padding: 0;
   }
 
   nav .menu-toggle {
-    display: block; /* Mostra apenas em telas pequenas */
+    display: block;
     background: none;
     border: none;
     color: white;
     font-size: 24px;
     cursor: pointer;
-    margin: 10px 0 0 10px; /* Alinha à esquerda */
-  }
-
-  nav .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  nav .logout {
-    color: white;
-    width: 90%;
-    text-decoration: none;
-    padding: 5px 10px;
-    background-color: #2c2c2c;
-    border-radius: 5px;
-    text-align: center;
-    margin: 0;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;;
-  }
-
-  nav .logout:hover {
-    background-color: #444;
+    margin: 10px;
   }
 
   nav .menu {
     display: none;
     flex-direction: column;
     gap: 8px;
-    width: 100%;
-    margin-top: 10px;
+    width: 90%;
+    background-color: #000;
+    padding: 10px;
+    border-radius: 5px;
   }
 
   nav .menu.open {
     display: flex;
   }
 
-  nav .menu a {
+  nav .menu a,
+  nav .logout-mobile {
     width: 100%;
     padding: 12px;
     background-color: #2c2c2c;
@@ -133,14 +118,16 @@ nav .menu-toggle {
     transition: background-color 0.3s ease;
   }
 
-  nav .menu a:hover {
+  nav .menu a:hover,
+  nav .logout-mobile:hover {
     background-color: #444;
   }
-}
 
-/* Font for headers */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Porsche Next', sans-serif; /* Use Porsche-inspired font */
-    color: #000; /* Black color for headers */
-    margin: 10px 0;
+  .logout-mobile {
+    display: block;
+  }
+
+  .logout-desktop {
+    display: none;
+  }
 }
