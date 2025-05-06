@@ -19,4 +19,9 @@ export class TaxiService {
   createTaxi(taxi: Taxi): Observable<Taxi> {
     return this.http.post<Taxi>(this.taxisUrl, taxi);
   }
+
+  getTaxisDisponiveis(inicio: Date, fim: Date): Observable<Taxi[]> {
+    const url = `${this.taxisUrl}/disponiveis`;
+    return this.http.post<Taxi[]>(url, { inicio, fim });
+  }
 }

@@ -20,6 +20,7 @@ import { EscolherPerfilComponent } from './escolher-perfil/escolher-perfil.compo
 import { GestorComponent } from './gestor/gestor.component';
 import { MotoristaLoginComponent } from './motorista-login/motorista-login.component';
 import { MotoristaDashboardComponent } from './motorista-dashboard/motorista-dashboard.component';
+import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.component';
 
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 
@@ -36,7 +37,8 @@ import { PorscheDesignSystemModule } from '@porsche-design-system/components-ang
     EscolherPerfilComponent,
     GestorComponent,
     MotoristaLoginComponent,
-    MotoristaDashboardComponent
+    MotoristaDashboardComponent,
+    RequisitarTaxiComponent
   ],
   imports: [
     BrowserModule,
