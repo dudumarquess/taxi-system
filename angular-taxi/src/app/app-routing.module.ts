@@ -16,9 +16,6 @@ import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes
 import { RegistarViagemComponent } from './registar-viagem/registar-viagem.component';
 import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
 import { TurnosListComponent } from './turnos-list/turnos-list.component';
-import {ClienteDashboardComponent} from "./cliente-dashboard/cliente-dashboard.component";
-import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi.component";
-import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },

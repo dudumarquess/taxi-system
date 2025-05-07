@@ -22,11 +22,10 @@ import { MotoristaLoginComponent } from './motorista-login/motorista-login.compo
 import { MotoristaDashboardComponent } from './motorista-dashboard/motorista-dashboard.component';
 import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.component';
 import { TurnosListComponent } from './turnos-list/turnos-list.component';
-
+import { ClienteDashboardComponent } from './cliente-dashboard/cliente-dashboard.component';
+import { ClientePedirTaxiComponent } from './cliente-pedir-taxi/cliente-pedir-taxi.component';
+import { ClientePedidosComponent } from './cliente-pedidos/cliente-pedidos.component';
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
-import {ClienteDashboardComponent} from "./cliente-dashboard/cliente-dashboard.component";
-import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi.component";
-import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
 
 @NgModule({
   declarations: [
@@ -43,13 +42,10 @@ import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.compone
     MotoristaLoginComponent,
     MotoristaDashboardComponent,
     RequisitarTaxiComponent,
-<<<<<<< HEAD
-    TurnosListComponent
-=======
+    TurnosListComponent,
     ClienteDashboardComponent,
     ClientePedirTaxiComponent,
     ClientePedidosComponent
->>>>>>> 839388a2b9d508c8495562368184eefe2d4c1751
   ],
   imports: [
     BrowserModule,
