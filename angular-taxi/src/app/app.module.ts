@@ -21,6 +21,7 @@ import { GestorComponent } from './gestor/gestor.component';
 import { MotoristaLoginComponent } from './motorista-login/motorista-login.component';
 import { MotoristaDashboardComponent } from './motorista-dashboard/motorista-dashboard.component';
 import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.component';
+import { TurnosListComponent } from './turnos-list/turnos-list.component';
 
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 
@@ -38,7 +39,8 @@ import { PorscheDesignSystemModule } from '@porsche-design-system/components-ang
     GestorComponent,
     MotoristaLoginComponent,
     MotoristaDashboardComponent,
-    RequisitarTaxiComponent
+    RequisitarTaxiComponent,
+    TurnosListComponent
   ],
   imports: [
     BrowserModule,

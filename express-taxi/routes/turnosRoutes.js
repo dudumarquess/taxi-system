@@ -6,5 +6,6 @@ router.get('/', controller.listarTurnos)
 
 router.post('/verificar-intersecoes', controller.verificarIntersecoes);
 
+router.post('/requisitar-turno', controller.turno_post);
 
 module.exports = router;

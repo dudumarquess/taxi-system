@@ -15,6 +15,7 @@ import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.compo
 import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
 import { RegistarViagemComponent } from './registar-viagem/registar-viagem.component';
 import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
+import { TurnosListComponent } from './turnos-list/turnos-list.component';
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },
@@ -40,7 +41,8 @@ const routes: Routes = [
     path: 'motorista', 
     component: MotoristaDashboardComponent,
     children: [
-      { path: 'requisitar', component: RequisitarTaxiComponent },
+      { path: 'requisitar-turno', component: RequisitarTaxiComponent },
+      { path: 'turnos', component: TurnosListComponent },
       { path: 'pedidos', component: PedidosPendentesComponent },
       { path: 'registar-viagem', component: RegistarViagemComponent },
       { path: 'viagens', component: ListaViagensComponent },
