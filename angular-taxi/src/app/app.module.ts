@@ -24,6 +24,9 @@ import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.compo
 import { TurnosListComponent } from './turnos-list/turnos-list.component';
 
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
+import {ClienteDashboardComponent} from "./cliente-dashboard/cliente-dashboard.component";
+import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi.component";
+import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
 
 @NgModule({
   declarations: [
@@ -40,7 +43,13 @@ import { PorscheDesignSystemModule } from '@porsche-design-system/components-ang
     MotoristaLoginComponent,
     MotoristaDashboardComponent,
     RequisitarTaxiComponent,
+<<<<<<< HEAD
     TurnosListComponent
+=======
+    ClienteDashboardComponent,
+    ClientePedirTaxiComponent,
+    ClientePedidosComponent
+>>>>>>> 839388a2b9d508c8495562368184eefe2d4c1751
   ],
   imports: [
     BrowserModule,
