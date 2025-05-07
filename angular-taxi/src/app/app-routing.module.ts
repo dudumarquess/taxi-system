@@ -11,10 +11,13 @@ import { EscolherPerfilComponent } from './escolher-perfil/escolher-perfil.compo
 import { GestorComponent } from './gestor/gestor.component';
 import { MotoristaLoginComponent } from './motorista-login/motorista-login.component';
 import { MotoristaDashboardComponent } from './motorista-dashboard/motorista-dashboard.component';
-import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.component';
+import { RequisitarTaxiComponent } from './requisitrar-taxi/requisitar-taxi.component';
 import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
 import { RegistarViagemComponent } from './registar-viagem/registar-viagem.component';
 import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
+import {ClienteDashboardComponent} from "./cliente-dashboard/cliente-dashboard.component";
+import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi.component";
+import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },
@@ -36,8 +39,8 @@ const routes: Routes = [
     ]
   },
   { path: 'motorista-login', component: MotoristaLoginComponent },
-  { 
-    path: 'motorista', 
+  {
+    path: 'motorista',
     component: MotoristaDashboardComponent,
     children: [
       { path: 'requisitar', component: RequisitarTaxiComponent },
@@ -45,6 +48,14 @@ const routes: Routes = [
       { path: 'registar-viagem', component: RegistarViagemComponent },
       { path: 'viagens', component: ListaViagensComponent },
       { path: '', redirectTo: 'requisitar', pathMatch: 'full' }
+    ]
+  },
+  {
+    path:'cliente',
+    component: ClienteDashboardComponent,
+    children: [
+      { path: 'pedir-taxi', component: ClientePedirTaxiComponent },
+      { path: 'pedido', component: ClientePedidosComponent },
     ]
   }
 ];

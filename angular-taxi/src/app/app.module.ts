@@ -20,9 +20,12 @@ import { EscolherPerfilComponent } from './escolher-perfil/escolher-perfil.compo
 import { GestorComponent } from './gestor/gestor.component';
 import { MotoristaLoginComponent } from './motorista-login/motorista-login.component';
 import { MotoristaDashboardComponent } from './motorista-dashboard/motorista-dashboard.component';
-import { RequisitarTaxiComponent } from './requisitar-taxi/requisitar-taxi.component';
+import { RequisitarTaxiComponent } from './requisitrar-taxi/requisitar-taxi.component';
 
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
+import {ClienteDashboardComponent} from "./cliente-dashboard/cliente-dashboard.component";
+import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi.component";
+import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { PorscheDesignSystemModule } from '@porsche-design-system/components-ang
     GestorComponent,
     MotoristaLoginComponent,
     MotoristaDashboardComponent,
-    RequisitarTaxiComponent
+    RequisitarTaxiComponent,
+    ClienteDashboardComponent,
+    ClientePedirTaxiComponent,
+    ClientePedidosComponent
   ],
   imports: [
     BrowserModule,

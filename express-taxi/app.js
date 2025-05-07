@@ -5,6 +5,7 @@ const motoristaRoutes = require('./routes/motoristaRoutes');
 const precoRoutes = require('./routes/precoRoutes');
 const localidadeRoutes = require('./routes/localidadeRoutes');
 const turnoRoutes = require('./routes/turnosRoutes');
+const pedidoClienteRoutes = require('./routes/pedidoClienteRoutes');
 let cors = require('cors');
 var logger = require('morgan');
 
@@ -18,7 +19,7 @@ app.use('/motoristas', motoristaRoutes);
 app.use('/precos', precoRoutes);
 app.use('/localidade', localidadeRoutes);
 app.use('/turnos', turnoRoutes);
-
+app.use('/api/pedidoCliente', pedidoClienteRoutes);
 
 
 //conexão com o mongoDB
