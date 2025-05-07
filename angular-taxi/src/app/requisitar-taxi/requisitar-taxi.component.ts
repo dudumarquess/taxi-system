@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { TaxiService } from '../taxi.service';
 import { TurnoService } from '../turno.service';
 import { Turno } from '../turno';
 import { Motorista } from '../motorista';
 import { Taxi } from '../taxi';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-requisitar-taxi',
@@ -17,8 +19,6 @@ export class RequisitarTaxiComponent {
   fimData: string = ''; // Data de fim
   fimHora: string = ''; // Hora de fim
   taxis: Taxi[] = [];
-  turnos: Turno[] = [];
-  taxiSelecionado: Taxi | null = null;
   motoristaLogado: Motorista | null = null;
   inicioError: string | null = null;
   fimError: string | null = null;
@@ -27,11 +27,14 @@ export class RequisitarTaxiComponent {
   generalError: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private taxiService: TaxiService, private turnoService: TurnoService) {}
+  constructor(
+    private taxiService: TaxiService,
+    private turnoService: TurnoService,
+    private router: Router,
+    private http: HttpClient) {}
 
   ngOnInit() {
     this.carregarMotoristaLogado();
-    this.listarTurnos();
   }
 
   carregarMotoristaLogado() {
@@ -108,27 +111,25 @@ export class RequisitarTaxiComponent {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    this.generalError = null;
-    this.successMessage = null;
-
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    const inicioData = formData.get('inicioData')?.toString();
-    const inicioHora = formData.get('inicioHora')?.toString();
-    const fimData = formData.get('fimData')?.toString();
-    const fimHora = formData.get('fimHora')?.toString();
+    const matricula = formData.get('matricula');
+    this.generalError = null;
+    this.successMessage = null;
 
-    if (!inicioData || !inicioHora || !fimData || !fimHora) {
+
+    const inicio = `${this.inicioData}T${this.inicioHora}`;
+    const fim = `${this.fimData}T${this.fimHora}`;
+    const inicioDate = new Date(inicio);
+    const fimDate = new Date(fim);
+
+    
+
+    if (!this.inicioData || !this.inicioHora || !this.fimData || !this.fimHora) {
       this.generalError = 'Todos os campos de data e hora são obrigatórios.';
       return;
     }
-
-    const inicio = `${inicioData}T${inicioHora}`;
-    const fim = `${fimData}T${fimHora}`;
-
-    const inicioDate = new Date(inicio);
-    const fimDate = new Date(fim);
 
     if (isNaN(inicioDate.getTime()) || isNaN(fimDate.getTime())) {
       this.generalError = 'Data ou hora inválida.';
@@ -140,9 +141,16 @@ export class RequisitarTaxiComponent {
       return;
     }
 
-    if (!this.taxiSelecionado) {
+    if (!matricula) {
       this.taxiSelecionadoError = 'Selecione um táxi.';
       this.generalError = 'Selecione um táxi.';
+      return;
+    }
+
+    const taxi = this.taxis.find(t => t.matricula === matricula);
+
+    if (!taxi) {
+      this.generalError = 'Táxi selecionado não encontrado.';
       return;
     }
 
@@ -151,31 +159,22 @@ export class RequisitarTaxiComponent {
       return;
     }
 
-    const turno: Turno = {
-      motoristaId: this.motoristaLogado,
+    const turno = {
+      motoristaId: this.motoristaLogado._id,
       inicio: inicioDate,
       fim: fimDate,
-      taxi: this.taxiSelecionado,
+      taxiId: taxi._id,
     };
+
+    console.log('Turno a ser enviado:', turno);
 
     this.turnoService.requisitarTurno(turno).subscribe({
       next: () => {
         this.successMessage = 'Turno requisitado com sucesso!';
-        this.listarTurnos();
+        this.router.navigate(['/motorista/turnos']);
       },
       error: () => {
         this.generalError = 'Erro ao requisitar o turno. Tente novamente.';
-      },
-    });
-  }
-
-  listarTurnos() {
-    this.turnoService.getTurnos().subscribe({
-      next: (turnos: Turno[]) => {
-        this.turnos = turnos;
-      },
-      error: () => {
-        this.generalError = 'Erro ao listar os turnos.';
       },
     });
   }
