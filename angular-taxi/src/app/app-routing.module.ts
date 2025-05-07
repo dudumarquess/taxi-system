@@ -18,7 +18,7 @@ import { TurnosListComponent } from './turnos-list/turnos-list.component';
 import {ClienteDashboardComponent} from "./cliente-dashboard/cliente-dashboard.component";
 import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi.component";
 import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
-import {RequisitarTaxiComponent} from "./requisitrar-taxi/requisitar-taxi.component";
+import {RequisitarTaxiComponent} from "./requisitar-taxi/requisitar-taxi.component";
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },

@@ -6,7 +6,7 @@ import { Motorista } from '../motorista';
 import { Taxi } from '../taxi';
 
 @Component({
-  selector: 'app-requisitrar-taxi',
+  selector: 'app-requisitar-taxi',
   templateUrl: './requisitar-taxi.component.html',
   styleUrls: ['./requisitar-taxi.component.css'],
   standalone: false,
