@@ -75,8 +75,13 @@ export class RequisitarTaxiComponent {
       return;
     }
 
+    if (!this.motoristaLogado || !this.motoristaLogado._id) {
+      this.disponiveisError = 'Motorista não autenticado.';
+      return;
+    }
+
     // Verificar interseção de turnos
-    this.turnoService.verificarIntersecoes(inicioDate, fimDate).subscribe({
+    this.turnoService.verificarIntersecoes(inicioDate, fimDate, this.motoristaLogado._id).subscribe({
       next: (intersecta) => {
         if (intersecta) {
           this.disponiveisError = 'O turno interseta outro turno existente.';

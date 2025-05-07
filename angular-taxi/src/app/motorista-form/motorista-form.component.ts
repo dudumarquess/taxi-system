@@ -151,7 +151,7 @@ export class MotoristaFormComponent {
     this.motoristaService.createMotorista(motorista).subscribe(
       () => {
         // Redireciona para a lista de motoristas em caso de sucesso
-        this.router.navigate(['/motoristas']);
+        this.router.navigate(['/gestor/motoristas']);
       },
       (error) => {
         // Verifica se o erro é relacionado ao código postal

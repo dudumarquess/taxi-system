@@ -1,4 +1,5 @@
 const Taxi = require("../models/taxiModel");
+const Turno = require("../models/turnoModel");
 
 const asyncHandler = require("express-async-handler");
 
@@ -81,3 +82,44 @@ function validarMatricula(matricula) {
 
     return true;
 }
+
+exports.taxi_disponiveis_post = asyncHandler(async (req, res) => {
+    const { inicio, fim } = req.body;
+
+    console.log('Recebendo requisição para verificar táxis disponíveis...');
+    console.log('Dados recebidos:', { inicio, fim });
+
+    const inicioDate = new Date(inicio);
+    const fimDate = new Date(fim);
+
+    if (isNaN(inicioDate.getTime()) || isNaN(fimDate.getTime())) {
+        console.error('Erro: Datas inválidas.');
+        return res.status(400).json({ error: 'Datas inválidas.' });
+    }
+
+    if (inicioDate >= fimDate) {
+        console.error('Erro: O horário de início deve ser anterior ao horário de fim.');
+        return res.status(400).json({ error: 'O horário de início deve ser anterior ao horário de fim.' });
+    }
+
+    console.log('Consultando turnos que intersetam o intervalo no banco de dados...');
+
+    const intersecoes = await Turno.find({
+        inicio: { $lt: fimDate },
+        fim: { $gt: inicioDate },
+    }).exec();
+
+    console.log('Resultado da consulta:', intersecoes);
+
+    const taxisIndisponiveis = intersecoes.map(turno => turno.taxi);
+
+    console.log('Táxis indisponíveis:', taxisIndisponiveis);
+
+    const taxisDisponiveis = await Taxi.find({
+        _id: { $nin: taxisIndisponiveis },
+    }).exec();
+
+    console.log('Taxis disponíveis:', taxisDisponiveis);
+
+    res.status(200).json(taxisDisponiveis); 
+});

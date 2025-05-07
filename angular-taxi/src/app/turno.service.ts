@@ -13,11 +13,13 @@ export class TurnoService {
   constructor(private http: HttpClient) {}
 
 
-  verificarIntersecoes(inicio: Date, fim: Date): Observable<boolean> {
+  verificarIntersecoes(inicio: Date, fim: Date, motoristaId: string): Observable<boolean> {
     return this.http.post<boolean>(`${this.turnosUrl}/verificar-intersecoes`, {
       inicio,
       fim,
+      motoristaId,
     });
+
   }
 
   requisitarTurno(turno: Turno): Observable<void> {

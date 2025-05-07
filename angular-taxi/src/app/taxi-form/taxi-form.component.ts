@@ -110,7 +110,7 @@ export class TaxiFormComponent {
 
     // Submit the Taxi object
     this.taxiService.createTaxi(taxi).subscribe(() => {
-      this.router.navigate(['/taxis']);
+      this.router.navigate(['/gestor/taxis']);
     });
   }
 }

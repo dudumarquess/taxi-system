@@ -4,6 +4,7 @@ const taxiRouter = require('./routes/taxiRoutes');
 const motoristaRoutes = require('./routes/motoristaRoutes');
 const precoRoutes = require('./routes/precoRoutes');
 const localidadeRoutes = require('./routes/localidadeRoutes');
+const turnoRoutes = require('./routes/turnosRoutes');
 let cors = require('cors');
 var logger = require('morgan');
 
@@ -16,6 +17,7 @@ app.use('/taxis', taxiRouter);
 app.use('/motoristas', motoristaRoutes);
 app.use('/precos', precoRoutes);
 app.use('/localidade', localidadeRoutes);
+app.use('/turnos', turnoRoutes);
 
 
 
