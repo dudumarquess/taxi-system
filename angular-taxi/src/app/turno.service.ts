@@ -22,11 +22,12 @@ export class TurnoService {
 
   }
 
-  requisitarTurno(turno: Turno): Observable<void> {
-    return this.http.post<void>(`${this.turnosUrl}/requisitar`, turno);
+  requisitarTurno(turno: any): Observable<void> {
+    return this.http.post<void>(`${this.turnosUrl}/requisitar-turno`, turno);
   }
 
-  getTurnos(): Observable<Turno[]> {
-    return this.http.get<Turno[]>(this.turnosUrl);
+  getTurnos(motoristaId: string): Observable<Turno[]> {
+    const url = `${this.turnosUrl}?motoristaId=${motoristaId}`;
+    return this.http.get<Turno[]>(url);
   }
 }

@@ -1,21 +1,21 @@
 <form (submit)="onSubmit($event)">
   <!-- Início do Turno -->
-  <p-text-field-wrapper label="Início - Data *">
+  <p-text-field-wrapper label="Início - Data">
     <input type="date" name="inicioData" [(ngModel)]="inicioData" required />
   </p-text-field-wrapper>
 
-  <p-text-field-wrapper label="Início - Hora *">
+  <p-text-field-wrapper label="Início - Hora">
     <input type="time" name="inicioHora" [(ngModel)]="inicioHora" required />
   </p-text-field-wrapper>
 
   <p-text [size]="'small'" *ngIf="inicioError" class="error">{{ inicioError }}</p-text>
 
   <!-- Fim do Turno -->
-  <p-text-field-wrapper label="Fim - Data *">
+  <p-text-field-wrapper label="Fim - Data">
     <input type="date" name="fimData" [(ngModel)]="fimData" required />
   </p-text-field-wrapper>
 
-  <p-text-field-wrapper label="Fim - Hora *">
+  <p-text-field-wrapper label="Fim - Hora">
     <input type="time" name="fimHora" [(ngModel)]="fimHora" required />
   </p-text-field-wrapper>
 
@@ -27,9 +27,9 @@
 
   <!-- Seleção de Táxi -->
   <div *ngIf="taxis.length > 0">
-    <p-select name="taxiSelecionado" label="Escolha um Táxi *" [(ngModel)]="taxiSelecionado">
+    <p-select name="matricula" label="Escolha um Táxi *">
       <p-select-option value="" selected>Selecione um táxi</p-select-option>
-      <p-select-option *ngFor="let taxi of taxis" [ngValue]="taxi">
+      <p-select-option *ngFor="let taxi of taxis" [value]="taxi.matricula">
         {{ taxi.matricula }}
       </p-select-option>
     </p-select>
@@ -43,23 +43,3 @@
     <p-text [size]="'small'" *ngIf="successMessage" class="success">{{ successMessage }}</p-text>
   </div>
 </form>
-<!-- Lista de Turnos do Motorista -->
-<div *ngIf="turnos.length > 0" class="turnos-lista">
-  <h3>Seus Turnos</h3>
-  <p-table>
-    <p-table-head>
-      <p-table-head-row>
-        <p-table-head-cell>Início</p-table-head-cell>
-        <p-table-head-cell>Fim</p-table-head-cell>
-        <p-table-head-cell>Táxi</p-table-head-cell>
-      </p-table-head-row>
-    </p-table-head>
-    <p-table-body>
-      <p-table-row *ngFor="let turno of turnos">
-        <p-table-cell>{{ turno.inicio | date: 'short' }}</p-table-cell>
-        <p-table-cell>{{ turno.fim | date: 'short' }}</p-table-cell>
-        <p-table-cell>{{ turno.taxi.modelo }}</p-table-cell>
-      </p-table-row>
-    </p-table-body>
-  </p-table>
-</div>

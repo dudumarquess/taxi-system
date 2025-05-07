@@ -73,7 +73,7 @@ export class MotoristaLoginComponent implements OnInit {
     localStorage.setItem('motoristaLogado', JSON.stringify(motoristaEncontrado));
     this.motoristaService.loginMotorista(nifFinal.toString()).subscribe({
       next: (motoristaEncontrado) => {
-        this.router.navigate(['/motorista']);
+        this.router.navigate(['/motorista/turnos']);
       },
       error: (error) => {
         this.generalError = 'Erro ao fazer login. Por favor, tente novamente.';

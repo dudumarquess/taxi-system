@@ -2,7 +2,7 @@ import { Motorista } from './motorista';
 import { Taxi } from './taxi';
 
 export interface Turno {
-    motoristaId: Motorista;
+    motorista: Motorista;
     inicio: Date;
     fim: Date;
     taxi: Taxi;
