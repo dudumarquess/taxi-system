@@ -6,7 +6,7 @@ import { Motorista } from '../motorista';
 import { Taxi } from '../taxi';
 
 @Component({
-  selector: 'app-requisitar-taxi',
+  selector: 'app-requisitrar-taxi',
   templateUrl: './requisitar-taxi.component.html',
   styleUrls: ['./requisitar-taxi.component.css'],
   standalone: false,
@@ -110,54 +110,54 @@ export class RequisitarTaxiComponent {
     event.preventDefault();
     this.generalError = null;
     this.successMessage = null;
-  
+
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-  
+
     const inicioData = formData.get('inicioData')?.toString();
     const inicioHora = formData.get('inicioHora')?.toString();
     const fimData = formData.get('fimData')?.toString();
     const fimHora = formData.get('fimHora')?.toString();
-  
+
     if (!inicioData || !inicioHora || !fimData || !fimHora) {
       this.generalError = 'Todos os campos de data e hora são obrigatórios.';
       return;
     }
-  
+
     const inicio = `${inicioData}T${inicioHora}`;
     const fim = `${fimData}T${fimHora}`;
-  
+
     const inicioDate = new Date(inicio);
     const fimDate = new Date(fim);
-  
+
     if (isNaN(inicioDate.getTime()) || isNaN(fimDate.getTime())) {
       this.generalError = 'Data ou hora inválida.';
       return;
     }
-  
+
     if (inicioDate >= fimDate) {
       this.generalError = 'O horário de início deve ser anterior ao de fim.';
       return;
     }
-  
+
     if (!this.taxiSelecionado) {
       this.taxiSelecionadoError = 'Selecione um táxi.';
       this.generalError = 'Selecione um táxi.';
       return;
     }
-  
+
     if (!this.motoristaLogado) {
       this.generalError = 'Motorista não autenticado.';
       return;
     }
-  
+
     const turno: Turno = {
       motoristaId: this.motoristaLogado,
       inicio: inicioDate,
       fim: fimDate,
       taxi: this.taxiSelecionado,
     };
-  
+
     this.turnoService.requisitarTurno(turno).subscribe({
       next: () => {
         this.successMessage = 'Turno requisitado com sucesso!';

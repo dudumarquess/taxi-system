@@ -1,0 +1,46 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface PedidoCliente {
+  _id?: string;
+  cliente: {
+    nome: string;
+    nif: string;
+    genero: string;
+  };
+  origem: {
+    rua: string;
+    cidade: string;
+  };
+  destino: {
+    rua: string;
+    cidade: string;
+  };
+  nivelConforto: 'básico' | 'luxuoso';
+  numeroPessoas: number;
+  status?: 'pendente' | 'em andamento' | 'concluído' | 'cancelado';
+  dataPedido?: Date;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ClienteService {
+
+  private pedidosUrl = 'http://localhost:3000/api/pedidoCliente';
+
+  constructor(private http: HttpClient) {}
+
+  criarPedido(pedido: PedidoCliente): Observable<PedidoCliente> {
+    return this.http.post<PedidoCliente>(this.pedidosUrl, pedido);
+  }
+
+  listarPedidos(): Observable<PedidoCliente[]> {
+    return this.http.get<PedidoCliente[]>(this.pedidosUrl);
+  }
+
+  buscarPedidosPorNif(nif: string): Observable<PedidoCliente[]> {
+    return this.http.get<PedidoCliente[]>(`${this.pedidosUrl}/buscar/${nif}`);
+  }
+}

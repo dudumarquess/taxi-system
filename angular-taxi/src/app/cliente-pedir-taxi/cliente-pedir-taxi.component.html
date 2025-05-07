@@ -1,0 +1,60 @@
+<form (submit)="onSubmit($event)">
+  <fieldset>
+    <legend>Informações do Cliente</legend>
+
+    <p-text-field-wrapper label="Nome completo">
+      <input type="text" name="nome" required placeholder="Ex: João Silva" />
+    </p-text-field-wrapper>
+
+    <p-text-field-wrapper label="NIF">
+      <input type="number" name="nif" required placeholder="Ex: 123456789" />
+    </p-text-field-wrapper>
+
+    <p-select name="genero" label="Género">
+      <p-select-option [ngValue]="'masculino'">Masculino</p-select-option>
+      <p-select-option [ngValue]="'feminino'">Feminino</p-select-option>
+    </p-select>
+  </fieldset>
+
+  <fieldset>
+    <legend>Localização Atual</legend>
+
+    <p-text-field-wrapper label="Rua (Origem)">
+      <input type="text" name="origemRua" required placeholder="Rua de origem" />
+    </p-text-field-wrapper>
+
+    <p-text-field-wrapper label="Cidade (Origem)">
+      <input type="text" name="origemCidade" required placeholder="Cidade de origem" />
+    </p-text-field-wrapper>
+  </fieldset>
+
+  <fieldset>
+    <legend>Destino</legend>
+
+    <p-text-field-wrapper label="Rua (Destino)">
+      <input type="text" name="destinoRua" required placeholder="Rua de destino" />
+    </p-text-field-wrapper>
+
+    <p-text-field-wrapper label="Cidade (Destino)">
+      <input type="text" name="destinoCidade" required placeholder="Cidade de destino" />
+    </p-text-field-wrapper>
+  </fieldset>
+
+  <fieldset>
+    <legend>Detalhes da Viagem</legend>
+
+    <p-select name="nivelConforto" label="Nível de Conforto">
+      <p-select-option [ngValue]="'luxuoso'">Luxuoso</p-select-option>
+      <p-select-option [ngValue]="'básico'">Básico</p-select-option>
+    </p-select>
+
+    <p-text-field-wrapper label="Número de Pessoas">
+      <input type="number" name="numeroPessoas" min="1" required placeholder="Ex: 2" />
+    </p-text-field-wrapper>
+  </fieldset>
+
+  <div class="submit">
+    <p-button type="submit">Pedir Táxi</p-button>
+  </div>
+</form>
+

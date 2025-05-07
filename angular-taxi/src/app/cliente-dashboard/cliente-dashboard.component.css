@@ -1,0 +1,133 @@
+/* Estilo base para o nav */
+nav {
+  background-color: #000; /* Fundo preto */
+  color: #fff; /* Texto branco */
+  border-radius: 5px;
+  font-family: 'Porsche Next', sans-serif;
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid #e5c100;
+  position: relative;
+}
+
+/* Links do menu */
+nav .menu a,
+nav .logout-desktop a {
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-decoration: none; /* Remove sublinhado */
+  color: white; /* Cor do texto */
+  transition: background-color 0.3s ease;
+}
+
+nav .menu a:hover {
+  background-color: #333;
+}
+
+nav .menu a.active {
+  color: #e5c100;
+  font-weight: bold;
+}
+
+/* Botão Logout */
+nav .logout {
+  margin-left: auto;
+  padding: 5px 10px;
+  color: #000;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Menu hamburguer */
+nav .menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Oculta/mostra logout certo conforme a tela */
+.logout-mobile {
+  display: none;
+}
+
+nav .logout-desktop {
+  margin-left: auto;
+  padding: 3px 8px; /* Mesmo padding dos outros links */
+}
+
+.logout-desktop a:hover {
+  background-color: #333; /* Mesmo efeito hover */
+}
+
+
+
+nav .menu a:hover,
+nav .logout-desktop a:hover {
+  background-color: #333; /* Mesmo efeito hover */
+}
+
+
+/* Estilo para telas pequenas */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0;
+  }
+
+  nav .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  nav .menu {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    width: 90%;
+    background-color: #000;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  nav .menu.open {
+    display: flex;
+  }
+
+  nav .menu a,
+  nav .logout-mobile {
+    width: 100%;
+    padding: 12px;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  nav .menu a:hover,
+  nav .logout-mobile:hover {
+    background-color: #444;
+  }
+
+  .logout-mobile {
+    display: block;
+  }
+
+  .logout-desktop {
+    display: none;
+  }
+}
