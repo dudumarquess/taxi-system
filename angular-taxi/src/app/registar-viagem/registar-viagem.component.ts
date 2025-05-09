@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ViagemService } from '../services/viagem.service';
+import { MotoristaService } from '../services/motorista.service';
 
 @Component({
   selector: 'app-registar-viagem',
@@ -11,8 +12,12 @@ export class RegistarViagemComponent implements OnInit {
   pedidoAtual: any = null;
   erro: string | null = null;
   mensagem: string | null = null;
+  turnoAtual: any = null;
 
-  constructor(private viagemService: ViagemService) {}
+  constructor(
+    private viagemService: ViagemService,
+    private motoristaService: MotoristaService
+  ) {}
 
   ngOnInit() {
     this.carregarPedidoAtual();
@@ -81,11 +86,49 @@ export class RegistarViagemComponent implements OnInit {
   }
 
   private carregarPedidoAtual() {
-    // Implementar lógica para carregar pedido atual do motorista
+    const motoristaLogado = this.getMotoristaLogado();
+    if (!motoristaLogado) {
+      this.erro = 'Motorista não está logado';
+      return;
+    }
+
+    this.motoristaService.getPedidoAtual(motoristaLogado._id).subscribe({
+      next: (pedido) => {
+        if (pedido && pedido.status === 'aceito_pelo_cliente') {
+          this.pedidoAtual = pedido;
+          this.carregarTurnoAtual();
+          this.erro = null;
+        } else {
+          this.erro = 'Nenhum pedido ativo encontrado';
+        }
+      },
+      error: (err) => {
+        this.erro = 'Erro ao carregar pedido: ' + err.message;
+      }
+    });
+  }
+
+  private carregarTurnoAtual() {
+    const motoristaLogado = this.getMotoristaLogado();
+    if (!motoristaLogado) return;
+
+    this.motoristaService.getTurnoAtual(motoristaLogado._id).subscribe({
+      next: (turno) => {
+        this.turnoAtual = turno;
+        this.erro = null;
+      },
+      error: (err) => {
+        this.erro = 'Erro ao carregar turno: ' + err.message;
+      }
+    });
   }
 
   private obterTurnoAtual(): string {
-    // Implementar lógica para obter ID do turno atual
-    return '';
+    return this.turnoAtual?._id || '';
+  }
+
+  private getMotoristaLogado(): any {
+    const motoristaStr = localStorage.getItem('motoristaLogado');
+    return motoristaStr ? JSON.parse(motoristaStr) : null;
   }
 }

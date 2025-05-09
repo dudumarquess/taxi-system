@@ -27,6 +27,14 @@ export class MotoristaService {
     return this.http.post<Motorista>(this.motoristaUrl+"/login", { nif });
   }
 
+  getPedidoAtual(motoristaId: string): Observable<PedidoTaxi> {
+    return this.http.get<PedidoTaxi>(`${this.motoristaUrl}/${motoristaId}/pedido-atual`);
+  }
+
+  getTurnoAtual(motoristaId: string): Observable<any> {
+    return this.http.get<any>(`${this.motoristaUrl}/${motoristaId}/turno-atual`);
+  }
+
   //PEDIDOS PENDENTES
 
   listarPedidosPendentes(lat: number, lng: number): Observable<PedidoTaxi[]> {
@@ -44,5 +52,7 @@ export class MotoristaService {
       { pedidoId, motoristaId }
     );
   }
+
+  
 
 }

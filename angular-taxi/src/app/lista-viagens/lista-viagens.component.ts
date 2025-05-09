@@ -17,11 +17,17 @@ export class ListaViagensComponent implements OnInit {
   }
 
   carregarViagens() {
-    const motoristaId = this.obterMotoristaId(); // Implementar método para obter ID do motorista logado
+    const motoristaId = this.obterMotoristaId();
+    if (!motoristaId) return;
     
     this.viagemService.listarViagens(motoristaId).subscribe({
       next: (viagens) => {
-        this.viagens = viagens;
+        // Ordena as viagens pela data de início (mais recente primeiro)
+        this.viagens = viagens.sort((a, b) => {
+          const dataA = new Date(a.inicio.data).getTime();
+          const dataB = new Date(b.inicio.data).getTime();
+          return dataB - dataA;
+        });
         this.erro = null;
       },
       error: (err) => {
@@ -31,7 +37,11 @@ export class ListaViagensComponent implements OnInit {
   }
 
   private obterMotoristaId(): string {
-    // Implementar lógica para obter ID do motorista logado
-    return '';
+    const motoristaLogado = localStorage.getItem('motoristaLogado');
+    if (!motoristaLogado) {
+      this.erro = 'Motorista não está logado';
+      return '';
+    }
+    return JSON.parse(motoristaLogado)._id;
   }
 }

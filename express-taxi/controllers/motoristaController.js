@@ -1,6 +1,9 @@
 const Motorista = require('../models/motoristaModel');
 const { validarMotorista } = require('../validations/motoristaValidation');
 const { obterLocalidadePorCodigoPostal } = require('../controllers/localidadeController');
+const PedidoCliente = require('../models/pedidoClienteModel');
+const Turno = require('../models/turnoModel');
+const asyncHandler = require('express-async-handler');
 
 exports.registarMotorista = async (req, res) => {
   try {
@@ -110,4 +113,36 @@ exports.loginMotorista = async (req, res) => {
     console.error("Erro interno do servidor:", error);
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
+
+  exports.getPedidoAtual = asyncHandler(async (req, res) => {
+    const { motoristaId } = req.params;
+  
+    const pedido = await PedidoCliente.findOne({
+      motorista: motoristaId,
+      status: 'aceito_pelo_cliente'
+    }).populate('cliente');
+  
+    if (!pedido) {
+      return res.status(404).json({ message: 'Nenhum pedido ativo encontrado' });
+    }
+  
+    res.json(pedido);
+  });
+  
+  exports.getTurnoAtual = asyncHandler(async (req, res) => {
+    const { motoristaId } = req.params;
+    const now = new Date();
+  
+    const turno = await Turno.findOne({
+      motorista: motoristaId,
+      inicio: { $lte: now },
+      fim: { $gt: now }
+    });
+  
+    if (!turno) {
+      return res.status(404).json({ message: 'Nenhum turno ativo encontrado' });
+    }
+  
+    res.json(turno);
+  });
 }
