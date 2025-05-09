@@ -14,7 +14,9 @@ const PedidoClienteSchema = new Schema({
     },
     destino: {
         rua: { type: String, required: true },
-        cidade: { type: String, required: true }      
+        cidade: { type: String, required: true },
+        lat: { type: Number, required: false },
+        lng: { type: Number, required: false }
     },
     nivelConforto: {
         type: String,
@@ -25,11 +27,11 @@ const PedidoClienteSchema = new Schema({
         type: Number,
         required: true,
         min: 1,
-        max: 7
+        max: 6
     },
     status: {
         type: String,
-        enum: ['pendente_motorista', 'cancelado', 'pendente_cliente', 'rejeitado_pelo_cliente','aceito_pelo_cliente', 'em andamento', 'concluído'],
+        enum: ['pendente_motorista', 'cancelado', 'pendente_cliente', 'rejeitado_pelo_cliente','aceito_pelo_cliente', 'em_viagem', 'concluído'],
         default: 'pendente_motorista'
     },
     motorista: {
