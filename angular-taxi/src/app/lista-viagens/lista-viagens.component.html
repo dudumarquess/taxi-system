@@ -1,1 +1,32 @@
-<p>lista-viagens works!</p>
+<div class="lista-viagens">
+    <h2>Minhas Viagens</h2>
+  
+    <div *ngIf="erro" class="alert alert-danger">
+      {{ erro }}
+    </div>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Nº Viagem</th>
+          <th>Cliente</th>
+          <th>Origem</th>
+          <th>Destino</th>
+          <th>Km</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let viagem of viagens">
+          <td>{{viagem.inicio.data | date:'short'}}</td>
+          <td>{{viagem.numeroSequencia}}</td>
+          <td>{{viagem.pedidoCliente.cliente.nome}}</td>
+          <td>{{viagem.pedidoCliente.origem.rua}}, {{viagem.pedidoCliente.origem.cidade}}</td>
+          <td>{{viagem.fim.morada.rua}}, {{viagem.fim.morada.cidade}}</td>
+          <td>{{viagem.quilometros}} km</td>
+          <td>{{viagem.valorTotal}}€</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

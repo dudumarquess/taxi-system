@@ -1,1 +1,44 @@
-<p>registar-viagem works!</p>
+<div class="viagem-container">
+    <h2>Registar Viagem</h2>
+  
+    <div *ngIf="erro" class="alert alert-danger">
+      {{ erro }}
+    </div>
+  
+    <div *ngIf="mensagem" class="alert alert-success">
+      {{ mensagem }}
+    </div>
+  
+    <!-- Info do Pedido -->
+    <div *ngIf="pedidoAtual" class="pedido-info">
+      <h3>Pedido Ativo</h3>
+      <p><strong>Cliente:</strong> {{pedidoAtual.cliente.nome}}</p>
+      <p><strong>Origem:</strong> {{pedidoAtual.origem.rua}}, {{pedidoAtual.origem.cidade}}</p>
+      <p><strong>Destino:</strong> {{pedidoAtual.destino.rua}}, {{pedidoAtual.destino.cidade}}</p>
+      <p><strong>Número de Pessoas:</strong> {{pedidoAtual.numeroPessoas}}</p>
+      <p><strong>Nível de Conforto:</strong> {{pedidoAtual.nivelConforto}}</p>
+    </div>
+  
+    <!-- Info da Viagem -->
+    <div *ngIf="viagemAtual" class="viagem-info">
+      <h3>Viagem em Andamento</h3>
+      <p><strong>Início:</strong> {{viagemAtual.inicio.data | date:'medium'}}</p>
+      <p><strong>Número da Viagem:</strong> {{viagemAtual.numeroSequencia}}</p>
+    </div>
+  
+    <!-- Controles -->
+    <div class="viagem-controls">
+      <button *ngIf="!viagemAtual" 
+              (click)="iniciarViagem()" 
+              [disabled]="!pedidoAtual"
+              class="btn btn-primary">
+        Iniciar Viagem
+      </button>
+  
+      <button *ngIf="viagemAtual" 
+              (click)="finalizarViagem()" 
+              class="btn btn-success">
+        Finalizar Viagem
+      </button>
+    </div>
+  </div>

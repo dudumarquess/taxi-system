@@ -25,6 +25,8 @@ import { TurnosListComponent } from './turnos-list/turnos-list.component';
 import { ClienteDashboardComponent } from './cliente-dashboard/cliente-dashboard.component';
 import { ClientePedirTaxiComponent } from './cliente-pedir-taxi/cliente-pedir-taxi.component';
 import { ClientePedidosComponent } from './cliente-pedidos/cliente-pedidos.component';
+import { RegistarViagemComponent } from './registar-viagem/registar-viagem.component';
+import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 
 import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
@@ -50,6 +52,8 @@ import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes
     ClientePedirTaxiComponent,
     ClientePedidosComponent,
     PedidosPendentesComponent,
+    RegistarViagemComponent,
+    ListaViagensComponent
   ],
   imports: [
     BrowserModule,
