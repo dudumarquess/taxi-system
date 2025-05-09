@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const axios = require('axios');
+
 const Schema = mongoose.Schema
 
 const PedidoClienteSchema = new Schema({
@@ -6,11 +8,13 @@ const PedidoClienteSchema = new Schema({
 
     origem: {
         rua: { type: String, required: true },
-        cidade: { type: String, required: true }
+        cidade: { type: String, required: true },
+        lat: { type: Number, required: false },
+        lng: { type: Number, required: false }
     },
     destino: {
         rua: { type: String, required: true },
-        cidade: { type: String, required: true }
+        cidade: { type: String, required: true }      
     },
     nivelConforto: {
         type: String,
@@ -25,8 +29,15 @@ const PedidoClienteSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['pendente', 'em andamento', 'concluído', 'cancelado'],
-        default: 'pendente'
+        enum: ['pendente_motorista', 'cancelado', 'pendente_cliente', 'rejeitado_pelo_cliente','aceito_pelo_cliente', 'em andamento', 'concluído'],
+        default: 'pendente_motorista'
+    },
+    motorista: {
+        type: String,
+    },
+    distancia: {
+        type: Number,
+        required: false
     },
     dataPedido: {
         type: Date,

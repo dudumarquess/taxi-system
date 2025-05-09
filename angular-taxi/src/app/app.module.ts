@@ -27,6 +27,9 @@ import { ClientePedirTaxiComponent } from './cliente-pedir-taxi/cliente-pedir-ta
 import { ClientePedidosComponent } from './cliente-pedidos/cliente-pedidos.component';
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 
+import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +48,8 @@ import { PorscheDesignSystemModule } from '@porsche-design-system/components-ang
     TurnosListComponent,
     ClienteDashboardComponent,
     ClientePedirTaxiComponent,
-    ClientePedidosComponent
+    ClientePedidosComponent,
+    PedidosPendentesComponent,
   ],
   imports: [
     BrowserModule,

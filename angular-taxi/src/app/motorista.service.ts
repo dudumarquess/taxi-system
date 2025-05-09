@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Motorista } from './motorista';
+import { PedidoTaxi } from './pedido-taxi';
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,7 @@ import { Motorista } from './motorista';
 export class MotoristaService {
 
   private motoristaUrl = 'http://localhost:3000/motoristas'
+  private pedidosUrl = 'http://localhost:3000/motorista/pedidos';
 
   constructor(private http: HttpClient) {}
 
@@ -23,4 +26,23 @@ export class MotoristaService {
   loginMotorista(nif: string): Observable<Motorista> {
     return this.http.post<Motorista>(this.motoristaUrl+"/login", { nif });
   }
+
+  //PEDIDOS PENDENTES
+
+  listarPedidosPendentes(lat: number, lng: number): Observable<PedidoTaxi[]> {
+    return this.http.get<PedidoTaxi[]>(`${this.pedidosUrl}`, {
+      params: {
+        lat: lat.toString(),
+        lng: lng.toString()
+      }
+    });
+  }
+
+  aceitarPedidoPendente(pedidoId: string, motoristaId: string): Observable<{success: boolean}> {
+    return this.http.post<{success: boolean}>(
+      `${this.pedidosUrl}/aceitar`, 
+      { pedidoId, motoristaId }
+    );
+  }
+
 }

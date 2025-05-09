@@ -25,7 +25,7 @@ export class ClientePedirTaxiComponent {
       cliente: {
         nome: formData.get('nome')?.toString() || '',
         nif: formData.get('nif')?.toString() || '',
-        genero: formData.get('genero')?.toString() || '',
+        genero: formData.get('genero')?.toString() === 'Masculino' ? 'Masculino' : 'Feminino',
       },
       origem: {
         rua: formData.get('origemRua')?.toString() || '',

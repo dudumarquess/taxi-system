@@ -2,9 +2,14 @@ const asyncHandler = require('express-async-handler');
 const PedidoCliente = require('../models/pedidoClienteModel');
 const Cliente = require('../models/clienteModel');
 const clienteController = require('./clienteController');
+const axios = require('axios');
+
+
 
 // POST /api/pedidos
 exports.criarPedido = asyncHandler(async (req, res) => {
+     console.log('REQ.BODY:', req.body) //so para debug
+
     const {
         cliente: { nome, nif, genero },
         origem,
@@ -20,12 +25,12 @@ exports.criarPedido = asyncHandler(async (req, res) => {
         throw new Error('Dados do cliente incompletos');
     }
 
-    let cliente = await Cliente.findOne({ nifN });
+    let cliente = await Cliente.findOne({ nif: nifN });
 
     if (cliente) {
         const pedidoAtivo = await PedidoCliente.findOne({
             cliente: cliente._id,
-            status: { $in: ['pendente', 'em andamento'] }
+            status: { $in: ['pendente_motorista', 'pendente_cliente', 'em andamento'] }
         });
 
         if (pedidoAtivo) {
@@ -37,15 +42,21 @@ exports.criarPedido = asyncHandler(async (req, res) => {
     let clienteCriadoAgora = false;
 
     if (!cliente) {
-        cliente = new Cliente({ nome, nifN, genero });
+        cliente = new Cliente({ nome, nif: nifN, genero });
         await cliente.save();
         clienteCriadoAgora = true;
     }
 
+    const origemCoords = await geocodeEndereco(origem.rua, origem.cidade);
+
     try {
         const novoPedido = new PedidoCliente({
             cliente: cliente._id,
-            origem,
+            origem: {
+                ...origem,
+                lat: origemCoords.lat,
+                lng: origemCoords.lng
+            },
             destino,
             nivelConforto,
             numeroPessoas
@@ -88,3 +99,14 @@ exports.buscarPedidoNif = asyncHandler(async (req, res) => {
 
     res.status(200).json(pedidos);
 });
+
+async function geocodeEndereco(rua, cidade) {
+  const url = `https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(rua)}&city=${encodeURIComponent(cidade)}&country=Portugal&format=json&limit=1`;
+  const resp = await axios.get(url, { headers: { 'User-Agent': 'TaxiSystem/1.0' } });
+  if (resp.data && resp.data.length > 0) {
+    return {
+      lat: parseFloat(resp.data[0].lat),
+      lng: parseFloat(resp.data[0].lon)
+    };
+  }
+}
