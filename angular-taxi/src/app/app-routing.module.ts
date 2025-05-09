@@ -56,6 +56,7 @@ const routes: Routes = [
     path:'cliente',
     component: ClienteDashboardComponent,
     children: [
+      { path: '', redirectTo: 'pedir-taxi', pathMatch: 'full' },
       { path: 'pedir-taxi', component: ClientePedirTaxiComponent },
       { path: 'pedido', component: ClientePedidosComponent },
     ]

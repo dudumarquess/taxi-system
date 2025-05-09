@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ViagemService } from '../services/viagem.service';
-import { MotoristaService } from '../services/motorista.service';
+import { ViagemService } from '../viagem.service';
+import { MotoristaService } from '../motorista.service';
 
 @Component({
   selector: 'app-registar-viagem',
   templateUrl: './registar-viagem.component.html',
-  styleUrls: ['./registar-viagem.component.css']
+  styleUrls: ['./registar-viagem.component.css'],
+  standalone: false
 })
 export class RegistarViagemComponent implements OnInit {
   viagemAtual: any = null;

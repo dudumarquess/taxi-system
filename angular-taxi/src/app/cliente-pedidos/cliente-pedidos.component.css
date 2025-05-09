@@ -1,0 +1,33 @@
+/* Container principal */
+div[ngIf="carregou"] {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Título do pedido */
+h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Estilo para cada parágrafo de detalhes do pedido */
+p {
+  font-size: 15px;
+  margin: 8px 0;
+  color: #444;
+}
+
+/* Destaque para os títulos dos campos */
+p strong {
+  color: #222;
+}
+
+/* Estilo para mensagem de ausência de pedido */
+ng-template p {
+  font-style: italic;
+  color: #666;
+  margin-top: 20px;
+}

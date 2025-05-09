@@ -50,7 +50,7 @@ export class ClientePedirTaxiComponent {
         console.groupEnd();
 
         localStorage.setItem('nifCliente', clienteData.cliente.nif);
-        this.router.navigate(['/cliente/pedidos']);
+        this.router.navigate(['/cliente/pedido']);
       },
       error: (error) => {
         console.group('❌ Erro ao Criar Pedido');

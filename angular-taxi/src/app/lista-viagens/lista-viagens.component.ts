@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ViagemService } from '../services/viagem.service';
+import { ViagemService } from '../viagem.service';
 
 @Component({
   selector: 'app-lista-viagens',
   templateUrl: './lista-viagens.component.html',
-  styleUrls: ['./lista-viagens.component.css']
+  styleUrls: ['./lista-viagens.component.css'],
+  standalone: false
 })
 export class ListaViagensComponent implements OnInit {
   viagens: any[] = [];
@@ -19,7 +20,7 @@ export class ListaViagensComponent implements OnInit {
   carregarViagens() {
     const motoristaId = this.obterMotoristaId();
     if (!motoristaId) return;
-    
+
     this.viagemService.listarViagens(motoristaId).subscribe({
       next: (viagens) => {
         // Ordena as viagens pela data de início (mais recente primeiro)

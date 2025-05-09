@@ -82,7 +82,12 @@ exports.listarPedidos = asyncHandler(async (req, res) => {
 });
 
 exports.buscarPedidoNif = asyncHandler(async (req, res) => {
-    const { nif } = req.params;
+
+    const { nif } = req.query; // Usar query em vez de body
+
+    if (!nif) {
+        return res.status(400).json({ message: 'NIF não fornecido' });
+    }
 
     // Buscar o cliente pelo NIF
     const cliente = await Cliente.findOne({ nif });
@@ -90,15 +95,16 @@ exports.buscarPedidoNif = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: 'Cliente não encontrado' });
     }
 
-    // Buscar os pedidos do cliente
-    const pedidos = await PedidoCliente.find({ cliente: cliente._id }).sort({ dataPedido: -1 });
+    // Buscar o último pedido do cliente
+    const pedido = await PedidoCliente.findOne({ cliente: cliente._id }).sort({ dataPedido: -1 });
 
-    if (!pedidos || pedidos.length === 0) {
+    if (!pedido) {
         return res.status(404).json({ message: 'Nenhum pedido encontrado para este cliente' });
     }
 
-    res.status(200).json(pedidos);
+    res.status(200).json(pedido); // Retorna um único pedido
 });
+
 
 async function geocodeEndereco(rua, cidade) {
   const url = `https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(rua)}&city=${encodeURIComponent(cidade)}&country=Portugal&format=json&limit=1`;

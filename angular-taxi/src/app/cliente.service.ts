@@ -40,7 +40,8 @@ export class ClienteService {
     return this.http.get<PedidoCliente[]>(this.pedidosUrl);
   }
 
-  buscarPedidosPorNif(nif: string): Observable<PedidoCliente[]> {
-    return this.http.get<PedidoCliente[]>(`${this.pedidosUrl}/buscar/${nif}`);
+  buscarPedidoPorNif(nif: string): Observable<PedidoCliente> {
+    return this.http.get<PedidoCliente>(`${this.pedidosUrl}/buscar?nif=${nif}`);
   }
+
 }

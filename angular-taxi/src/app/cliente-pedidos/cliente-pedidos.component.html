@@ -1,17 +1,15 @@
-<div *ngIf="pedidos.length > 0; else noPedidos">
-  <h2>Meus Pedidos</h2>
-  <ul>
-    <li *ngFor="let pedido of pedidos">
-      <p><strong>Origem:</strong> {{ pedido.origem.rua }}, {{ pedido.origem.cidade }}</p>
-      <p><strong>Destino:</strong> {{ pedido.destino.rua }}, {{ pedido.destino.cidade }}</p>
-      <p><strong>Status:</strong> {{ pedido.status }}</p>
-      <p><strong>Nível de Conforto:</strong> {{ pedido.nivelConforto }}</p>
-      <p><strong>Número de Pessoas:</strong> {{ pedido.numeroPessoas }}</p>
-      <p><strong>Data do Pedido:</strong> {{ pedido.dataPedido | date }}</p>
-    </li>
-  </ul>
-</div>
+<div *ngIf="carregou">
+  <div *ngIf="pedido; else noPedido">
+    <h2>Meu Pedido</h2>
+    <p><strong>Origem:</strong> {{ pedido.origem.rua }}, {{ pedido.origem.cidade }}</p>
+    <p><strong>Destino:</strong> {{ pedido.destino.rua }}, {{ pedido.destino.cidade }}</p>
+    <p><strong>Status:</strong> {{ pedido.status }}</p>
+    <p><strong>Nível de Conforto:</strong> {{ pedido.nivelConforto }}</p>
+    <p><strong>Número de Pessoas:</strong> {{ pedido.numeroPessoas }}</p>
+    <p><strong>Data do Pedido:</strong> {{ pedido.dataPedido | date }}</p>
+  </div>
 
-<ng-template #noPedidos>
-  <p>Você ainda não tem pedidos registrados.</p>
-</ng-template>
+  <ng-template #noPedido>
+    <p>Você ainda não tem pedidos registrados.</p>
+  </ng-template>
+</div>

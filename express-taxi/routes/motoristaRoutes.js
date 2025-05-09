@@ -6,7 +6,7 @@ router.post('/', controller.registarMotorista);
 router.get('/', controller.listarMotoristas);
 router.post('/login', controller.loginMotorista);
 
-router.get('/:motoristaId/pedido-atual', motoristaController.getPedidoAtual);
-router.get('/:motoristaId/turno-atual', motoristaController.getTurnoAtual);
+router.get('/:motoristaId/pedido-atual', controller.getPedidoAtual);
+router.get('/:motoristaId/turno-atual', controller.getTurnoAtual);
 
 module.exports = router;
