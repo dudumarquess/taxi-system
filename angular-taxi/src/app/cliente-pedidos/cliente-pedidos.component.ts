@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ClienteService, PedidoCliente} from '../cliente.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ClienteService, PedidoCliente } from '../cliente.service';
 
 @Component({
   selector: 'app-cliente-pedidos',
@@ -7,17 +7,34 @@ import {ClienteService, PedidoCliente} from '../cliente.service';
   styleUrls: ['./cliente-pedidos.component.css'],
   standalone: false
 })
-export class ClientePedidosComponent implements OnInit {
+export class ClientePedidosComponent implements OnInit, OnDestroy {
   pedido?: PedidoCliente;
   carregou: boolean = false;
+  intervalId: any;
 
   constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {
+    this.buscarPedido();
+
+    // Configurar polling para verificar o status do pedido a cada 5 segundos
+    this.intervalId = setInterval(() => {
+      this.buscarPedido();
+    }, 5000);
+  }
+
+  ngOnDestroy(): void {
+    // Limpar o intervalo ao destruir o componente
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  buscarPedido(): void {
     const nif = localStorage.getItem('nifCliente');
     if (nif) {
       this.clienteService.buscarPedidoPorNif(nif).subscribe({
-        next: (pedido) => {  // TypeScript infere o tipo automaticamente agora
+        next: (pedido) => {
           this.pedido = pedido;
           this.carregou = true;
         },
@@ -29,6 +46,34 @@ export class ClientePedidosComponent implements OnInit {
     } else {
       console.warn('NIF não encontrado no localStorage');
       this.carregou = true;
+    }
+  }
+
+  aceitarPedido(): void {
+    if (this.pedido && this.pedido._id) {
+      this.clienteService.aceitarPedido(this.pedido._id).subscribe({
+        next: () => {
+          console.log('Pedido aceito pelo cliente.');
+          this.buscarPedido(); // Atualizar o pedido após aceitar
+        },
+        error: (error) => {
+          console.error('Erro ao aceitar pedido:', error);
+        }
+      });
+    }
+  }
+
+  recusarPedido(): void {
+    if (this.pedido && this.pedido._id) {
+      this.clienteService.recusarPedido(this.pedido._id).subscribe({
+        next: () => {
+          console.log('Pedido recusado pelo cliente.');
+          this.buscarPedido(); // Atualizar o pedido após recusar
+        },
+        error: (error) => {
+          console.error('Erro ao recusar pedido:', error);
+        }
+      });
     }
   }
 }

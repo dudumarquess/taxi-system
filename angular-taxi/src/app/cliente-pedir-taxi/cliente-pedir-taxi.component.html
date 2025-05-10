@@ -1,60 +1,60 @@
 <form (submit)="onSubmit($event)">
-  <fieldset>
-    <legend>Informações do Cliente</legend>
+  <!-- Informações do Cliente -->
+  <p-text-field-wrapper label="Nome *">
+    <input type="text" name="nome" placeholder="Ex: João Silva" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nomeError" class="error">{{ nomeError }}</p-text>
 
-    <p-text-field-wrapper label="Nome completo">
-      <input type="text" name="nome" required placeholder="Ex: João Silva" />
+  <p-text-field-wrapper label="NIF *">
+    <input type="number" name="nif" placeholder="Ex: 123456789" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
+
+  <p-select name="genero" label="Género *">
+    <p-select-option value="" selected>Escolha o género</p-select-option>
+    <p-select-option value="Masculino">Masculino</p-select-option>
+    <p-select-option value="Feminino">Feminino</p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="generoError" class="error">{{ generoError }}</p-text>
+
+  <!-- Localização Atual -->
+  <div>
+    <h3>Origem</h3>
+    <p-text-field-wrapper label="Rua *">
+      <input type="text" name="origemRua" [value]="origemRua" placeholder="Rua de origem" />
     </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="origemError" class="error">{{ origemError }}</p-text>
 
-    <p-text-field-wrapper label="NIF">
-      <input type="number" name="nif" required placeholder="Ex: 123456789" />
+    <p-text-field-wrapper label="Cidade *">
+      <input type="text" name="origemCidade" [value]="origemCidade" placeholder="Cidade de origem" />
     </p-text-field-wrapper>
+  </div>
 
-    <p-select name="genero" label="Género">
-      <p-select-option [ngValue]="'Masculino'">Masculino</p-select-option>
-      <p-select-option [ngValue]="'Feminino'">Feminino</p-select-option>
-    </p-select>
-  </fieldset>
-
-  <fieldset>
-    <legend>Localização Atual</legend>
-
-    <p-text-field-wrapper label="Rua (Origem)">
-      <input type="text" name="origemRua" required placeholder="Rua de origem" />
+  <!-- Destino -->
+  <div>
+    <h3>Destino</h3>
+    <p-text-field-wrapper label="Rua *">
+      <input type="text" name="destinoRua" placeholder="Rua de destino" />
     </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="destinoError" class="error">{{ destinoError }}</p-text>
 
-    <p-text-field-wrapper label="Cidade (Origem)">
-      <input type="text" name="origemCidade" required placeholder="Cidade de origem" />
+    <p-text-field-wrapper label="Cidade *">
+      <input type="text" name="destinoCidade" placeholder="Cidade de destino" />
     </p-text-field-wrapper>
-  </fieldset>
+  </div>
 
-  <fieldset>
-    <legend>Destino</legend>
+  <!-- Detalhes da Viagem -->
+  <p-select name="nivelConforto" label="Nível de Conforto *">
+    <p-select-option value="luxuoso">Luxuoso</p-select-option>
+    <p-select-option value="básico">Básico</p-select-option>
+  </p-select>
 
-    <p-text-field-wrapper label="Rua (Destino)">
-      <input type="text" name="destinoRua" required placeholder="Rua de destino" />
-    </p-text-field-wrapper>
-
-    <p-text-field-wrapper label="Cidade (Destino)">
-      <input type="text" name="destinoCidade" required placeholder="Cidade de destino" />
-    </p-text-field-wrapper>
-  </fieldset>
-
-  <fieldset>
-    <legend>Detalhes da Viagem</legend>
-
-    <p-select name="nivelConforto" label="Nível de Conforto">
-      <p-select-option [ngValue]="'luxuoso'">Luxuoso</p-select-option>
-      <p-select-option [ngValue]="'básico'">Básico</p-select-option>
-    </p-select>
-
-    <p-text-field-wrapper label="Número de Pessoas">
-      <input type="number" name="numeroPessoas" min="1" required placeholder="Ex: 2" />
-    </p-text-field-wrapper>
-  </fieldset>
+  <p-text-field-wrapper label="Número de Pessoas *">
+    <input type="number" name="numeroPessoas" min="1" placeholder="Ex: 2" />
+  </p-text-field-wrapper>
 
   <div class="submit">
     <p-button type="submit">Pedir Táxi</p-button>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">{{ generalError }}</p-text>
   </div>
 </form>
-

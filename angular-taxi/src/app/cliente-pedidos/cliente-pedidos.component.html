@@ -7,6 +7,14 @@
     <p><strong>Nível de Conforto:</strong> {{ pedido.nivelConforto }}</p>
     <p><strong>Número de Pessoas:</strong> {{ pedido.numeroPessoas }}</p>
     <p><strong>Data do Pedido:</strong> {{ pedido.dataPedido | date }}</p>
+
+    <!-- Mostrar botões se o status for 'pendente_cliente' -->
+    <div *ngIf="pedido.status === 'pendente_cliente'">
+      <h3>Motorista Aceitou a Viagem</h3>
+      <p>Você deseja aceitar ou recusar?</p>
+      <button (click)="aceitarPedido()">Aceitar</button>
+      <button (click)="recusarPedido()">Recusar</button>
+    </div>
   </div>
 
   <ng-template #noPedido>

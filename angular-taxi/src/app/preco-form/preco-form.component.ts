@@ -70,7 +70,7 @@ export class PrecoFormComponent {
 
     // Submit the Preco object
     this.precoService.definirPreco(preco).subscribe(() => {
-      this.router.navigate(['/precos']);
+      this.router.navigate(['gestor/precos']);
     });
   }
 }

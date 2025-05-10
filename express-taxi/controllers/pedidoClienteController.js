@@ -8,7 +8,7 @@ const axios = require('axios');
 
 // POST /api/pedidos
 exports.criarPedido = asyncHandler(async (req, res) => {
-     console.log('REQ.BODY:', req.body) //so para debug
+    console.log('REQ.BODY:', req.body); // Log para debug
 
     const {
         cliente: { nome, nif, genero },
@@ -18,15 +18,17 @@ exports.criarPedido = asyncHandler(async (req, res) => {
         numeroPessoas
     } = req.body;
 
-    const nifN = parseInt(req.body.cliente.nif, 10)
+    const nifN = parseInt(req.body.cliente.nif, 10);
 
+    // Verificar se os dados do cliente estão completos
     if (!nifN || !nome || !genero) {
-        res.status(400);
-        throw new Error('Dados do cliente incompletos');
+        res.status(400).json({ error: 'Dados do cliente incompletos.' });
+        return;
     }
 
     let cliente = await Cliente.findOne({ nif: nifN });
 
+    // Verificar se já existe um pedido ativo para o cliente
     if (cliente) {
         const pedidoAtivo = await PedidoCliente.findOne({
             cliente: cliente._id,
@@ -34,22 +36,42 @@ exports.criarPedido = asyncHandler(async (req, res) => {
         });
 
         if (pedidoAtivo) {
-            res.status(409);
-            throw new Error('Já existe um pedido ativo para este cliente');
+            res.status(409).json({ error: 'Já existe um pedido ativo para este cliente.' });
+            return;
         }
     }
 
     let clienteCriadoAgora = false;
 
+    // Criar cliente se não existir
     if (!cliente) {
         cliente = new Cliente({ nome, nif: nifN, genero });
         await cliente.save();
         clienteCriadoAgora = true;
     }
 
+    // Verificar se a origem é válida
     const origemCoords = await geocodeEndereco(origem.rua, origem.cidade);
+    if (!origemCoords || !origemCoords.lat || !origemCoords.lng) {
+        if (clienteCriadoAgora) {
+            await Cliente.deleteOne({ _id: cliente._id });
+        }
+        res.status(400).json({ error: 'Endereço de origem inválido ou não encontrado.' });
+        return;
+    }
+
+    // Verificar se o destino é válido
+    const destinoCoords = await geocodeEndereco(destino.rua, destino.cidade);
+    if (!destinoCoords || !destinoCoords.lat || !destinoCoords.lng) {
+        if (clienteCriadoAgora) {
+            await Cliente.deleteOne({ _id: cliente._id });
+        }
+        res.status(400).json({ error: 'Endereço de destino inválido ou não encontrado.' });
+        return;
+    }
 
     try {
+        // Criar o pedido
         const novoPedido = new PedidoCliente({
             cliente: cliente._id,
             origem: {
@@ -57,7 +79,11 @@ exports.criarPedido = asyncHandler(async (req, res) => {
                 lat: origemCoords.lat,
                 lng: origemCoords.lng
             },
-            destino,
+            destino: {
+                ...destino,
+                lat: destinoCoords.lat,
+                lng: destinoCoords.lng
+            },
             nivelConforto,
             numeroPessoas
         });
@@ -68,7 +94,8 @@ exports.criarPedido = asyncHandler(async (req, res) => {
         if (clienteCriadoAgora) {
             await Cliente.deleteOne({ _id: cliente._id });
         }
-        throw new Error('Erro ao criar o pedido: ' + err.message);
+        console.error('Erro ao criar o pedido:', err.message);
+        res.status(500).json({ error: 'Erro ao criar o pedido. Tente novamente mais tarde.' });
     }
 });
 
@@ -103,6 +130,33 @@ exports.buscarPedidoNif = asyncHandler(async (req, res) => {
     }
 
     res.status(200).json(pedido); // Retorna um único pedido
+});
+
+exports.geocodeCoordenadas = asyncHandler(async (req, res) => {
+    const { latitude, longitude } = req.body;
+
+    if (!latitude || !longitude) {
+        return res.status(400).json({ message: 'latitude e longitude são obrigatorios' });
+    }
+
+    try {
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`;
+        const response = await axios.get(url, { headers: { 'User-Agent': 'TaxiSystem/1.0' } });
+        if (response.data && response.data.address) {
+            const { road, town } = response.data.address;
+
+            res.status(200).json({
+                rua: road || 'Rua não encontrada',
+                localidade: town || 'Localidade não encontrada',
+                codigo_postal: response.data.address.postcode || 'Código postal não encontrado'
+            });
+        } else {
+            res.status(404).json({ error: 'Endereço não encontrado para as coordenadas fornecidas.' });
+        }
+    } catch (error) {
+        console.error('Erro ao geocodificar coordenadas:', error.message);
+        res.status(500).json({ error: 'Erro ao processar a solicitação.' });
+    }
 });
 
 

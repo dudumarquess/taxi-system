@@ -19,7 +19,7 @@ export interface PedidoCliente {
   };
   nivelConforto: 'básico' | 'luxuoso';
   numeroPessoas: number;
-  status?: 'pendente' | 'em andamento' | 'concluído' | 'cancelado';
+  status?: 'pendente_motorista' | 'cancelado' | 'pendente_cliente' | 'rejeitado_pelo_cliente' | 'aceito_pelo_cliente' | 'em_viagem' | 'concluído';
   dataPedido?: Date;
 }
 
@@ -36,6 +36,11 @@ export class ClienteService {
     return this.http.post<PedidoCliente>(this.pedidosUrl, pedido);
   }
 
+  enviarCoordenadas(latitude: number, longitude: number): Observable<any> {
+    const url = `${this.pedidosUrl}/geocode`;
+    return this.http.post(url, { latitude, longitude });
+  }
+
   listarPedidos(): Observable<PedidoCliente[]> {
     return this.http.get<PedidoCliente[]>(this.pedidosUrl);
   }
@@ -44,4 +49,11 @@ export class ClienteService {
     return this.http.get<PedidoCliente>(`${this.pedidosUrl}/buscar?nif=${nif}`);
   }
 
+  aceitarPedido(pedidoId: string): Observable<any> {
+    return this.http.post(`${this.pedidosUrl}/aceitar`, { pedidoId });
+  }
+
+  recusarPedido(pedidoId: string): Observable<any> {
+    return this.http.post(`${this.pedidosUrl}/recusar`, { pedidoId });
+  }
 }
