@@ -1,19 +1,25 @@
 <div *ngIf="carregou">
   <div *ngIf="pedido; else noPedido">
     <h2>Meu Pedido</h2>
-    <p><strong>Origem:</strong> {{ pedido.origem.rua }}, {{ pedido.origem.cidade }}</p>
-    <p><strong>Destino:</strong> {{ pedido.destino.rua }}, {{ pedido.destino.cidade }}</p>
-    <p><strong>Status:</strong> {{ pedido.status }}</p>
-    <p><strong>Nível de Conforto:</strong> {{ pedido.nivelConforto }}</p>
-    <p><strong>Número de Pessoas:</strong> {{ pedido.numeroPessoas }}</p>
-    <p><strong>Data do Pedido:</strong> {{ pedido.dataPedido | date }}</p>
+    <p-text>Origem: {{ pedido.origem.rua }}, {{ pedido.origem.cidade }}</p-text>
+    <p-text>Destino: {{ pedido.destino.rua }}, {{ pedido.destino.cidade }}</p-text>
+    <p-text>Status: {{ pedido.status }}</p-text>
+    <p-text>Nível de Conforto: {{ pedido.nivelConforto }}</p-text>
+    <p-text>Número de Pessoas:{{ pedido.numeroPessoas }}</p-text>
+    <p-text>Data do Pedido:{{ pedido.dataPedido | date }}</p-text>
 
     <!-- Mostrar botões se o status for 'pendente_cliente' -->
     <div *ngIf="pedido.status === 'pendente_cliente'">
       <h3>Motorista Aceitou a Viagem</h3>
-      <p>Você deseja aceitar ou recusar?</p>
-      <button (click)="aceitarPedido()">Aceitar</button>
-      <button (click)="recusarPedido()">Recusar</button>
+      <p-text>Você deseja aceitar ou recusar?</p-text>
+      <p-text>Motorista: {{ pedido.motorista?.nome }}</p-text>
+      <p-button (click)="aceitarPedido()">Aceitar</p-button>
+      <p-button (click)="recusarPedido()">Recusar</p-button>
+    </div>
+
+    <!-- Mostrar botão de cancelar se o status não for 'pendente_cliente' -->
+    <div *ngIf="pedido.status === 'pendente_motorista'">
+      <p-button (click)="cancelarPedido()">Cancelar Pedido</p-button>
     </div>
   </div>
 

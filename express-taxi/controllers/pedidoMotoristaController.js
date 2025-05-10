@@ -46,10 +46,14 @@ exports.aceitarPedido = async (req, res) => {
     if (!pedido || pedido.status !== 'pendente_motorista') {
       return res.status(400).json({ error: 'Pedido não disponível.' });
     }
+    const motorista = await Motorista.findById(motoristaId);
+    if (!motorista) {
+      return res.status(404).json({ error: 'Motorista não encontrado.' });
+    }
     pedido.status = 'pendente_cliente'; // Aguarda confirmação do cliente
-    pedido.motorista = motoristaId;
+    pedido.motorista = motorista;
     await pedido.save();
-    res.json({ success: true });
+    res.json({ success: true, pedido });
   } catch (err) {
     res.status(500).json({ error: 'Erro ao aceitar pedido.' });
   }

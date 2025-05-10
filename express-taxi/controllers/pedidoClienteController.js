@@ -103,6 +103,7 @@ exports.criarPedido = asyncHandler(async (req, res) => {
 exports.listarPedidos = asyncHandler(async (req, res) => {
     const pedidos = await PedidoCliente.find()
         .populate('cliente')
+        .populate('motorista')
         .sort({ dataPedido: -1 });
 
     res.status(200).json(pedidos);
@@ -123,7 +124,9 @@ exports.buscarPedidoNif = asyncHandler(async (req, res) => {
     }
 
     // Buscar o último pedido do cliente
-    const pedido = await PedidoCliente.findOne({ cliente: cliente._id }).sort({ dataPedido: -1 });
+    const pedido = await PedidoCliente.findOne({ cliente: cliente._id })
+        .populate('motorista')    
+        .sort({ dataPedido: -1 });
 
     if (!pedido) {
         return res.status(404).json({ message: 'Nenhum pedido encontrado para este cliente' });
@@ -170,3 +173,71 @@ async function geocodeEndereco(rua, cidade) {
     };
   }
 }
+
+exports.aceitarPedido = asyncHandler(async (req, res) => {
+    const { pedidoId } = req.body;
+
+    if (!pedidoId) {
+        return res.status(400).json({ error: 'ID do pedido não fornecido.' });
+    }
+
+    const pedido = await PedidoCliente.findById(pedidoId).populate('motorista');
+    if (!pedido) {
+        return res.status(404).json({ error: 'Pedido não encontrado.' });
+    }
+
+    if (pedido.status !== 'pendente_cliente') {
+        return res.status(400).json({ error: 'Pedido não está aguardando aceitação do cliente.' });
+    }
+
+    pedido.status = 'aceito_pelo_cliente';
+    await pedido.save();
+
+    res.status(200).json({ success: true, message: 'Pedido aceito com sucesso.', pedido });
+});
+
+exports.recusarPedido = asyncHandler(async (req, res) => {
+    const { pedidoId } = req.body;
+
+    if (!pedidoId) {
+        return res.status(400).json({ error: 'ID do pedido não fornecido.' });
+    }
+
+    const pedido = await PedidoCliente.findById(pedidoId).populate('motorista');
+    if (!pedido) {
+        return res.status(404).json({ error: 'Pedido não encontrado.' });
+    }
+
+    if (pedido.status !== 'pendente_cliente') {
+        return res.status(400).json({ error: 'Pedido não está aguardando aceitação do cliente.' });
+    }
+
+    pedido.status = 'rejeitado_pelo_cliente';
+    pedido.motorista = null; // Liberar o motorista
+    await pedido.save();
+
+    res.status(200).json({ success: true, message: 'Pedido recusado com sucesso.', pedido });
+});
+
+// Cancelar Pedido
+exports.cancelarPedido = asyncHandler(async (req, res) => {
+    const { pedidoId } = req.body;
+
+    if (!pedidoId) {
+        return res.status(400).json({ error: 'ID do pedido não fornecido.' });
+    }
+
+    const pedido = await PedidoCliente.findById(pedidoId).populate('motorista');
+    if (!pedido) {
+        return res.status(404).json({ error: 'Pedido não encontrado.' });
+    }
+
+    if (pedido.status === 'concluído' || pedido.status === 'em_viagem') {
+        return res.status(400).json({ error: 'Não é possível cancelar um pedido em andamento ou concluído.' });
+    }
+
+    pedido.status = 'cancelado';
+    await pedido.save();
+
+    res.status(200).json({ success: true, message: 'Pedido cancelado com sucesso.', pedido });
+});

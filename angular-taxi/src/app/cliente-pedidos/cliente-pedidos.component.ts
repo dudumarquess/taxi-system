@@ -37,6 +37,7 @@ export class ClientePedidosComponent implements OnInit, OnDestroy {
         next: (pedido) => {
           this.pedido = pedido;
           this.carregou = true;
+          console.log('Pedido recebido do backend:', pedido); 
         },
         error: (error) => {
           console.error('Erro ao buscar pedido:', error);
@@ -74,6 +75,23 @@ export class ClientePedidosComponent implements OnInit, OnDestroy {
           console.error('Erro ao recusar pedido:', error);
         }
       });
+    }
+  }
+
+  cancelarPedido(): void {
+    if (this.pedido && this.pedido._id) {
+      this.clienteService.cancelarPedido(this.pedido._id).subscribe({
+        next: () => {
+          console.log('Pedido cancelado com sucesso.');
+          this.pedido = undefined; // Remover o pedido da interface
+          this.carregou = true;
+        },
+        error: (error) => {
+          console.error('Erro ao cancelar pedido:', error);
+        }
+      });
+    } else {
+      console.warn('Pedido ou ID do pedido não encontrado.');
     }
   }
 }

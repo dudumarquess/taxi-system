@@ -35,7 +35,9 @@ const PedidoClienteSchema = new Schema({
         default: 'pendente_motorista'
     },
     motorista: {
-        type: String,
+        type: Schema.Types.ObjectId, // Referência ao modelo de Motorista
+        ref: 'Motorista',
+        default: null // Pode ser null se nenhum motorista tiver aceitado
     },
     distancia: {
         type: Number,

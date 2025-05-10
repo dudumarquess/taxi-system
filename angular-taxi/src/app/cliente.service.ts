@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Motorista } from './motorista';
 
 export interface PedidoCliente {
   _id?: string;
@@ -21,6 +22,7 @@ export interface PedidoCliente {
   numeroPessoas: number;
   status?: 'pendente_motorista' | 'cancelado' | 'pendente_cliente' | 'rejeitado_pelo_cliente' | 'aceito_pelo_cliente' | 'em_viagem' | 'concluído';
   dataPedido?: Date;
+  motorista?: Motorista;
 }
 
 @Injectable({
@@ -55,5 +57,10 @@ export class ClienteService {
 
   recusarPedido(pedidoId: string): Observable<any> {
     return this.http.post(`${this.pedidosUrl}/recusar`, { pedidoId });
+  }
+
+
+  cancelarPedido(pedidoId: string): Observable<any> {
+    return this.http.post(`${this.pedidosUrl}/cancelar`, { pedidoId });
   }
 }
