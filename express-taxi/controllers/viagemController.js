@@ -37,8 +37,14 @@ exports.iniciarViagem = asyncHandler(async (req, res) => {
         numeroSequencia,
         numeroPessoas: pedido.numeroPessoas,
         inicio: {
-            data: new Date()
-        }
+            data: new Date(),
+            morada: {
+                rua: pedido.origem.rua,
+                cidade: pedido.origem.cidade,
+                lat: pedido.origem.lat,
+                lng: pedido.origem.lng
+            }
+        },
     });
 
     await viagem.save();
@@ -63,7 +69,12 @@ exports.finalizarViagem = asyncHandler(async (req, res) => {
     // Atualizar os dados de fim da viagem
     viagem.fim = {
         data: new Date(),
-        morada: morada
+        morada: {
+            rua: morada.rua,
+            cidade: morada.cidade,
+            lat: morada.lat,
+            lng: morada.lng
+        }
     };
 
     // Calcular quilômetros e valor
