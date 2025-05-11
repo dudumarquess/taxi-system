@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Motorista } from './motorista';
+import {Taxi} from "./taxi";
 
 export interface PedidoCliente {
   _id?: string;
@@ -23,6 +24,11 @@ export interface PedidoCliente {
   status?: 'pendente_motorista' | 'cancelado' | 'pendente_cliente' | 'rejeitado_pelo_cliente' | 'aceito_pelo_cliente' | 'em_viagem' | 'concluído';
   dataPedido?: Date;
   motorista?: Motorista;
+  distancia?: number;
+  request?: {
+    preco?: number;
+    taxi?: Taxi;
+  }
 }
 
 @Injectable({

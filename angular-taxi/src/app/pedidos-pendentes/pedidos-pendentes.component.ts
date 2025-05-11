@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MotoristaService } from '../motorista.service';
-import { PedidoTaxi } from '../pedido-taxi';
-
+import { PedidoCliente} from "../cliente.service";
 
 
 @Component({
@@ -12,12 +11,12 @@ import { PedidoTaxi } from '../pedido-taxi';
 })
 
 export class PedidosPendentesComponent {
-  pedidos: PedidoTaxi[] = [];
+  pedidos: PedidoCliente[] = [];
   motoristaId: string = ''; // Defina como recuperar o ID do motorista logado
   lat: number = 38.756734;
   lng: number = -9.155412;
 
-  constructor(private motoristaService: MotoristaService) {} 
+  constructor(private motoristaService: MotoristaService) {}
   ngOnInit() {
     // Pegue o ID do motorista logado (exemplo: do localStorage)
     const motorista = localStorage.getItem('motoristaLogado');
