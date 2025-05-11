@@ -1,50 +1,32 @@
-<div class="viagem-container">
+<div *ngIf="pedidoAtual; else semPedidos">
   <h2>Registar Viagem</h2>
+  <p-text>Cliente: {{ pedidoAtual.cliente.nome }}</p-text>
+  <p-text>Origem: {{ pedidoAtual.origem.rua }}, {{ pedidoAtual.origem.cidade }}</p-text>
+  <p-text>Destino: {{ pedidoAtual.destino.rua }}, {{ pedidoAtual.destino.cidade }}</p-text>
+  <p-text>Número de Pessoas: {{ pedidoAtual.numeroPessoas }}</p-text>
+  <p-text>Nível de Conforto: {{ pedidoAtual.nivelConforto }}</p-text>
 
-  <div *ngIf="erro" class="alert alert-danger">
-    {{ erro }}
-  </div>
-
-  <div *ngIf="mensagem" class="alert alert-success">
-    {{ mensagem }}
-  </div>
-
-  <!-- Info do Pedido -->
-  <div *ngIf="pedidoAtual; else semPedidos" class="pedido-info">
-    <h3>Pedido Ativo</h3>
-    <p><strong>Cliente:</strong> {{ pedidoAtual.cliente.nome }}</p>
-    <p><strong>Origem:</strong> {{ pedidoAtual.origem.rua }}, {{ pedidoAtual.origem.cidade }}</p>
-    <p><strong>Destino:</strong> {{ pedidoAtual.destino.rua }}, {{ pedidoAtual.destino.cidade }}</p>
-    <p><strong>Número de Pessoas:</strong> {{ pedidoAtual.numeroPessoas }}</p>
-    <p><strong>Nível de Conforto:</strong> {{ pedidoAtual.nivelConforto }}</p>
-  </div>
-
-  <ng-template #semPedidos>
-    <div class="alert alert-warning">
-      Não há pedidos ativos no momento.
-    </div>
-  </ng-template>
-
-  <!-- Info da Viagem -->
-  <div *ngIf="viagemAtual" class="viagem-info">
+  <!-- Mostrar informações da viagem se estiver em andamento -->
+  <div *ngIf="viagemAtual">
     <h3>Viagem em Andamento</h3>
-    <p><strong>Início:</strong> {{ viagemAtual.inicio.data | date:'medium' }}</p>
-    <p><strong>Número da Viagem:</strong> {{ viagemAtual.numeroSequencia }}</p>
+    <p-text>Início: {{ viagemAtual.inicio.data | date:'medium' }}</p-text>
+    <p-text>Número da Viagem: {{ viagemAtual.numeroSequencia }}</p-text>
   </div>
 
-  <!-- Controles -->
+  <!-- Botões de controle -->
   <div class="viagem-controls">
-    <button *ngIf="!viagemAtual" 
-            (click)="iniciarViagem()" 
-            [disabled]="!pedidoAtual"
-            class="btn btn-primary">
+    <p-button *ngIf="!viagemAtual" 
+              (click)="iniciarViagem()" 
+              [disabled]="!pedidoAtual">
       Iniciar Viagem
-    </button>
-
-    <button *ngIf="viagemAtual" 
-            (click)="finalizarViagem()" 
-            class="btn btn-success">
+    </p-button>
+    <p-button *ngIf="viagemAtual" 
+              (click)="finalizarViagem()">
       Finalizar Viagem
-    </button>
+    </p-button>
   </div>
 </div>
+
+<ng-template #semPedidos>
+  <p>Não há pedidos ativos no momento.</p>
+</ng-template>

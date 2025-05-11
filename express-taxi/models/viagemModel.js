@@ -3,6 +3,11 @@ const haversine = require('haversine-distance');
 const Schema = mongoose.Schema;
 
 const ViagemSchema = new Schema({
+    motorista: {
+        type: Schema.Types.ObjectId,
+        ref: 'Motorista',
+        required: true
+    },
     pedidoCliente: { 
         type: Schema.Types.ObjectId, 
         ref: 'PedidoCliente', 
@@ -113,5 +118,6 @@ ViagemSchema.pre('save', async function(next) {
         next(error);
     }
 });
+
 
 module.exports = mongoose.model('Viagem', ViagemSchema);

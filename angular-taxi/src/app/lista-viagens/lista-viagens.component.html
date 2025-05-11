@@ -1,32 +1,34 @@
 <div class="lista-viagens">
-    <h2>Minhas Viagens</h2>
-  
-    <div *ngIf="erro" class="alert alert-danger">
-      {{ erro }}
-    </div>
-  
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Nº Viagem</th>
-          <th>Cliente</th>
-          <th>Origem</th>
-          <th>Destino</th>
-          <th>Km</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let viagem of viagens">
-          <td>{{viagem.inicio.data | date:'short'}}</td>
-          <td>{{viagem.numeroSequencia}}</td>
-          <td>{{viagem.pedidoCliente.cliente.nome}}</td>
-          <td>{{viagem.pedidoCliente.origem.rua}}, {{viagem.pedidoCliente.origem.cidade}}</td>
-          <td>{{viagem.fim.morada.rua}}, {{viagem.fim.morada.cidade}}</td>
-          <td>{{viagem.quilometros}} km</td>
-          <td>{{viagem.valorTotal}}€</td>
-        </tr>
-      </tbody>
-    </table>
+  <h2>Minhas Viagens</h2>
+
+  <div *ngIf="erro" class="alert alert-danger">
+    {{ erro }}
   </div>
+
+  <p-table>
+    <p-table-head>
+      <p-table-head-row>
+        <p-table-head-cell>Data</p-table-head-cell>
+        <p-table-head-cell>Nº Viagem</p-table-head-cell>
+        <p-table-head-cell>Cliente</p-table-head-cell>
+        <p-table-head-cell>Origem</p-table-head-cell>
+        <p-table-head-cell>Destino</p-table-head-cell>
+        <p-table-head-cell>Km</p-table-head-cell>
+        <p-table-head-cell>Valor</p-table-head-cell>
+        <p-table-head-cell>Turno</p-table-head-cell>
+      </p-table-head-row>
+    </p-table-head>
+    <p-table-body>
+      <p-table-row *ngFor="let viagem of viagens">
+        <p-table-cell>{{ viagem.fim.data | date:'short' }}</p-table-cell>
+        <p-table-cell>{{ viagem.numeroSequencia }}</p-table-cell>
+        <p-table-cell>{{ viagem.pedidoCliente.cliente.nome }}</p-table-cell>
+        <p-table-cell>{{ viagem.pedidoCliente.origem.rua }}, {{ viagem.pedidoCliente.origem.cidade }}</p-table-cell>
+        <p-table-cell>{{ viagem.fim.morada.rua }}, {{ viagem.fim.morada.cidade }}</p-table-cell>
+        <p-table-cell>{{ viagem.quilometros }} km</p-table-cell>
+        <p-table-cell>{{ viagem.valorTotal }}€</p-table-cell>
+        <p-table-cell>{{ viagem.turno.inicio | date:'short' }} - {{ viagem.turno.fim | date:'short' }}</p-table-cell>
+      </p-table-row>
+    </p-table-body>
+  </p-table>
+</div>

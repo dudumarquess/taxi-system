@@ -110,4 +110,3 @@ exports.aceitarPedido = async (req, res) => {
     }
 };
 
-

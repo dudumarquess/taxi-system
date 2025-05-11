@@ -21,4 +21,8 @@ export class ViagemService {
   listarViagens(motoristaId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/motorista/${motoristaId}`);
   }
+
+  getViagemPorPedido(pedidoId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/pedido/${pedidoId}`);
+}
 }
