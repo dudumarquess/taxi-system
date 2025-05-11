@@ -91,7 +91,7 @@ exports.getPedidoAtual = async (req, res) => {
 
   const pedido = await PedidoCliente.findOne({
     motorista: motoristaId,
-    status: 'aceito_pelo_cliente'
+    status: { $in: ['aceito_pelo_cliente', 'em_viagem'] } // Inclui os dois status
   }).populate('cliente');
 
   if (!pedido) {

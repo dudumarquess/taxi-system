@@ -1,25 +1,37 @@
 const Viagem = require('../models/viagemModel');
 const PedidoCliente = require('../models/pedidoClienteModel');
 const Turno = require('../models/turnoModel');
+const Motorista = require('../models/motoristaModel');
 const asyncHandler = require('express-async-handler');
 
 exports.iniciarViagem = asyncHandler(async (req, res) => {
-    const { pedidoId, turnoId } = req.body;
+    const { pedidoId, turnoId, motoristaId } = req.body;
 
+    // Buscar o pedido pelo ID
     const pedido = await PedidoCliente.findById(pedidoId);
     if (!pedido || pedido.status !== 'aceito_pelo_cliente') {
-        return res.status(400).json({ error: 'Pedido inválido' });
+        return res.status(400).json({ error: 'Pedido inválido ou não está no estado aceito pelo cliente.' });
     }
 
+    // Buscar o turno pelo ID
     const turno = await Turno.findById(turnoId);
     if (!turno) {
-        return res.status(404).json({ error: 'Turno não encontrado' });
+        return res.status(404).json({ error: 'Turno não encontrado.' });
     }
 
+    // Buscar o motorista pelo ID
+    const motorista = await Motorista.findById(motoristaId);
+    if (!motorista) {
+        return res.status(404).json({ error: 'Motorista não encontrado.' });
+    }
+
+    // Determinar o número de sequência da viagem no turno
     const ultimaViagem = await Viagem.findOne({ turno: turnoId }).sort({ numeroSequencia: -1 });
     const numeroSequencia = ultimaViagem ? ultimaViagem.numeroSequencia + 1 : 1;
 
+    // Criar a nova viagem
     const viagem = new Viagem({
+        motorista: motoristaId,
         pedidoCliente: pedidoId,
         turno: turnoId,
         numeroSequencia,
@@ -32,18 +44,23 @@ exports.iniciarViagem = asyncHandler(async (req, res) => {
     await viagem.save();
     await PedidoCliente.findByIdAndUpdate(pedidoId, { status: 'em_viagem' });
 
-    res.status(201).json(viagem);
+    res.status(201).json({ success: true, message: 'Viagem iniciada com sucesso.', viagem });
 });
 
 exports.finalizarViagem = asyncHandler(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params; // ID da viagem
     const { morada } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ error: 'ID da viagem não fornecido.' });
+    }
 
     const viagem = await Viagem.findById(id).populate('pedidoCliente');
     if (!viagem) {
-        return res.status(404).json({ error: 'Viagem não encontrada' });
+        return res.status(404).json({ error: 'Viagem não encontrada.' });
     }
 
+    // Atualizar os dados de fim da viagem
     viagem.fim = {
         data: new Date(),
         morada: morada
@@ -56,22 +73,35 @@ exports.finalizarViagem = asyncHandler(async (req, res) => {
     await viagem.save();
     await PedidoCliente.findByIdAndUpdate(viagem.pedidoCliente._id, { status: 'concluído' });
 
-    res.json(viagem);
+    res.json({ success: true, message: 'Viagem finalizada com sucesso.', viagem });
 });
 
 exports.listarViagens = asyncHandler(async (req, res) => {
     const { motoristaId } = req.params;
 
-    const viagens = await Viagem.find({})
-        .populate({
-            path: 'pedidoCliente',
-            match: { status: 'aceito_pelo_cliente' } // Filtrar apenas pedidos com status 'aceito_pelo_cliente'
-        })
-        .populate('turno')
-        .sort({ 'inicio.data': -1 }); // Ordenar por data mais recente
+    // Buscar viagens concluídas (com horário de fim definido) e associadas ao motorista
+    const viagens = await Viagem.find({
+        motorista: motoristaId, // Filtrar pelo motorista
+        'fim.data': { $exists: true, $ne: null } // Apenas viagens concluídas
+    })
+        .populate('pedidoCliente') // Popula os dados do pedido
+        .populate('turno') // Popula os dados do turno
+        .sort({ 'fim.data': -1 }); // Ordenar por data de fim (mais recente primeiro)
 
-    // Filtrar viagens que possuem pedidos válidos
-    const viagensFiltradas = viagens.filter(viagem => viagem.pedidoCliente !== null);
+    res.json(viagens);
+});
 
-    res.json(viagensFiltradas);
+exports.getViagemPorPedido = asyncHandler(async (req, res) => {
+    const { pedidoId } = req.params;
+
+    console.log(`Buscando viagem para o pedidoId: ${pedidoId}`);
+    const viagem = await Viagem.findOne({ pedidoCliente: pedidoId});
+
+    if (!viagem) {
+        console.warn(`Nenhuma viagem encontrada para o pedidoId: ${pedidoId}`);
+        return res.status(404).json({ message: 'Nenhuma viagem encontrada para este pedido' });
+    }
+
+    console.log('Viagem encontrada:', viagem);
+    res.json(viagem);
 });

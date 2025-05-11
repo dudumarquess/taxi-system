@@ -10,46 +10,43 @@ exports.listarPedidosPendentes = async (req, res) => {
     try {
         const { lat, lng } = req.query;
         const motoristaCoords = {
-            lat: parseFloat(lat) || 38.756734,
-            lng: parseFloat(lng) || -9.155412
+        lat: parseFloat(lat) || 38.756734,
+        lng: parseFloat(lng) || -9.155412
         };
 
         // Busca pedidos com status pendente_motorista e que tenham lat/lng na origem
         const pedidos = await PedidoCliente.find({
-            status: 'pendente_motorista',
-            'origem.lat': { $exists: true, $ne: null },
-            'origem.lng': { $exists: true, $ne: null }
+          status: 'pendente_motorista',
+          'origem.lat': { $exists: true, $ne: null },
+          'origem.lng': { $exists: true, $ne: null }
         });
+
 
         // Calcula a distância para cada pedido
-        const pedidosComDistancia = pedidos.map(async (pedido) => {
-            const origemCoords = {
-                lat: pedido.origem.lat,
-                lng: pedido.origem.lng
+        const pedidosComDistancia = pedidos.map(pedido => {
+        const origemCoords = {
+            lat: pedido.origem.lat,
+            lng: pedido.origem.lng
+        };
+        const distancia = haversine(motoristaCoords, origemCoords) / 1000; // km
+        const preco = calcularCustoViagemFuncao(pedido.nivelConforto, pedido.origem, pedido.destino);
+        return pedidoAtualizado = {
+                ...pedido.toObject(),
+                distancia: parseFloat(distancia.toFixed(2)),
+                request: {
+                    preco: parseFloat(preco)
+                }
             };
-            const distancia = haversine(motoristaCoords, origemCoords) / 1000; // km
-            const preco = calcularCustoViagemFuncao(pedido.nivelConforto, pedido.origem, pedido.destino);
-            pedido.distancia = parseFloat(distancia.toFixed(2));
-            pedido.request.preco = parseFloat(preco);
-
-            // Salva as alterações no banco de dados
-            await pedido.save(); // Persiste as alterações de distancia e preco no banco
-
-            return pedido.toObject(); // Retorna o objeto modificado
         });
-
-        // Aguarda todos os pedidos serem atualizados
-        const pedidosAtualizados = await Promise.all(pedidosComDistancia);
-
         // Ordena por distância
-        pedidosAtualizados.sort((a, b) => a.distancia - b.distancia);
+        pedidosComDistancia.sort((a, b) => a.distancia - b.distancia);
 
         console.log('Pedidos encontrados:', pedidos); // Debugging
-        console.log('Pedidos com distância:', pedidosAtualizados); // Debugging
-        res.json(pedidosAtualizados);
+        console.log('Pedidos com distância:', pedidosComDistancia); // Debugging
+        res.json(pedidosComDistancia);
     } catch (err) {
-        res.status(500).json({ error: 'Erro ao listar pedidos pendentes.' });
-    }
+        res.status(500).json({ error: 'Erro ao listar pedidos pendentes.' });
+    }
 };
 
 // Motorista aceita um pedido

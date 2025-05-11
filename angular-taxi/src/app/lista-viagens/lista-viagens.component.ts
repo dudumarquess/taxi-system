@@ -23,12 +23,8 @@ export class ListaViagensComponent implements OnInit {
 
     this.viagemService.listarViagens(motoristaId).subscribe({
       next: (viagens) => {
-        // Ordena as viagens pela data de início (mais recente primeiro)
-        this.viagens = viagens.sort((a, b) => {
-          const dataA = new Date(a.inicio.data).getTime();
-          const dataB = new Date(b.inicio.data).getTime();
-          return dataB - dataA;
-        });
+        // Apenas viagens concluídas (com horário de fim definido)
+        this.viagens = viagens.filter(viagem => viagem.fim && viagem.fim.data);
         this.erro = null;
       },
       error: (err) => {
