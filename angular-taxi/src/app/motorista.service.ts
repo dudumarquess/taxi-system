@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Motorista } from './motorista';
-import { PedidoTaxi } from './pedido-taxi';
+import {PedidoCliente} from "./cliente.service";
 
 
 @Injectable({
@@ -27,8 +27,8 @@ export class MotoristaService {
     return this.http.post<Motorista>(this.motoristaUrl+"/login", { nif });
   }
 
-  getPedidoAtual(motoristaId: string): Observable<PedidoTaxi> {
-    return this.http.get<PedidoTaxi>(`${this.motoristaUrl}/${motoristaId}/pedido-atual`);
+  getPedidoAtual(motoristaId: string): Observable<PedidoCliente> {
+    return this.http.get<PedidoCliente>(`${this.motoristaUrl}/${motoristaId}/pedido-atual`);
   }
 
   getTurnoAtual(motoristaId: string): Observable<any> {
@@ -37,8 +37,8 @@ export class MotoristaService {
 
   //PEDIDOS PENDENTES
 
-  listarPedidosPendentes(lat: number, lng: number): Observable<PedidoTaxi[]> {
-    return this.http.get<PedidoTaxi[]>(`${this.pedidosUrl}`, {
+  listarPedidosPendentes(lat: number, lng: number): Observable<PedidoCliente[]> {
+    return this.http.get<PedidoCliente[]>(`${this.pedidosUrl}`, {
       params: {
         lat: lat.toString(),
         lng: lng.toString()
@@ -48,11 +48,11 @@ export class MotoristaService {
 
   aceitarPedidoPendente(pedidoId: string, motoristaId: string): Observable<{success: boolean}> {
     return this.http.post<{success: boolean}>(
-      `${this.pedidosUrl}/aceitar`, 
+      `${this.pedidosUrl}/aceitar`,
       { pedidoId, motoristaId }
     );
   }
 
-  
+
 
 }

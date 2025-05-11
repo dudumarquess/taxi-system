@@ -1,5 +1,7 @@
 const PedidoCliente = require('../models/pedidoClienteModel');
 const haversine = require('haversine-distance');
+const Motorista = require('../models/motoristaModel');
+
 
 // Listar pedidos pendentes para o motorista, ordenados por distância
 exports.listarPedidosPendentes = async (req, res) => {
@@ -11,7 +13,7 @@ exports.listarPedidosPendentes = async (req, res) => {
         };
 
         // Busca pedidos com status pendente_motorista e que tenham lat/lng na origem
-        const pedidos = await PedidoCliente.find({ 
+        const pedidos = await PedidoCliente.find({
           status: 'pendente_motorista',
           'origem.lat': { $exists: true, $ne: null },
           'origem.lng': { $exists: true, $ne: null }
@@ -40,21 +42,22 @@ exports.listarPedidosPendentes = async (req, res) => {
 
 // Motorista aceita um pedido
 exports.aceitarPedido = async (req, res) => {
-  try {
-    const { pedidoId, motoristaId } = req.body;
-    const pedido = await PedidoCliente.findById(pedidoId);
-    if (!pedido || pedido.status !== 'pendente_motorista') {
-      return res.status(400).json({ error: 'Pedido não disponível.' });
+    try {
+        const { pedidoId, motoristaId } = req.body;
+        const pedido = await PedidoCliente.findById(pedidoId);
+        if (!pedido || pedido.status !== 'pendente_motorista') {
+            return res.status(400).json({ error: 'Pedido não disponível.' });
+        }
+        const motorista = await Motorista.findById(motoristaId);
+        if (!motorista) {
+            return res.status(404).json({ error: 'Motorista não encontrado.' });
+        }
+        pedido.status = 'pendente_cliente'; // Aguarda confirmação do cliente
+        pedido.motorista = motorista;
+        await pedido.save();
+        res.json({ success: true, pedido });
+    } catch (err) {
+        res.status(500).json({ error: 'Erro ao aceitar pedido.' });
     }
-    const motorista = await Motorista.findById(motoristaId);
-    if (!motorista) {
-      return res.status(404).json({ error: 'Motorista não encontrado.' });
-    }
-    pedido.status = 'pendente_cliente'; // Aguarda confirmação do cliente
-    pedido.motorista = motorista;
-    await pedido.save();
-    res.json({ success: true, pedido });
-  } catch (err) {
-    res.status(500).json({ error: 'Erro ao aceitar pedido.' });
-  }
 };
+

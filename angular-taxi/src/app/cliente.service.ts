@@ -23,6 +23,7 @@ export interface PedidoCliente {
   status?: 'pendente_motorista' | 'cancelado' | 'pendente_cliente' | 'rejeitado_pelo_cliente' | 'aceito_pelo_cliente' | 'em_viagem' | 'concluído';
   dataPedido?: Date;
   motorista?: Motorista;
+  distancia?: number;
 }
 
 @Injectable({
