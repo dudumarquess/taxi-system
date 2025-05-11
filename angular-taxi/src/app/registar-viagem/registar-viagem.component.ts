@@ -67,50 +67,41 @@ export class RegistarViagemComponent implements OnInit {
   }
 
   finalizarViagem() {
-    console.log('Tentando finalizar viagem...');
-    if (!this.viagemAtual) {
-        this.erro = 'Nenhuma viagem em andamento';
-        console.warn(this.erro);
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            console.log('Localização obtida:', position.coords);
-            const dados = {
-                morada: {
-                    rua: this.pedidoAtual.destino.rua,
-                    cidade: this.pedidoAtual.destino.cidade,
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                }
-            };
-
-            console.log('Dados para finalizar viagem:', dados);
-            console.log('ID da viagem:', this.viagemAtual._id);
-
-            this.viagemService.finalizarViagem(this.viagemAtual._id, dados).subscribe({
-                next: (viagem) => {
-                    console.log('Viagem finalizada com sucesso:', viagem);
-                    this.mensagem = `Viagem finalizada! Valor total: ${viagem.viagem.valorTotal}€`;
-                    this.viagemAtual = null;
-                    this.pedidoAtual = null;
-                    this.erro = null;
-                    this.router.navigate(['/motorista/viagens']);
-                },
-                error: (err) => {
-                    this.erro = 'Erro ao finalizar viagem: ' + err.message;
-                    console.error(this.erro);
-                    this.mensagem = null;
-                }
-            });
-        },
-        (err) => {
-            this.erro = 'Erro ao obter localização: ' + err.message;
-            console.error(this.erro);
-        }
-    );
+  console.log('Tentando finalizar viagem...');
+  if (!this.viagemAtual) {
+    this.erro = 'Nenhuma viagem em andamento';
+    console.warn(this.erro);
+    return;
   }
+
+  // Usa diretamente a morada de destino do pedido
+  const dados = {
+    morada: {
+      rua: this.pedidoAtual.destino.rua,
+      cidade: this.pedidoAtual.destino.cidade,
+      lat: this.pedidoAtual.destino.lat,
+      lng: this.pedidoAtual.destino.lng
+    }
+  };
+
+  console.log('Dados para finalizar viagem:', dados);
+  console.log('ID da viagem:', this.viagemAtual._id);
+
+  this.viagemService.finalizarViagem(this.viagemAtual._id, dados).subscribe({
+    next: (viagem) => {
+      console.log('Viagem finalizada com sucesso:', viagem);
+      this.mensagem = `Viagem finalizada! Valor total: ${viagem.viagem.valorTotal}€`;
+      this.viagemAtual = null;
+      this.pedidoAtual = null;
+      this.erro = null;
+    },
+    error: (err) => {
+      this.erro = 'Erro ao finalizar viagem: ' + err.message;
+      console.error(this.erro);
+      this.mensagem = null;
+    }
+  });
+}
 
   private carregarPedidoAtual() {
     console.log('Carregando pedido atual...');

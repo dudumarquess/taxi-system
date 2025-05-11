@@ -35,7 +35,13 @@ const ViagemSchema = new Schema({
         }
     },
     inicio: {
-        data: { type: Date, required: true }
+        data: { type: Date, required: true },
+        morada: {
+            rua: { type: String },
+            cidade: { type: String },
+            lat: { type: Number },
+            lng: { type: Number }
+        }
     },
     fim: {
         data: { type: Date },

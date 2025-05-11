@@ -23,8 +23,8 @@
         <p-table-cell>{{ viagem.numeroSequencia }}</p-table-cell>
         <p-table-cell>{{ viagem.pedidoCliente.origem.rua }}, {{ viagem.pedidoCliente.origem.cidade }}</p-table-cell>
         <p-table-cell>{{ viagem.fim.morada.rua }}, {{ viagem.fim.morada.cidade }}</p-table-cell>
-        <p-table-cell>{{ viagem.quilometros }} km</p-table-cell>
-        <p-table-cell>{{ viagem.valorTotal }}€</p-table-cell>
+        <p-table-cell>{{ viagem.quilometros | number:'1.2-2' }} km</p-table-cell>
+        <p-table-cell>{{ viagem.valorTotal |  number:'1.2-2' }}€</p-table-cell>
         <p-table-cell>{{ viagem.turno.inicio | date:'short' }} - {{ viagem.turno.fim | date:'short' }}</p-table-cell>
       </p-table-row>
     </p-table-body>
