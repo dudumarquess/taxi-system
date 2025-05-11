@@ -117,3 +117,22 @@ exports.getTurnoAtual = async (req, res) => {
 
   res.json(turno);
 };
+
+
+const getTurnoAtualFuncao = async (motoristaId) => {
+  const now = new Date();
+
+  const turno = await Turno.findOne({
+    motorista: motoristaId,
+    inicio: { $lte: now },
+    fim: { $gt: now }
+  });
+
+  if (!turno) {
+    throw new Error('Nenhum turno ativo encontrado');
+  }
+
+  return turno;
+};
+
+module.exports.getTurnoAtualFuncao = getTurnoAtualFuncao;

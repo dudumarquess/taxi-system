@@ -34,18 +34,22 @@ const PedidoClienteSchema = new Schema({
         enum: ['pendente_motorista', 'cancelado', 'pendente_cliente', 'rejeitado_pelo_cliente','aceito_pelo_cliente', 'em_viagem', 'concluído'],
         default: 'pendente_motorista'
     },
+    dataPedido: {
+        type: Date,
+        default: Date.now
+    },
     motorista: {
-        type: Schema.Types.ObjectId, // Referência ao modelo de Motorista
+        type: Schema.Types.ObjectId,
         ref: 'Motorista',
-        default: null // Pode ser null se nenhum motorista tiver aceitado
+        default: null
     },
     distancia: {
         type: Number,
         required: false
     },
-    dataPedido: {
-        type: Date,
-        default: Date.now
+    request: {
+        preco: { type: Number, default: null },
+        taxi: { type: Schema.Types.ObjectId, ref: 'Taxi', default: null }
     }
 })
 

@@ -37,7 +37,7 @@ export class ClientePedidosComponent implements OnInit, OnDestroy {
         next: (pedido) => {
           this.pedido = pedido;
           this.carregou = true;
-          console.log('Pedido recebido do backend:', pedido); 
+          console.log('Pedido recebido do backend:', pedido);
         },
         error: (error) => {
           console.error('Erro ao buscar pedido:', error);
@@ -93,5 +93,26 @@ export class ClientePedidosComponent implements OnInit, OnDestroy {
     } else {
       console.warn('Pedido ou ID do pedido não encontrado.');
     }
+  }
+
+  getStatusLabel(status: string | undefined): string {
+    const statusMap: { [key: string]: string } = {
+      'pendente_motorista': 'Aguardando motorista',
+      'cancelado': 'Pedido cancelado',
+      'pendente_cliente': 'Aguardando confirmação do cliente',
+      'rejeitado_pelo_cliente': 'Rejeitado pelo cliente',
+      'aceito_pelo_cliente': 'Aceito pelo cliente',
+      'em_viagem': 'Em viagem',
+      'concluído': 'Viagem concluída'
+    };
+
+    return statusMap[status || ''] || 'Status desconhecido';
+  }
+
+  calcularTempoEstimado(): number {
+    if (this.pedido && this.pedido.distancia) {
+      return this.pedido.distancia * 4;
+    }
+    return 0; // ou qualquer valor padrão que você deseja exibir
   }
 }
