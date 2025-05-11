@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const haversine = require('haversine-distance');
 const Schema = mongoose.Schema;
 
 const ViagemSchema = new Schema({
@@ -42,21 +43,19 @@ const ViagemSchema = new Schema({
     },
     quilometros: {
         type: Number,
-        min: 0
+        min: 0 // RIA 20: Quilômetros devem ser positivos
     },
     valorTotal: {
         type: Number,
         min: 0
     },
-
     numeroPessoas: {
         type: Number,
         required: true,
-        min: [1, 'Mínimo de 1 pessoa'],
-        max: [6, 'Máximo de 6 pessoas'], // RIA 19
+        min: [1, 'Mínimo de 1 pessoa'], // RIA 19
+        max: [6, 'Máximo de 6 pessoas']
     }
 });
-
 
 // Método para calcular quilômetros usando Haversine
 ViagemSchema.methods.calcularQuilometros = function() {
@@ -64,7 +63,6 @@ ViagemSchema.methods.calcularQuilometros = function() {
         lat: this.pedidoCliente.origem.lat,
         lng: this.pedidoCliente.origem.lng
     };
-    
     const end = {
         lat: this.fim.morada.lat,
         lng: this.fim.morada.lng
@@ -104,18 +102,10 @@ ViagemSchema.pre('save', async function(next) {
             throw new Error('A data de início deve ser anterior à data de fim');
         }
 
-        // RIA 20: Validar quilometragem mínima
-        if (this.isModified('quilometros') && this.quilometros < 0.1) {
-            throw new Error('A quilometragem mínima é de 100 metros');
-        }
-
-        // Se é uma nova viagem, definir número de sequência
-        if (this.isNew) {
-            const ultimaViagem = await this.constructor.findOne({ 
-                turno: this.turno 
-            }).sort({ numeroSequencia: -1 });
-            
-            this.numeroSequencia = ultimaViagem ? ultimaViagem.numeroSequencia + 1 : 1;
+        // Validar que o período da viagem está contido no turno (RIA 2)
+        const turno = await mongoose.model('Turno').findById(this.turno);
+        if (!turno || this.inicio.data < turno.inicio || this.fim.data > turno.fim) {
+            throw new Error('O período da viagem deve estar contido no período do turno');
         }
 
         next();

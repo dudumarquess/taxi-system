@@ -1,5 +1,6 @@
 const PedidoCliente = require('../models/pedidoClienteModel');
 const haversine = require('haversine-distance');
+const Motorista = require('../models/motoristaModel');
 
 // Listar pedidos pendentes para o motorista, ordenados por distância
 exports.listarPedidosPendentes = async (req, res) => {
@@ -42,19 +43,37 @@ exports.listarPedidosPendentes = async (req, res) => {
 exports.aceitarPedido = async (req, res) => {
   try {
     const { pedidoId, motoristaId } = req.body;
+
+    // Log dos IDs recebidos
+    console.log(`Recebido pedidoId: ${pedidoId}, motoristaId: ${motoristaId}`);
+
+    // Buscar o pedido pelo ID
     const pedido = await PedidoCliente.findById(pedidoId);
     if (!pedido || pedido.status !== 'pendente_motorista') {
+      console.warn(`Pedido não disponível ou com status inválido. Pedido: ${pedido}`);
       return res.status(400).json({ error: 'Pedido não disponível.' });
     }
+    console.log('Pedido encontrado:', pedido);
+
+    // Buscar o motorista pelo ID
     const motorista = await Motorista.findById(motoristaId);
     if (!motorista) {
+      console.warn(`Motorista não encontrado. MotoristaId: ${motoristaId}`);
       return res.status(404).json({ error: 'Motorista não encontrado.' });
     }
+    console.log('Motorista encontrado:', motorista);
+
+    // Atualizar o status do pedido e associar o motorista
     pedido.status = 'pendente_cliente'; // Aguarda confirmação do cliente
     pedido.motorista = motorista;
     await pedido.save();
+
+    // Log do pedido atualizado
+    console.log('Pedido atualizado com sucesso:', pedido);
+
     res.json({ success: true, pedido });
   } catch (err) {
+    console.error('Erro ao aceitar pedido:', err);
     res.status(500).json({ error: 'Erro ao aceitar pedido.' });
   }
 };

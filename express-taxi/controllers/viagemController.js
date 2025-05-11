@@ -1,5 +1,6 @@
 const Viagem = require('../models/viagemModel');
 const PedidoCliente = require('../models/pedidoClienteModel');
+const Turno = require('../models/turnoModel');
 const asyncHandler = require('express-async-handler');
 
 exports.iniciarViagem = asyncHandler(async (req, res) => {
@@ -10,9 +11,18 @@ exports.iniciarViagem = asyncHandler(async (req, res) => {
         return res.status(400).json({ error: 'Pedido inválido' });
     }
 
+    const turno = await Turno.findById(turnoId);
+    if (!turno) {
+        return res.status(404).json({ error: 'Turno não encontrado' });
+    }
+
+    const ultimaViagem = await Viagem.findOne({ turno: turnoId }).sort({ numeroSequencia: -1 });
+    const numeroSequencia = ultimaViagem ? ultimaViagem.numeroSequencia + 1 : 1;
+
     const viagem = new Viagem({
         pedidoCliente: pedidoId,
         turno: turnoId,
+        numeroSequencia,
         numeroPessoas: pedido.numeroPessoas,
         inicio: {
             data: new Date()
@@ -51,11 +61,17 @@ exports.finalizarViagem = asyncHandler(async (req, res) => {
 
 exports.listarViagens = asyncHandler(async (req, res) => {
     const { motoristaId } = req.params;
-    
+
     const viagens = await Viagem.find({})
-        .populate('pedidoCliente')
+        .populate({
+            path: 'pedidoCliente',
+            match: { status: 'aceito_pelo_cliente' } // Filtrar apenas pedidos com status 'aceito_pelo_cliente'
+        })
         .populate('turno')
         .sort({ 'inicio.data': -1 }); // Ordenar por data mais recente
 
-    res.json(viagens);
+    // Filtrar viagens que possuem pedidos válidos
+    const viagensFiltradas = viagens.filter(viagem => viagem.pedidoCliente !== null);
+
+    res.json(viagensFiltradas);
 });

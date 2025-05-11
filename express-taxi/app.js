@@ -21,6 +21,7 @@ app.use('/localidade', localidadeRoutes);
 app.use('/turnos', turnoRoutes);
 app.use('/api/pedidoCliente', pedidoClienteRoutes);
 app.use('/motorista/pedidos', require('./routes/pedidoMotoristaRoutes'));
+app.use('/viagens', require('./routes/viagemRoutes'));
 
 
 //conexão com o mongoDB
