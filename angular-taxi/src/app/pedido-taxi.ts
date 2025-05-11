@@ -4,7 +4,7 @@ export type StatusPedidoTaxi =
   | 'pendente_cliente'
   | 'rejeitado_pelo_cliente'
   | 'aceito_pelo_cliente'
-  | 'em andamento'
+  | 'em viagem'
   | 'concluído'
 
 

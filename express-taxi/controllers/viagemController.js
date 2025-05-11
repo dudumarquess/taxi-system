@@ -65,12 +65,15 @@ exports.listarViagens = asyncHandler(async (req, res) => {
     const viagens = await Viagem.find({})
         .populate({
             path: 'pedidoCliente',
-            match: { status: 'aceito_pelo_cliente' } // Filtrar apenas pedidos com status 'aceito_pelo_cliente'
+            match: { 
+                status: { 
+                    $in: ['aceito_pelo_cliente', 'em_viagem', 'concluído'] 
+                }
+            }
         })
         .populate('turno')
-        .sort({ 'inicio.data': -1 }); // Ordenar por data mais recente
+        .sort({ 'inicio.data': -1 });
 
-    // Filtrar viagens que possuem pedidos válidos
     const viagensFiltradas = viagens.filter(viagem => viagem.pedidoCliente !== null);
 
     res.json(viagensFiltradas);

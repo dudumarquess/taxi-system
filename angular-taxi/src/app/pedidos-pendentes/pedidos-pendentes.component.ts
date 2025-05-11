@@ -51,7 +51,7 @@ export class PedidosPendentesComponent {
 
 
   carregarPedidos() {
-    this.motoristaService.listarPedidosPendentes(this.lat, this.lng, this.turno!.motorista._id!)
+    this.motoristaService.listarPedidosPendentes(this.lat, this.lng, this.motoristaId)
       .subscribe(pedidos =>  this.pedidos = pedidos);
   }
 

@@ -19,12 +19,16 @@ exports.listarPedidosPendentes = async (req, res) => {
             'origem.lat': { $exists: true, $ne: null },
             'origem.lng': { $exists: true, $ne: null },
         });
+        console.log("Pedidos encontrados:", pedidos);
+
         const turnoAtual = await getTurnoAtualFuncao(motoristaId);
+        console.log("Turno atual:", turnoAtual);
         if (!turnoAtual || !turnoAtual.taxi) {
             return res.status(400).json({ error: 'Nenhum táxi atribuído ao motorista neste momento.' });
         }
+        console.log("Taxi:", turnoAtual.taxi);
         const nivelConfortoTaxi = turnoAtual.taxi.nivel_conforto;
-
+        console.log("Nível de conforto do táxi:", nivelConfortoTaxi);
         const pedidosComDistancia = await Promise.all(
             pedidos.map(async (pedido) => {
                 if (pedido.nivelConforto !== nivelConfortoTaxi) {
@@ -62,8 +66,8 @@ exports.listarPedidosPendentes = async (req, res) => {
         );
         const pedidosComDistanciaFiltrados = pedidosComDistancia.filter(pedido => pedido !== null);
         pedidosComDistanciaFiltrados.sort((a, b) => a.distancia - b.distancia);
-
-        res.json(pedidosComDistancia);
+        console.log("Pedidos após ordenação:", pedidosComDistanciaFiltrados);
+        res.json(pedidosComDistanciaFiltrados);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Erro ao listar pedidos pendentes.' });
@@ -92,6 +96,8 @@ exports.aceitarPedido = async (req, res) => {
         }
 
         pedido.status = 'pendente_cliente';
+        console.log("Status do pedido apos motorista aceitar:", pedido.status);
+
         pedido.motorista = motorista;
         // Log da linha que atribui o taxi ao pedido
 

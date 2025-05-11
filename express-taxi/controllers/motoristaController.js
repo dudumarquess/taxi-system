@@ -128,7 +128,8 @@ const getTurnoAtualFuncao = async (motoristaId) => {
     motorista: motoristaId,
     inicio: { $lte: now },
     fim: { $gt: now }
-  });
+  })
+  .populate('taxi');
 
   if (!turno) {
     throw new Error('Nenhum turno ativo encontrado');
