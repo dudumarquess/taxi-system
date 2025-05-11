@@ -113,6 +113,6 @@ export class ClientePedidosComponent implements OnInit, OnDestroy {
     if (this.pedido && this.pedido.distancia) {
       return this.pedido.distancia * 4;
     }
-    return 0; // ou qualquer valor padrão que você deseja exibir
+    return 0;
   }
 }

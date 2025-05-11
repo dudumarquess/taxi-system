@@ -109,7 +109,9 @@ exports.getTurnoAtual = async (req, res) => {
     motorista: motoristaId,
     inicio: { $lte: now },
     fim: { $gt: now }
-  });
+  })
+      .populate('taxi')
+      .populate('motorista');
 
   if (!turno) {
     return res.status(404).json({ message: 'Nenhum turno ativo encontrado' });

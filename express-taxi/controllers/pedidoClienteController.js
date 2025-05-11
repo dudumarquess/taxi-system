@@ -125,7 +125,8 @@ exports.buscarPedidoNif = asyncHandler(async (req, res) => {
 
     // Buscar o último pedido do cliente
     const pedido = await PedidoCliente.findOne({ cliente: cliente._id })
-        .populate('motorista')    
+        .populate('motorista')
+        .populate('request.taxi')
         .sort({ dataPedido: -1 });
 
     if (!pedido) {
