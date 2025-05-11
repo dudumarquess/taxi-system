@@ -30,6 +30,7 @@ import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 
 import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
+import { ClienteLoginComponent } from './cliente-login/cliente-login.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes
     ClientePedidosComponent,
     PedidosPendentesComponent,
     RegistarViagemComponent,
-    ListaViagensComponent
+    ListaViagensComponent,
+    ClienteLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -37,6 +37,7 @@ export interface PedidoCliente {
 export class ClienteService {
 
   private pedidosUrl = 'http://localhost:3000/api/pedidoCliente';
+  private clientesUrl = 'http://localhost:3000/clientes';
 
   constructor(private http: HttpClient) {}
 
@@ -68,5 +69,9 @@ export class ClienteService {
 
   cancelarPedido(pedidoId: string): Observable<any> {
     return this.http.post(`${this.pedidosUrl}/cancelar`, { pedidoId });
+  }
+
+  buscarOuCriarCliente(dados: { nome: string; nif: number, genero: string }): Observable<any> {
+    return this.http.post(`${this.clientesUrl}/login`, dados);
   }
 }

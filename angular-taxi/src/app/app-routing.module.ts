@@ -19,6 +19,7 @@ import {ClienteDashboardComponent} from "./cliente-dashboard/cliente-dashboard.c
 import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi.component";
 import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
 import {RequisitarTaxiComponent} from "./requisitar-taxi/requisitar-taxi.component";
+import {ClienteLoginComponent} from "./cliente-login/cliente-login.component";
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },
@@ -56,7 +57,7 @@ const routes: Routes = [
     path:'cliente',
     component: ClienteDashboardComponent,
     children: [
-      { path: '', redirectTo: 'pedir-taxi', pathMatch: 'full' },
+      { path: '', component: ClienteLoginComponent },
       { path: 'pedir-taxi', component: ClientePedirTaxiComponent },
       { path: 'pedido', component: ClientePedidosComponent },
     ]

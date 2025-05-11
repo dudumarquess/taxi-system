@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ViagemService } from '../viagem.service';
 import { MotoristaService } from '../motorista.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registar-viagem',
@@ -17,7 +18,8 @@ export class RegistarViagemComponent implements OnInit {
 
   constructor(
     private viagemService: ViagemService,
-    private motoristaService: MotoristaService
+    private motoristaService: MotoristaService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -94,6 +96,7 @@ export class RegistarViagemComponent implements OnInit {
                     this.viagemAtual = null;
                     this.pedidoAtual = null;
                     this.erro = null;
+                    this.router.navigate(['/motorista/viagens']);
                 },
                 error: (err) => {
                     this.erro = 'Erro ao finalizar viagem: ' + err.message;

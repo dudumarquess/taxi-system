@@ -17,9 +17,6 @@ export class ClientePedirTaxiComponent {
   localizacaoError: string | null = null;
 
   // Propriedades para mensagens de erro
-  nomeError: string | null = null;
-  nifError: string | null = null;
-  generoError: string | null = null;
   origemError: string | null = null;
   destinoError: string | null = null;
   generalError: string | null = null;
@@ -69,75 +66,61 @@ export class ClientePedirTaxiComponent {
 
   onSubmit(event: Event): void {
     event.preventDefault();
-  
+
     // Resetar mensagens de erro
-    this.nomeError = null;
-    this.nifError = null;
-    this.generoError = null;
     this.origemError = null;
     this.destinoError = null;
     this.generalError = null;
-  
+
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-  
-    const nome = formData.get('nome');
-    const nif = formData.get('nif');
-    const genero = formData.get('genero');
+
     const origemRua = formData.get('origemRua') || this.origemRua;
     const origemCidade = formData.get('origemCidade') || this.origemCidade;
     const destinoRua = formData.get('destinoRua');
     const destinoCidade = formData.get('destinoCidade');
     const nivelConforto = formData.get('nivelConforto');
     const numeroPessoas = formData.get('numeroPessoas');
-  
+
     // Validações
-    if (!nome) {
-      this.nomeError = 'O campo "Nome" é obrigatório.';
-      this.generalError = 'O campo "Nome" é obrigatório.';
-      return;
-    }
-  
-    if (!nif || !/^[0-9]{9}$/.test(nif.toString())) {
-      this.nifError = 'O campo "NIF" é obrigatório e deve conter exatamente 9 dígitos.';
-      this.generalError = 'O campo "NIF" é obrigatório e deve conter exatamente 9 dígitos.';
-      return;
-    }
-  
-    if (!genero || (genero !== 'Masculino' && genero !== 'Feminino')) {
-      this.generoError = 'O campo "Género" é obrigatório e deve ser "Masculino" ou "Feminino".';
-      this.generalError = 'O campo "Género" é obrigatório e deve ser "Masculino" ou "Feminino".';
-      return;
-    }
-  
     if (!origemRua || !origemCidade) {
       this.origemError = 'Os campos "Rua" e "Cidade" de origem são obrigatórios.';
       this.generalError = 'Os campos "Rua" e "Cidade" de origem são obrigatórios.';
       return;
     }
-  
+
     if (!destinoRua || !destinoCidade) {
       this.destinoError = 'Os campos "Rua" e "Cidade" de destino são obrigatórios.';
       this.generalError = 'Os campos "Rua" e "Cidade" de destino são obrigatórios.';
       return;
     }
-  
+
     if (!nivelConforto || (nivelConforto !== 'luxuoso' && nivelConforto !== 'básico')) {
       this.generalError = 'O campo "Nível de Conforto" é obrigatório e deve ser "luxuoso" ou "básico".';
       return;
     }
-  
+
     if (!numeroPessoas || isNaN(Number(numeroPessoas)) || Number(numeroPessoas) <= 0) {
       this.generalError = 'O campo "Número de Pessoas" é obrigatório e deve ser um número maior que 0.';
       return;
     }
-  
+
+    // Recuperar dados do cliente logado
+    const clienteLogado = localStorage.getItem('clienteLogado');
+    if (!clienteLogado) {
+      this.generalError = 'Nenhum cliente logado. Faça login novamente.';
+      this.router.navigate(['/cliente/login']);
+      return;
+    }
+
+    const cliente = JSON.parse(clienteLogado);
+
     // Dados do cliente
     const clienteData: PedidoCliente = {
       cliente: {
-        nome: nome.toString(),
-        nif: nif.toString(),
-        genero: genero.toString(),
+        nome: cliente.nome,
+        nif: cliente.nif,
+        genero: cliente.genero,
       },
       origem: {
         rua: origemRua.toString(),
@@ -150,26 +133,20 @@ export class ClientePedirTaxiComponent {
       nivelConforto: nivelConforto.toString() as 'básico' | 'luxuoso',
       numeroPessoas: Number(numeroPessoas),
     };
-  
+
     // Enviar pedido ao backend
     this.clienteService.criarPedido(clienteData).subscribe({
       next: (response) => {
         console.log('Pedido criado com sucesso:', response);
-        localStorage.setItem('nifCliente', clienteData.cliente.nif);
         this.router.navigate(['/cliente/pedido']);
       },
       error: (error) => {
         console.error('Erro ao criar pedido:', error);
-  
+
         // Tratamento de erros com base no backend
         if (error.error && error.error.error) {
           const backendError = error.error.error;
-  
-          if (backendError.includes('Dados do cliente incompletos')) {
-            this.nomeError = 'O nome é obrigatório.';
-            this.nifError = 'O NIF é obrigatório.';
-            this.generoError = 'O género é obrigatório.';
-          }
+
           if (backendError.includes('Endereço de origem inválido')) {
             this.origemError = 'O endereço de origem é inválido ou não encontrado.';
           }

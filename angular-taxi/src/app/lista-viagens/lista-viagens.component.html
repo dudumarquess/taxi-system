@@ -10,7 +10,6 @@
       <p-table-head-row>
         <p-table-head-cell>Data</p-table-head-cell>
         <p-table-head-cell>Nº Viagem</p-table-head-cell>
-        <p-table-head-cell>Cliente</p-table-head-cell>
         <p-table-head-cell>Origem</p-table-head-cell>
         <p-table-head-cell>Destino</p-table-head-cell>
         <p-table-head-cell>Km</p-table-head-cell>
@@ -22,7 +21,6 @@
       <p-table-row *ngFor="let viagem of viagens">
         <p-table-cell>{{ viagem.fim.data | date:'short' }}</p-table-cell>
         <p-table-cell>{{ viagem.numeroSequencia }}</p-table-cell>
-        <p-table-cell>{{ viagem.pedidoCliente.cliente.nome }}</p-table-cell>
         <p-table-cell>{{ viagem.pedidoCliente.origem.rua }}, {{ viagem.pedidoCliente.origem.cidade }}</p-table-cell>
         <p-table-cell>{{ viagem.fim.morada.rua }}, {{ viagem.fim.morada.cidade }}</p-table-cell>
         <p-table-cell>{{ viagem.quilometros }} km</p-table-cell>

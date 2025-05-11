@@ -1,22 +1,4 @@
 <form (submit)="onSubmit($event)">
-  <!-- Informações do Cliente -->
-  <p-text-field-wrapper label="Nome *">
-    <input type="text" name="nome" placeholder="Ex: João Silva" />
-  </p-text-field-wrapper>
-  <p-text [size]="'small'" *ngIf="nomeError" class="error">{{ nomeError }}</p-text>
-
-  <p-text-field-wrapper label="NIF *">
-    <input type="number" name="nif" placeholder="Ex: 123456789" />
-  </p-text-field-wrapper>
-  <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
-
-  <p-select name="genero" label="Género *">
-    <p-select-option value="" selected>Escolha o género</p-select-option>
-    <p-select-option value="Masculino">Masculino</p-select-option>
-    <p-select-option value="Feminino">Feminino</p-select-option>
-  </p-select>
-  <p-text [size]="'small'" *ngIf="generoError" class="error">{{ generoError }}</p-text>
-
   <!-- Localização Atual -->
   <div>
     <h3>Origem</h3>
