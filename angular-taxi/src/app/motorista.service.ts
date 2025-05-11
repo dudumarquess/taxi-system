@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Motorista } from './motorista';
 import {PedidoCliente} from "./cliente.service";
+import {Turno} from "./turno";
 
 
 @Injectable({
@@ -31,17 +32,18 @@ export class MotoristaService {
     return this.http.get<PedidoCliente>(`${this.motoristaUrl}/${motoristaId}/pedido-atual`);
   }
 
-  getTurnoAtual(motoristaId: string): Observable<any> {
+  getTurnoAtual(motoristaId: string): Observable<Turno> {
     return this.http.get<any>(`${this.motoristaUrl}/${motoristaId}/turno-atual`);
   }
 
   //PEDIDOS PENDENTES
 
-  listarPedidosPendentes(lat: number, lng: number): Observable<PedidoCliente[]> {
+  listarPedidosPendentes(lat: number, lng: number, motoristaId: string): Observable<PedidoCliente[]> {
     return this.http.get<PedidoCliente[]>(`${this.pedidosUrl}`, {
       params: {
         lat: lat.toString(),
-        lng: lng.toString()
+        lng: lng.toString(),
+        motoristaId,
       }
     });
   }
