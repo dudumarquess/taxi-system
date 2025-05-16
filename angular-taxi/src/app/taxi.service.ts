@@ -24,4 +24,9 @@ export class TaxiService {
     const url = `${this.taxisUrl}/disponiveis`;
     return this.http.post<Taxi[]>(url, { inicio, fim });
   }
+
+  deleteTaxi(id: string): Observable<void> {
+    const url = `${this.taxisUrl}/${id}`;
+    return this.http.delete<void>(url);
+  }
 }

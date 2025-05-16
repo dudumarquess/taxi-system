@@ -10,6 +10,7 @@
       <p-table-head-cell>Modelo</p-table-head-cell>
       <p-table-head-cell>Ano de Compra</p-table-head-cell>
       <p-table-head-cell>Nível de Conforto</p-table-head-cell>
+      <p-table-head-cell>Ações</p-table-head-cell>
     </p-table-head-row>
   </p-table-head>
   <p-table-body>
@@ -19,6 +20,10 @@
       <p-table-cell>{{ taxi.modelo }}</p-table-cell>
       <p-table-cell>{{ taxi.ano_compra }}</p-table-cell>
       <p-table-cell>{{ taxi.nivel_conforto }}</p-table-cell>
+      <p-table-cell>
+        <p-button (click)="onEdit(taxi)">Editar</p-button>
+        <p-button (click)="onRemove(taxi)" [disabled]="taxi.temTurno">Remover</p-button>
+      </p-table-cell>
     </p-table-row>
   </p-table-body>
 </p-table>

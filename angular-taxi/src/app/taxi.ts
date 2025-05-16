@@ -6,4 +6,7 @@ export interface Taxi {
     ano_compra: number;
     nivel_conforto: 'básico' | 'luxuoso';
     createdAt?: Date;
+    updatedAt?: Date;
+    temViagem?: boolean;
+    temTurno?: boolean;
 }

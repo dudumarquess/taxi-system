@@ -28,6 +28,7 @@ import { ClientePedidosComponent } from './cliente-pedidos/cliente-pedidos.compo
 import { RegistarViagemComponent } from './registar-viagem/registar-viagem.component';
 import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
+import { EditarTaxiComponent } from './editar-taxi/editar-taxi.component';
 
 import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
 import { ClienteLoginComponent } from './cliente-login/cliente-login.component';
@@ -55,7 +56,8 @@ import { ClienteLoginComponent } from './cliente-login/cliente-login.component';
     PedidosPendentesComponent,
     RegistarViagemComponent,
     ListaViagensComponent,
-    ClienteLoginComponent
+    ClienteLoginComponent,
+    EditarTaxiComponent
   ],
   imports: [
     BrowserModule,

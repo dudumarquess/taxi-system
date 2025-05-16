@@ -87,7 +87,6 @@ exports.turno_post = asyncHandler(async (req, res) => {
     if (!motoristaExistente) {
         return res.status(404).json({ error: 'Motorista não encontrado.' });
     }
-    const taxiExistente = await Taxi.findById(taxiId);
 
     const intersecoes = await Turno.find({
         motorista: motoristaId,
@@ -107,6 +106,8 @@ exports.turno_post = asyncHandler(async (req, res) => {
     });
 
     await novoTurno.save();
+
+    await Taxi.findByIdAndUpdate(taxiId, { temTurno: true });
     console.log('Novo turno criado:', novoTurno);
     res.status(201).json({message: 'turno criado com sucesso', turno: novoTurno}); // Retorna o turno criado
 });

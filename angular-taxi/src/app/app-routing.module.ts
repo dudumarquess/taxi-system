@@ -20,6 +20,7 @@ import {ClientePedirTaxiComponent} from "./cliente-pedir-taxi/cliente-pedir-taxi
 import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.component";
 import {RequisitarTaxiComponent} from "./requisitar-taxi/requisitar-taxi.component";
 import {ClienteLoginComponent} from "./cliente-login/cliente-login.component";
+import { EditarTaxiComponent } from './editar-taxi/editar-taxi.component';
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
     children: [
       { path: 'taxis', component: TaxiListComponent },
       { path: 'taxis/novo', component: TaxiFormComponent },
+      { path: 'taxis/editar', component: EditarTaxiComponent},
 
       { path: '', redirectTo: 'taxis', pathMatch: 'full' },
       { path: 'motoristas', component: MotoristaListComponent },
