@@ -3,8 +3,10 @@ const csvParser = require('csv-parser');
 
 let codigosPostais = {};
 
-// Carregar o CSV e passar os dados do cod postal associado a uma localidade
-fs.createReadStream('..\\data\\codigos_postais.csv')
+const path = require('path');
+const filePath = path.join(__dirname, '..', '..', 'data', 'codigos_postais.csv');
+
+fs.createReadStream(filePath)
   .pipe(csvParser({ separator: ',' }))
   .on('data', (row) => {
     const codigoPostal = `${row.num_cod_postal}-${row.ext_cod_postal}`;
@@ -12,7 +14,7 @@ fs.createReadStream('..\\data\\codigos_postais.csv')
   })
   .on('end', () => {
     console.log('CSV carregado com sucesso!');
-  });
+});
 
 // Função síncrona
 function obterLocalidadePorCodigoPostal(codigoPostal) {
