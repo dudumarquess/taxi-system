@@ -3,6 +3,60 @@ const Turno = require("../models/turnoModel");
 
 const asyncHandler = require("express-async-handler");
 
+exports.taxi_getById = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+
+    Taxi.findById(id)
+        .then((taxi) => {
+            if (!taxi) {
+                return res.status(404).json({ message: 'Táxi não encontrado.' });
+            }
+            res.status(200).json(taxi);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: 'Erro ao buscar o táxi.', error: err });
+        });
+})
+
+
+exports.taxi_edit = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const taxiData = req.body;
+
+    console.log('Recebido pedido para editar táxi');
+    console.log('ID recebido:', id);
+    console.log('Dados recebidos:', JSON.stringify(taxiData));
+
+    try {
+        const existingTaxi = await Taxi.findById(id);
+
+        if (!existingTaxi) {
+            return res.status(404).json({ error: 'Táxi não encontrado.' });
+        }
+        if(existingTaxi.temViagem && taxiData.nivel_conforto !== existingTaxi.nivel_conforto){
+            return res.status(400).json({ error: 'Não pode mudar o nível de conforto. Taxi já fez viagem.' });
+        }
+
+        const updatedTaxi = await Taxi.findByIdAndUpdate(
+            id,
+            taxiData,
+            { new: true }
+        );
+
+        if (!updatedTaxi) {
+            return res.status(404).json({ error: 'Táxi não encontrado durante atualização.' });
+        }
+
+        res.json(updatedTaxi);
+    } catch (error) {
+        if (error.name === 'CastError') {
+            return res.status(400).json({ error: 'ID do táxi em formato inválido.' });
+        }
+        return res.status(500).json({ error: `Erro ao atualizar o táxi: ${error.message}` });
+    }
+});
+
 exports.taxi_get_all = asyncHandler(async (req, res) => {
     const allTaxis = await Taxi.find({})
         .sort({ _id: 1 })

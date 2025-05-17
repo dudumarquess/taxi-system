@@ -31,7 +31,7 @@ const routes: Routes = [
     children: [
       { path: 'taxis', component: TaxiListComponent },
       { path: 'taxis/novo', component: TaxiFormComponent },
-      { path: 'taxis/editar', component: EditarTaxiComponent},
+      { path: 'taxis/editar/:id', component: EditarTaxiComponent},
 
       { path: '', redirectTo: 'taxis', pathMatch: 'full' },
       { path: 'motoristas', component: MotoristaListComponent },

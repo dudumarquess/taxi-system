@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import { Taxi } from './taxi';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { Taxi } from './taxi';
 })
 export class TaxiService {
 
-  private taxisUrl = 'http://localhost:3000/taxis' 
+  private taxisUrl = 'http://localhost:3000/taxis'
 
   constructor(private http: HttpClient) {}
 
@@ -29,4 +29,22 @@ export class TaxiService {
     const url = `${this.taxisUrl}/${id}`;
     return this.http.delete<void>(url);
   }
+
+  editTaxi(id: string, taxi: Taxi): Observable<Taxi> {
+    console.log('Editando táxi. ID:', id);
+    console.log('Dados do táxi:', taxi);
+
+    // Verificação de segurança
+    if (!id) {
+      console.error('Tentativa de editar táxi sem ID definido');
+      return throwError(() => new Error('ID do táxi não definido'));
+    }
+
+    return this.http.put<Taxi>(`${this.taxisUrl}/${id}`, taxi);
+  }
+
+  getTaxiById(id: string): Observable<Taxi> {
+    return this.http.get<Taxi>(`${this.taxisUrl}/${encodeURIComponent(id)}`);
+  }
+
 }

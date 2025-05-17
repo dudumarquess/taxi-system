@@ -29,13 +29,13 @@ export class TaxiListComponent implements OnInit {
   }
 
   onRemove(taxi: Taxi) {
-  if (confirm('Tem a certeza que pretende remover este taxi?')) {
-    this.taxiService.deleteTaxi(taxi._id!).subscribe({
-      next: () => this.ngOnInit(),
-      error: (err) => {
-        alert('Não é possível remover este táxi porque já foi requisitado para um turno.');
-      }
-    });
+    if (confirm('Tem a certeza que pretende remover este taxi?')) {
+      this.taxiService.deleteTaxi(taxi._id!).subscribe({
+        next: () => this.ngOnInit(),
+        error: (err) => {
+          alert('Não é possível remover este táxi porque já foi requisitado para um turno.');
+        }
+      });
+    }
   }
-}
 }
