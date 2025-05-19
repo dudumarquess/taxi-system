@@ -2,6 +2,7 @@ const Viagem = require('../models/viagemModel');
 const PedidoCliente = require('../models/pedidoClienteModel');
 const Turno = require('../models/turnoModel');
 const Motorista = require('../models/motoristaModel');
+const Taxi = require('../models/taxiModel');
 const asyncHandler = require('express-async-handler');
 
 exports.iniciarViagem = asyncHandler(async (req, res) => {
@@ -23,6 +24,11 @@ exports.iniciarViagem = asyncHandler(async (req, res) => {
     const motorista = await Motorista.findById(motoristaId);
     if (!motorista) {
         return res.status(404).json({ error: 'Motorista não encontrado.' });
+    }
+
+    const taxi = await Taxi.findById(turno.taxi);
+    if (!taxi) {
+        return res.status(404).json({ error: 'Taxi não encontrado.' });
     }
 
     // Determinar o número de sequência da viagem no turno
@@ -49,6 +55,7 @@ exports.iniciarViagem = asyncHandler(async (req, res) => {
 
     await viagem.save();
     await PedidoCliente.findByIdAndUpdate(pedidoId, { status: 'em_viagem' });
+    await Taxi.findByIdAndUpdate(taxi._id, { temViagem: true });
 
     res.status(201).json({ success: true, message: 'Viagem iniciada com sucesso.', viagem });
 });

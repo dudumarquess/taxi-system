@@ -11,6 +11,7 @@
       <p-table-head-cell>Ano de Nascimento</p-table-head-cell>
       <p-table-head-cell>Carta de Condução</p-table-head-cell>
       <p-table-head-cell>Morada</p-table-head-cell>
+      <p-table-head-cell>Ações</p-table-head-cell>
     </p-table-head-row>
   </p-table-head>
   <p-table-body>
@@ -23,6 +24,10 @@
       <p-table-cell>
         {{ motorista.morada.rua }}, nº {{ motorista.morada.numeroPorta }}, 
         {{ motorista.morada.localidade }}, {{ motorista.morada.codigoPostal }}
+      </p-table-cell>
+      <p-table-cell>
+        <p-button (click)="onEdit(motorista)">Editar</p-button>
+        <p-button (click)="onRemove(motorista)" [disabled]="motorista.jaRequisitou">Remover</p-button>
       </p-table-cell>
     </p-table-row>
   </p-table-body>

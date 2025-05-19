@@ -127,8 +127,20 @@ export class EditarTaxiComponent {
     };
 
 
-    this.taxiService.editTaxi(this.taxiId, taxi).subscribe(() => {
-      this.router.navigate(['/gestor/taxis']);
+    this.taxiService.editTaxi(this.taxiId, taxi).subscribe({
+      next: () => {
+        this.router.navigate(['/gestor/taxis']);
+      },
+      error: (err) => {
+        // Verifica se veio mensagem do backend
+        if (err.error && err.error.error) {
+          // Exemplo: mostrar como erro do nível de conforto
+          this.nivelConfortoError = err.error.error;
+        } else {
+          // Mensagem genérica
+          this.nivelConfortoError = 'Erro ao editar táxi.';
+        }
+      }
     });
   }
 

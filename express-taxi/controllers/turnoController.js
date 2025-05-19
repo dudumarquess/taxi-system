@@ -108,6 +108,8 @@ exports.turno_post = asyncHandler(async (req, res) => {
     await novoTurno.save();
 
     await Taxi.findByIdAndUpdate(taxiId, { temTurno: true });
+    await Motorista.findByIdAndUpdate(motoristaId, { jaRequisitou: true });
+    
     console.log('Novo turno criado:', novoTurno);
     res.status(201).json({message: 'turno criado com sucesso', turno: novoTurno}); // Retorna o turno criado
 });

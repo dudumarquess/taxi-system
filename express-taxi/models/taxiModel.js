@@ -13,7 +13,7 @@ const TaxiSchema = new Schema ({
         }, required: true},
     quilometragem_total: {type: Number, required: false, min:[0, 'O valor deve ser positivo']},
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date},
+    updatedAt: { type: Date, default: Date.now },
     temTurno: {type: Boolean, default: false},
     temViagem: {type: Boolean, default: false}
 });

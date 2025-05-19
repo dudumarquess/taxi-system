@@ -8,7 +8,9 @@ const MotoristaSchema = new mongoose.Schema({
   anoNascimento: { type: Number, required: true },
   numeroCartaConducao: { type: String, required: true, unique: true },
   morada: { type: MoradaSchema, required: true },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+  jaRequisitou: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Motorista', MotoristaSchema);

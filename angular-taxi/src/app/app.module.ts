@@ -29,9 +29,11 @@ import { RegistarViagemComponent } from './registar-viagem/registar-viagem.compo
 import { ListaViagensComponent } from './lista-viagens/lista-viagens.component';
 import { PorscheDesignSystemModule } from '@porsche-design-system/components-angular';
 import { EditarTaxiComponent } from './editar-taxi/editar-taxi.component';
+import { EditarMotoristaComponent } from './editar-motorista/editar-motorista.component';
 
 import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
 import { ClienteLoginComponent } from './cliente-login/cliente-login.component';
+
 
 
 @NgModule({
@@ -57,7 +59,8 @@ import { ClienteLoginComponent } from './cliente-login/cliente-login.component';
     RegistarViagemComponent,
     ListaViagensComponent,
     ClienteLoginComponent,
-    EditarTaxiComponent
+    EditarTaxiComponent,
+    EditarMotoristaComponent
   ],
   imports: [
     BrowserModule,

@@ -17,10 +17,7 @@ export class TaxiListComponent implements OnInit {
 
   ngOnInit() {
     this.taxiService.getTaxis().subscribe(taxis => {
-      this.taxis = taxis.sort((a, b) =>
-      new Date(b.updatedAt || b.createdAt || '').getTime() -
-      new Date(a.updatedAt || a.createdAt || '').getTime()
-    );
+      this.taxis = taxis || [];
     });
   }
 

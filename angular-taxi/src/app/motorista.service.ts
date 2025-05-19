@@ -55,6 +55,26 @@ export class MotoristaService {
     );
   }
 
+  deleteMotorista(id: string): Observable<any> {
+    const url = `${this.motoristaUrl}/${id}`;
+    return this.http.delete<void>(url);
+  }
 
+  getMotoristaById(id: string): Observable<Motorista> {
+      return this.http.get<Motorista>(`${this.motoristaUrl}/${encodeURIComponent(id)}`);
+  }
+
+  editMotorista(id: string, motorista: Motorista): Observable<Motorista> {
+    console.log('Editando motorista. ID:', id);
+    console.log('Dados do motorista:', motorista);
+
+    // Verificação de segurança
+    if (!id) {
+      console.error('Tentativa de editar motorista sem ID definido');
+      return new Observable<Motorista>();
+    }
+
+    return this.http.put<Motorista>(`${this.motoristaUrl}/${id}`, motorista);
+  }
 
 }

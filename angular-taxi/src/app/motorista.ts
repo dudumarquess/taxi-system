@@ -5,4 +5,6 @@ export interface Motorista extends Pessoa {
     numeroCartaConducao: string;
     morada: Morada;
     createdAt?: Date;
+    updatedAt?: Date;
+    jaRequisitou?: boolean;
 }

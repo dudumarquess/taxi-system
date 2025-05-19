@@ -1,0 +1,57 @@
+<form (submit)="onSubmit($event)">
+  <p-text-field-wrapper label="Nome *">
+    <input type="text" name="nome" placeholder="Nome do motorista" [value]="motorista.nome" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nomeError" class="error">{{ nomeError }}</p-text>
+
+  <p-select name="genero" label="Género *" [value]="motorista.genero">
+    <p-select-option value="">Escolha o género</p-select-option>
+    <p-select-option *ngFor="let genero of generos" [value]="genero" [selected]="genero === motorista.genero">{{ genero }}</p-select-option>
+  </p-select>
+  <p-text [size]="'small'" *ngIf="generoError" class="error"> {{ generoError }}</p-text>
+
+  <p-text-field-wrapper label="NIF *">
+    <input type="number" name="nif" placeholder="Ex: 123456789" [value]="motorista.nif" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
+
+  <p-text-field-wrapper label="Ano de Nascimento *">
+    <input type="number" name="anoNascimento" placeholder="Ex: 1990" [value]="motorista.anoNascimento" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="anoNascimentoError" class="error">{{ anoNascimentoError }}</p-text>
+
+  <p-text-field-wrapper label="Número Carta de Condução *">
+    <input type="text" name="numeroCartaConducao" placeholder="Ex: X1234567" [value]="motorista.numeroCartaConducao" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="numeroCartaConducaoError" class="error">{{ numeroCartaConducaoError }}</p-text>
+
+  <div>
+    <h3>Morada</h3>
+    <p-text-field-wrapper label="Rua *">
+      <input type="text" name="rua" [value]="motorista.morada.rua" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="ruaError" class="error">{{ ruaError }}</p-text>
+
+    <p-text-field-wrapper label="Número da Porta *">
+      <input type="number" name="numeroPorta" [value]="motorista.morada.numeroPorta" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="numeroPortaError" class="error">{{ numeroPortaError }}</p-text>
+
+    <div class="codigo-postal-container">
+      <p-text-field-wrapper label="Código Postal *">
+        <input type="text" #codigoPostalInput name="codigoPostal" [value]="motorista.morada.codigoPostal" />
+      </p-text-field-wrapper>
+      <p-button type="button" (click)="buscarLocalidade(codigoPostalInput.value)">
+        Buscar
+      </p-button>
+    </div>
+    <p-text id="localidade" *ngIf="localidade">Localidade: {{ localidade }}</p-text>
+    <p-text *ngIf="localidadeError">Erro: {{localidadeError}}</p-text>
+    <p-text [size]="'small'" *ngIf="codigoPostalError" class="error" >{{ codigoPostalError }}</p-text>
+  </div>
+
+  <div class="submit">
+    <p-button type="submit">Atualizar Motorista</p-button>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">{{ generalError }}</p-text>
+  </div>
+</form>

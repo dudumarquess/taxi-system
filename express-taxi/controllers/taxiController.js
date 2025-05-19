@@ -38,6 +38,8 @@ exports.taxi_edit = asyncHandler(async (req, res) => {
             return res.status(400).json({ error: 'Não pode mudar o nível de conforto. Taxi já fez viagem.' });
         }
 
+        taxiData.updatedAt = new Date();
+
         const updatedTaxi = await Taxi.findByIdAndUpdate(
             id,
             taxiData,
@@ -58,11 +60,13 @@ exports.taxi_edit = asyncHandler(async (req, res) => {
 });
 
 exports.taxi_get_all = asyncHandler(async (req, res) => {
-    const allTaxis = await Taxi.find({})
-        .sort({ _id: 1 })
-        .exec();
+    try {
+        const allTaxis = await Taxi.find({}).sort({ updatedAt: -1 })
+        res.status(200).json(allTaxis);
+    }catch (error) {
+        res.status(500).json({ error: `Erro ao buscar os táxis: ${error.message}` });
+    }
 
-    res.status(200).json(allTaxis);
 });
 
 exports.taxi_delete = asyncHandler(async (req, res) => {

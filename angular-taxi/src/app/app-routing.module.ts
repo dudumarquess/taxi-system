@@ -21,6 +21,7 @@ import {ClientePedidosComponent} from "./cliente-pedidos/cliente-pedidos.compone
 import {RequisitarTaxiComponent} from "./requisitar-taxi/requisitar-taxi.component";
 import {ClienteLoginComponent} from "./cliente-login/cliente-login.component";
 import { EditarTaxiComponent } from './editar-taxi/editar-taxi.component';
+import { EditarMotoristaComponent } from './editar-motorista/editar-motorista.component';
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },
@@ -33,9 +34,11 @@ const routes: Routes = [
       { path: 'taxis/novo', component: TaxiFormComponent },
       { path: 'taxis/editar/:id', component: EditarTaxiComponent},
 
+
       { path: '', redirectTo: 'taxis', pathMatch: 'full' },
       { path: 'motoristas', component: MotoristaListComponent },
       { path: 'motoristas/novo', component: MotoristaFormComponent },
+      { path: 'motoristas/editar/:id', component: EditarMotoristaComponent},
 
       { path: 'precos', component: PrecosListComponent },
       { path: 'precos/definir', component: PrecoFormComponent },
