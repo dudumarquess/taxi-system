@@ -27,8 +27,8 @@ export class MotoristaEstatisticaComponent implements OnInit {
 
   setPeriodoHoje() {
     const hoje = new Date().toISOString().slice(0, 10);
-    this.inicio = `${hoje}T00:00:00`;
-    this.fim = `${hoje}T23:59:59`;
+    this.inicio = hoje;
+    this.fim = hoje;
   }
 
   carregarEstatisticas() {

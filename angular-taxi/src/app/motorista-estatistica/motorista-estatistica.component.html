@@ -4,7 +4,7 @@
   a
   <input type="date" [(ngModel)]="fim">
 </label>
-<button (click)="carregarEstatisticas()">Atualizar</button>
+<button (click)="carregarEstatisticas()">Buscar</button>
 <div *ngIf="estatisticas">
   <p>Total de viagens: {{ estatisticas.totalViagens }}</p>
   <p>Total de horas: {{ estatisticas.totalHoras | number:'1.2-2' }}</p>
