@@ -123,3 +123,48 @@ exports.getViagemPorPedido = asyncHandler(async (req, res) => {
     console.log('Viagem encontrada:', viagem);
     res.json(viagem);
 });
+
+exports.relatorioPorTaxi = asyncHandler(async (req, res) => {
+    const { taxiId } = req.params;
+    let { dataInicio, dataFim } = req.query;
+
+    // Período padrão: hoje
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    const amanha = new Date(hoje);
+    amanha.setDate(amanha.getDate() + 1);
+
+    const inicio = dataInicio ? new Date(dataInicio) : hoje;
+    const fim = dataFim ? new Date(dataFim) : amanha;
+
+    // Buscar viagens concluídas desse táxi no período
+    const viagens = await Viagem.find({
+        'fim.data': { $gte: inicio, $lt: fim },
+    })
+    .populate({
+        path: 'turno',
+        match: { taxi: taxiId }
+    });
+
+    // Filtrar apenas viagens cujo turno corresponde ao taxiId
+    const viagensDoTaxi = viagens.filter(v => v.turno);
+
+    const totalViagens = viagensDoTaxi.length;
+    const totalHoras = viagensDoTaxi.reduce((acc, v) => {
+        if (v.inicio && v.fim && v.inicio.data && v.fim.data) {
+            return acc + ((v.fim.data - v.inicio.data) / (1000 * 60 * 60));
+        }
+        return acc;
+    }, 0);
+    const totalKm = viagensDoTaxi.reduce((acc, v) => acc + (v.quilometros || 0), 0);
+
+    res.json({
+        taxiId,
+        periodo: { inicio, fim },
+        totais: {
+            viagens: totalViagens,
+            horas: Number(totalHoras.toFixed(2)),
+            quilometros: Number(totalKm.toFixed(2))
+        }
+    });
+});

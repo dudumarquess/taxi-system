@@ -16,10 +16,14 @@ export class MotoristaListComponent implements OnInit {
   constructor(private motoristaService: MotoristaService, private router: Router) {}
 
   ngOnInit() {
-  this.motoristaService.getMotoristas().subscribe(motoristas => { 
-    this.motoristas = motoristas || [];
-  });
-}
+    this.motoristaService.getMotoristas().subscribe(motoristas => { 
+      this.motoristas = motoristas || [];
+    });
+  }
+
+  onEstatisticas(motorista: Motorista) {
+    this.router.navigate(['/gestor/motoristas', motorista._id, 'estatisticas']);
+  }
 
   onEdit(motorista: Motorista) {
       this.router.navigate(['/gestor/motoristas/editar', motorista._id])

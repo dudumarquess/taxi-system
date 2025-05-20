@@ -33,6 +33,8 @@ import { EditarMotoristaComponent } from './editar-motorista/editar-motorista.co
 
 import { PedidosPendentesComponent } from './pedidos-pendentes/pedidos-pendentes.component';
 import { ClienteLoginComponent } from './cliente-login/cliente-login.component';
+import { TaxiEstatisticaComponent } from './taxi-estatistica/taxi-estatistica.component';
+import { MotoristaEstatisticaComponent } from './motorista-estatistica/motorista-estatistica.component';
 
 
 
@@ -60,7 +62,9 @@ import { ClienteLoginComponent } from './cliente-login/cliente-login.component';
     ListaViagensComponent,
     ClienteLoginComponent,
     EditarTaxiComponent,
-    EditarMotoristaComponent
+    EditarMotoristaComponent,
+    TaxiEstatisticaComponent,
+    MotoristaEstatisticaComponent
   ],
   imports: [
     BrowserModule,

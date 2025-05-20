@@ -1,0 +1,22 @@
+<div class="estatistica-container">
+  <h2>Estatísticas do Táxi</h2>
+  <div class="filtros">
+    <label>Início:
+      <input type="date" [(ngModel)]="dataInicio">
+    </label>
+    <label>Fim:
+      <input type="date" [(ngModel)]="dataFim">
+    </label>
+    <button (click)="buscarEstatisticas()">Buscar</button>
+  </div>
+
+  <div *ngIf="estatisticas">
+    <h3>Período: {{dataInicio}} a {{dataFim}}</h3>
+    <ul>
+      <li>Total de viagens: {{estatisticas.viagens}}</li>
+      <li>Total de horas: {{estatisticas.horas}}</li>
+      <li>Total de quilómetros: {{estatisticas.quilometros}}</li>
+    </ul>
+  </div>
+  <div *ngIf="erro" class="erro">{{erro}}</div>
+</div>

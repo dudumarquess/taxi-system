@@ -23,6 +23,8 @@ app.use('/api/pedidoCliente', pedidoClienteRoutes);
 app.use('/motorista/pedidos', require('./routes/pedidoMotoristaRoutes'));
 app.use('/viagens', require('./routes/viagemRoutes'));
 app.use('/clientes', require('./routes/clienteRoutes'));
+app.use('/motoristas/:motoristaId', relatorioRoutes);
+app.use('/taxis/:taxiId', relatorioRoutes);
 
 
 //conexão com o mongoDB

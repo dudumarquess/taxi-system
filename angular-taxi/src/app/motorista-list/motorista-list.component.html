@@ -16,6 +16,7 @@
   </p-table-head>
   <p-table-body>
     <p-table-row *ngFor="let motorista of motoristas">
+      <button (click)="onEstatisticas(motorista)">Estatísticas</button>
       <p-table-cell>{{ motorista.nome }}</p-table-cell>
       <p-table-cell>{{ motorista.genero }}</p-table-cell>
       <p-table-cell>{{ motorista.nif }}</p-table-cell>

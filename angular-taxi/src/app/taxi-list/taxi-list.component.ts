@@ -25,6 +25,10 @@ export class TaxiListComponent implements OnInit {
     this.router.navigate(['/gestor/taxis/editar', taxi._id])
   }
 
+  onEstatisticas(taxi: Taxi) {
+    this.router.navigate(['/gestor/taxis/estatisticas', taxi._id]);
+  }
+
   onRemove(taxi: Taxi) {
     if (confirm('Tem a certeza que pretende remover este taxi?')) {
       this.taxiService.deleteTaxi(taxi._id!).subscribe({

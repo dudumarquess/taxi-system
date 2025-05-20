@@ -22,6 +22,8 @@ import {RequisitarTaxiComponent} from "./requisitar-taxi/requisitar-taxi.compone
 import {ClienteLoginComponent} from "./cliente-login/cliente-login.component";
 import { EditarTaxiComponent } from './editar-taxi/editar-taxi.component';
 import { EditarMotoristaComponent } from './editar-motorista/editar-motorista.component';
+import {MotoristaEstatisticaComponent} from "./motorista-estatistica/motorista-estatistica.component"
+import { TaxiEstatisticaComponent } from './taxi-estatistica/taxi-estatistica.component';
 
 const routes: Routes = [
   { path: '', component: EscolherPerfilComponent },
@@ -39,6 +41,8 @@ const routes: Routes = [
       { path: 'motoristas', component: MotoristaListComponent },
       { path: 'motoristas/novo', component: MotoristaFormComponent },
       { path: 'motoristas/editar/:id', component: EditarMotoristaComponent},
+      { path: 'gestor/motoristas/:id/estatisticas', component: MotoristaEstatisticaComponent },
+      { path: 'gestor/taxis/estatisticas/:id', component: TaxiEstatisticaComponent }
 
       { path: 'precos', component: PrecosListComponent },
       { path: 'precos/definir', component: PrecoFormComponent },

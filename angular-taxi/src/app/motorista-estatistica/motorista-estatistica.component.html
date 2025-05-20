@@ -1,0 +1,12 @@
+<h2>Estatísticas do Motorista</h2>
+<label>Período:
+  <input type="date" [(ngModel)]="inicio">
+  a
+  <input type="date" [(ngModel)]="fim">
+</label>
+<button (click)="carregarEstatisticas()">Atualizar</button>
+<div *ngIf="estatisticas">
+  <p>Total de viagens: {{ estatisticas.totalViagens }}</p>
+  <p>Total de horas: {{ estatisticas.totalHoras | number:'1.2-2' }}</p>
+  <p>Total de km: {{ estatisticas.totalKm | number:'1.2-2' }}</p>
+</div>
