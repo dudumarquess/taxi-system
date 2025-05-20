@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RelatorioService {
-  private motoristaUrl = 'http://localhost:3000/motoristas/:motoristaId';
-  private taxiUrl = 'http://localhost:3000/taxis/:taxiId';
+  private motoristaUrl = 'http://localhost:3000/motoristas';
+  private taxiUrl = 'http://localhost:3000/taxis';
 
 
   constructor(private http: HttpClient) {}
@@ -14,13 +14,13 @@ export class RelatorioService {
     let params: any = {};
     if (inicio) params.inicio = inicio;
     if (fim) params.fim = fim;
-    return this.http.get(`${this.motoristaUrl}/motorista/${motoristaId}/estatisticas`, { params });
+    return this.http.get(`${this.motoristaUrl}/${motoristaId}/estatisticasMotorista`, { params });
   }
 
   getEstatisticaInicialTaxi(taxiId: string, inicio?: string, fim?: string): Observable<any> {
     let params: any = {};
     if (inicio) params.inicio = inicio;
     if (fim) params.fim = fim;
-    return this.http.get(`${this.taxiUrl}/taxi/${taxiId}/estatisticas`, { params });
+    return this.http.get(`${this.taxiUrl}/${taxiId}/estatisticasTaxi`, { params });
   }
 }

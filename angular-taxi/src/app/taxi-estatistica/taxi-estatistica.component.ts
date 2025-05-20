@@ -29,6 +29,7 @@ export class TaxiEstatisticaComponent implements OnInit {
   }
 
   buscarEstatisticas() {
+    console.log('Buscando estatísticas para o taxiId:', this.taxiId);
     this.erro = null;
     this.relatorioService.getEstatisticaInicialTaxi(
       this.taxiId,
@@ -38,5 +39,7 @@ export class TaxiEstatisticaComponent implements OnInit {
       next: (res) => this.estatisticas = res.totais || res,
       error: (err) => this.erro = 'Erro ao buscar estatísticas: ' + err.message
     });
+    console.log('dataInicio:', this.dataInicio);
+    console.log('dataFim:', this.dataFim);
   }
 }

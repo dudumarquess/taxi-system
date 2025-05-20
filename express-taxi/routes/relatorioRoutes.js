@@ -1,9 +1,10 @@
 const express = require('express');
 const controller = require('../controllers/relatorioController');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-router.get('/estatisticas', controller.estatisticaInicialMotorista);
-router.get('/estatisicas', controller.estatisticaInicialTaxi);
+
+router.get('/estatisticasMotorista', controller.estatisticaInicialMotorista);
+router.get('/estatisticasTaxi', controller.estatisticaInicialTaxi);
 
 
 module.exports = router;

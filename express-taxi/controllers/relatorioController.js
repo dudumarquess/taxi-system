@@ -5,6 +5,8 @@ exports.estatisticaInicialMotorista = async (req, res) => {
     const { motoristaId } = req.params;
     let { inicio, fim } = req.query;
 
+    console.log('Motorista ID:', motoristaId);
+
     // Por padrão, usar o dia de hoje
     const hoje = new Date();
     if (!inicio || !fim) {
@@ -39,28 +41,31 @@ exports.estatisticaInicialMotorista = async (req, res) => {
 exports.estatisticaInicialTaxi = async (req, res) => {
   try {
     const { taxiId } = req.params;
-    let { dataInicio, dataFim } = req.query;
+    let { inicio, fim } = req.query;
 
-    // Período padrão: hoje
+    console.log('Taxi ID:', taxiId);
+    console.log('Data início:', inicio);
+    console.log('Data fim:', fim);
+
+
     const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-    const amanha = new Date(hoje);
-    amanha.setDate(amanha.getDate() + 1);
+    if (!inicio || !fim) {
+      inicio = new Date(hoje.setHours(0,0,0,0));
+      fim = new Date(hoje.setHours(23,59,59,999));
+    } else {
+      // Corrigido: strings para datas completas
+      inicio = new Date(inicio + 'T00:00:00');
+      fim = new Date(fim + 'T23:59:59');
+    }
 
-    const inicio = dataInicio ? new Date(dataInicio) : hoje;
-    const fim = dataFim ? new Date(dataFim) : amanha;
-
+    
     // Buscar viagens concluídas desse táxi no período
-    const viagens = await Viagem.find({
-      'fim.data': { $gte: inicio, $lt: fim },
+    const viagensDoTaxi = await Viagem.find({
+      'fim.data': { $gte: inicio, $lte: fim },
     })
-      .populate({
-        path: 'turno',
-        match: { taxi: taxiId }
-      });
 
-    // Filtrar apenas viagens cujo turno corresponde ao taxiId
-    const viagensDoTaxi = viagens.filter(v => v.turno);
+    console.log('Viagens do táxi:', viagensDoTaxi);
+
 
     const totalViagens = viagensDoTaxi.length;
     const totalHoras = viagensDoTaxi.reduce((acc, v) => {

@@ -26,7 +26,7 @@ export class TaxiListComponent implements OnInit {
   }
 
   onEstatisticas(taxi: Taxi) {
-    this.router.navigate(['/gestor/taxis/estatisticas', taxi._id]);
+    this.router.navigate(['/gestor/taxis/', taxi._id, 'estatisticas']);
   }
 
   onRemove(taxi: Taxi) {
