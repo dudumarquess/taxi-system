@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RelatorioService } from '../relatorioService';
+import { RelatorioService } from '../relatorio.service';
 
 @Component({
   selector: 'app-taxi-estatistica',

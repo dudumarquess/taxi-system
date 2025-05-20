@@ -4,11 +4,11 @@ import { RelatorioService } from '../relatorio.service';
 
 @Component({
   selector: 'app-motorista-estatisticas',
-  templateUrl: './motorista-estatisticas.component.html',
-  styleUrls: ['./motorista-estatisticas.component.css'],
+  templateUrl: './motorista-estatistica.component.html',
+  styleUrls: ['./motorista-estatistica.component.css'],
   standalone: false
 })
-export class MotoristaEstatisticasComponent implements OnInit {
+export class MotoristaEstatisticaComponent implements OnInit {
   motoristaId!: string;
   estatisticas: any;
   inicio!: string; 
@@ -32,7 +32,7 @@ export class MotoristaEstatisticasComponent implements OnInit {
   }
 
   carregarEstatisticas() {
-    this.relatorioService.getEstatisticasMotorista(this.motoristaId, this.inicio, this.fim)
-      .subscribe(est => this.estatisticas = est);
+    this.relatorioService.getEstatisticaInicialMotorista(this.motoristaId, this.inicio, this.fim)
+      .subscribe((est: any) => this.estatisticas = est);
   }
 }
