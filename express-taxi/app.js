@@ -6,6 +6,7 @@ const precoRoutes = require('./routes/precoRoutes');
 const localidadeRoutes = require('./routes/localidadeRoutes');
 const turnoRoutes = require('./routes/turnosRoutes');
 const pedidoClienteRoutes = require('./routes/pedidoClienteRoutes');
+const relatorioRoutes = require('./routes/relatorioRoutes');
 let cors = require('cors');
 var logger = require('morgan');
 

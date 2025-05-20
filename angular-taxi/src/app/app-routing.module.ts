@@ -42,7 +42,7 @@ const routes: Routes = [
       { path: 'motoristas/novo', component: MotoristaFormComponent },
       { path: 'motoristas/editar/:id', component: EditarMotoristaComponent},
       { path: 'gestor/motoristas/:id/estatisticas', component: MotoristaEstatisticaComponent },
-      { path: 'gestor/taxis/estatisticas/:id', component: TaxiEstatisticaComponent }
+      { path: 'gestor/taxis/estatisticas/:id', component: TaxiEstatisticaComponent },
 
       { path: 'precos', component: PrecosListComponent },
       { path: 'precos/definir', component: PrecoFormComponent },

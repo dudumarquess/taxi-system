@@ -5,7 +5,8 @@ import { RelatorioService } from '../relatorioService';
 @Component({
   selector: 'app-taxi-estatistica',
   templateUrl: './taxi-estatistica.component.html',
-  styleUrls: ['./taxi-estatistica.component.css']
+  styleUrls: ['./taxi-estatistica.component.css'],
+  standalone: false
 })
 export class TaxiEstatisticaComponent implements OnInit {
   taxiId!: string;
