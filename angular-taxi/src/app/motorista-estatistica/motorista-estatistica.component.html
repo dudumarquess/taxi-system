@@ -5,8 +5,11 @@
   <input type="date" [(ngModel)]="fim">
 </label>
 <button (click)="carregarEstatisticas()">Buscar</button>
-<div *ngIf="estatisticas">
-  <p>Total de viagens: {{ estatisticas.totalViagens }}</p>
+
+<div *ngIf="erro" class="erro">{{ erro }}</div>
+
+<div *ngIf="estatisticas && !erro">
+  <p>Total de viagens: {{ est atisticas.totalViagens }}</p>
   <p>Total de horas: {{ estatisticas.totalHoras | number:'1.2-2' }}</p>
   <p>Total de km: {{ estatisticas.totalKm | number:'1.2-2' }}</p>
 </div>

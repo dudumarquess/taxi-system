@@ -13,6 +13,7 @@ export class MotoristaEstatisticaComponent implements OnInit {
   estatisticas: any;
   inicio!: string; 
   fim!: string;
+  erro: string | null = null; // <-- Adicione esta linha
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +33,19 @@ export class MotoristaEstatisticaComponent implements OnInit {
   }
 
   carregarEstatisticas() {
+    this.erro = null; // Limpa erro anterior
+
+    const hoje = new Date().toISOString().slice(0, 10);
+
+    if (this.inicio > hoje || this.fim > hoje) {
+      this.erro = 'A data de início e de fim devem ser iguais ou anteriores ao dia de hoje.';
+      return;
+    }
+    if (this.fim < this.inicio) {
+      this.erro = 'A data de fim não pode ser menor que a data de início.';
+      return;
+    }
+
     this.relatorioService.getEstatisticaInicialMotorista(this.motoristaId, this.inicio, this.fim)
       .subscribe((est: any) => this.estatisticas = est);
   }

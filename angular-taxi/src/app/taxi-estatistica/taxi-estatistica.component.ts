@@ -29,17 +29,35 @@ export class TaxiEstatisticaComponent implements OnInit {
   }
 
   buscarEstatisticas() {
-    console.log('Buscando estatísticas para o taxiId:', this.taxiId);
-    this.erro = null;
-    this.relatorioService.getEstatisticaInicialTaxi(
-      this.taxiId,
-      this.dataInicio,
-      this.dataFim
-    ).subscribe({
-      next: (res) => this.estatisticas = res.totais || res,
-      error: (err) => this.erro = 'Erro ao buscar estatísticas: ' + err.message
-    });
-    console.log('dataInicio:', this.dataInicio);
-    console.log('dataFim:', this.dataFim);
+  this.erro = null;
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+
+  const inicioDate = new Date(this.dataInicio);
+  const fimDate = new Date(this.dataFim);
+
+  if (inicioDate > fimDate) {
+    this.erro = 'A data inicial deve ser anterior ou igual à data final.';
+    this.estatisticas = null;
+    return;
   }
+
+  if (inicioDate > hoje || fimDate > hoje) {
+    this.erro = 'Nenhuma das datas pode ser maior que hoje.';
+    this.estatisticas = null;
+    return;
+  }
+
+  console.log('Buscando estatísticas para o taxiId:', this.taxiId);
+  this.relatorioService.getEstatisticaInicialTaxi(
+    this.taxiId,
+    this.dataInicio,
+    this.dataFim
+  ).subscribe({
+    next: (res) => this.estatisticas = res.totais || res,
+    error: (err) => this.erro = 'Erro ao buscar estatísticas: ' + err.message
+  });
+  console.log('dataInicio:', this.dataInicio);
+  console.log('dataFim:', this.dataFim);
+}
 }
