@@ -4,8 +4,8 @@ exports.estatisticaInicialMotorista = async (req, res) => {
   try {
     const { motoristaId } = req.params;
     let { inicio, fim } = req.query;
-
     console.log('Motorista ID:', motoristaId);
+    console.log('Início:', inicio);
 
     // Por padrão, usar o dia de hoje
     const hoje = new Date();
@@ -13,8 +13,9 @@ exports.estatisticaInicialMotorista = async (req, res) => {
       inicio = new Date(hoje.setHours(0,0,0,0));
       fim = new Date(hoje.setHours(23,59,59,999));
     } else {
-      inicio = new Date(inicio);
-      fim = new Date(fim);
+      // Corrigido: strings para datas completas
+      inicio = new Date(inicio + 'T00:00:00');
+      fim = new Date(fim + 'T23:59:59');
     }
 
     // Buscar viagens concluídas do motorista no período
@@ -31,7 +32,7 @@ exports.estatisticaInicialMotorista = async (req, res) => {
       return acc;
     }, 0);
     const totalKm = viagens.reduce((acc, v) => acc + (v.quilometros || 0), 0);
-
+    
     res.json({ totalViagens, totalHoras, totalKm });
   } catch (err) {
     res.status(500).json({ error: err.message });
