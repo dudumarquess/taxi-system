@@ -420,3 +420,50 @@ exports.getDetalhesViagensPorMotoristaNoTaxi = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Detalhes das viagens de um motorista em um táxi no período
+exports.detalhesViagensPorTaxiDoMotorista = async (req, res) => {
+  try {
+    const { motoristaId, taxiId } = req.params;
+    let { inicio, fim } = req.query;
+
+    // Ajuste de datas
+    const hoje = new Date();
+    if (!inicio || !fim) {
+      inicio = new Date(hoje.setHours(0,0,0,0));
+      fim = new Date(hoje.setHours(23,59,59,999));
+    } else {
+      inicio = new Date(inicio + 'T00:00:00');
+      fim = new Date(fim + 'T23:59:59');
+    }
+
+    // Buscar viagens do motorista naquele táxi no período
+    const viagens = await Viagem.find({
+      motorista: motoristaId,
+      'fim.data': { $gte: inicio, $lte: fim }
+    })
+    .populate({
+      path: 'turno',
+      match: { taxi: taxiId }
+    })
+    .sort({ 'fim.data': -1 });
+
+    // Filtrar viagens do taxi correto
+    const viagensDoTaxi = viagens.filter(v => v.turno && v.turno.taxi.toString() === taxiId);
+
+    // Mapear detalhes
+    const detalhes = viagensDoTaxi.map(v => ({
+      viagemId: v._id,
+      inicio: v.inicio.data,
+      fim: v.fim.data,
+      horas: v.inicio.data && v.fim.data ? ((new Date(v.fim.data) - new Date(v.inicio.data)) / 3600000).toFixed(2) : '0.00',
+      quilometros: v.quilometros,
+      origem: v.inicio.morada,
+      destino: v.fim.morada
+    }));
+
+    res.json(detalhes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
