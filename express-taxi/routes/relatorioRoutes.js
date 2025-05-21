@@ -16,7 +16,5 @@ router.get('/subtotais-km-taxi', controller.subtotaisKmPorTaxiDoMotorista);
 
 router.get('/detalhes-viagens-motorista/:motoristaId', controller.getDetalhesViagensPorMotoristaNoTaxi);
 
-router.get('/detalhes-viagens-motorista/:motoristaId', controller.getDetalhesViagensPorMotoristaNoTaxi);
-
 router.get('/detalhes-viagens-taxi/:taxiId', controller.detalhesViagensPorTaxiDoMotorista);
 module.exports = router;
