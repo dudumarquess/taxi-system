@@ -21,6 +21,10 @@ export class MotoristaEstatisticaComponent implements OnInit {
   subtotaisKm: any[] = [];
   mostrarSubtotaisKm = false;
 
+  detalhesViagens: any[] = [];
+  mostrarDetalhesViagens = false;
+  taxiSelecionado: any = null;
+
   constructor(
     private route: ActivatedRoute,
     private relatorioService: RelatorioService
@@ -72,11 +76,25 @@ export class MotoristaEstatisticaComponent implements OnInit {
     });
   }
 
-onMostrarSubtotaisKm() {
-  this.relatorioService.getSubtotaisKmPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
-    .subscribe(res => {
-      this.subtotaisKm = res;
-      this.mostrarSubtotaisKm = true;
+  onMostrarSubtotaisKm() {
+    this.relatorioService.getSubtotaisKmPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
+      .subscribe(res => {
+        this.subtotaisKm = res;
+        this.mostrarSubtotaisKm = true;
+      });
+  }
+
+  mostrarDetalhesViagensTaxi(subtotal: any) {
+    this.taxiSelecionado = subtotal;
+    this.relatorioService.getDetalhesViagensPorTaxiDoMotorista(
+      this.motoristaId,
+      subtotal.taxiId,
+      this.inicio,
+      this.fim
+    ).subscribe(res => {
+      this.detalhesViagens = res;
+      this.mostrarDetalhesViagens = true;
     });
   }
 }
+
