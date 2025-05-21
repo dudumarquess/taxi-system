@@ -16,18 +16,38 @@
   <p>Total de horas: {{ estatisticas.totalHoras | number:'1.2-2' }}
   <button (click)="onMostrarSubtotaisHoras()">Ver horas por Taxi</button>
   </p>
-  
+
   <p>Total de km: {{ estatisticas.totalKm | number:'1.2-2' }}
       <button (click)="onMostrarSubtotaisKm()">Ver km por Taxi</button>
   </p>
 </div>
 
- <div *ngIf="mostrarSubtotais">
+ <div *ngIf="mostrarSubtotaisHoras">
     <h4>Horas por taxi</h4>
     <ul>
-      <li *ngFor="let s of subtotais">
+      <li *ngFor="let s of subtotaisHoras">
         {{s.matricula}}: {{s.horas}} horas
       </li>
     </ul>
-    <button (click)="mostrarSubtotais = false">Fechar</button>
+    <button (click)="mostrarSubtotaisHoras = false">Fechar</button>
+  </div>
+
+  <div *ngIf="mostrarSubtotaisViagens">
+    <h4>Viagens por taxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisViagens">
+        {{s.matricula}}: {{s.viagens}} viagens
+      </li>
+    </ul>
+    <button (click)="mostrarSubtotaisViagens = false">Fechar</button>
+  </div>
+
+  <div *ngIf="mostrarSubtotaisKm">
+    <h4>Quilómetros por taxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisKm">
+        {{s.matricula}}: {{s.quilometros}} quilometros
+      </li>
+    </ul>
+    <button (click)="mostrarSubtotaisKm = false">Fechar</button>
   </div>

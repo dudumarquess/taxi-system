@@ -14,8 +14,12 @@ export class MotoristaEstatisticaComponent implements OnInit {
   inicio!: string; 
   fim!: string;
   erro: string | null = null; // <-- Adicione esta linha
-  subtotais: any[] = [];
-  mostrarSubtotais = false;
+  subtotaisHoras: any[] = [];
+  mostrarSubtotaisHoras = false;
+  subtotaisViagens: any[] = [];
+  mostrarSubtotaisViagens = false;
+  subtotaisKm: any[] = [];
+  mostrarSubtotaisKm = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,24 +59,24 @@ export class MotoristaEstatisticaComponent implements OnInit {
   onMostrarSubtotaisHoras() {
   this.relatorioService.getSubtotaisHorasPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
     .subscribe(res => {
-      this.subtotais = res;
-      this.mostrarSubtotais = true;
+      this.subtotaisHoras = res;
+      this.mostrarSubtotaisHoras = true;
     });
   }
 
   onMostrarSubtotaisViagens() {
   this.relatorioService.getSubtotaisViagensPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
     .subscribe(res => {
-      this.subtotais = res;
-      this.mostrarSubtotais = true;
+      this.subtotaisViagens = res;
+      this.mostrarSubtotaisViagens = true;
     });
   }
 
-  onMostrarSubtotaisKm() {
-    this.relatorioService.getSubtotaisKmPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
-      .subscribe(res => {
-        this.subtotais = res;
-        this.mostrarSubtotais = true;
-      });
+onMostrarSubtotaisKm() {
+  this.relatorioService.getSubtotaisKmPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
+    .subscribe(res => {
+      this.subtotaisKm = res;
+      this.mostrarSubtotaisKm = true;
+    });
   }
 }
