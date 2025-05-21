@@ -125,6 +125,7 @@ export class TaxiEstatisticaComponent implements OnInit {
       },
       error: (err) => this.erro = 'Erro ao buscar detalhes: ' + err.message
     });
+    console.log(this.detalhes);
   }
 
   // Detalhes de km por motorista

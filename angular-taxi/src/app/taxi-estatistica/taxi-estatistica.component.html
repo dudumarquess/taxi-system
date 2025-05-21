@@ -60,3 +60,18 @@
   </ul>
   <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
 </p-card>
+
+<p-card *ngIf="mostrarDetalhes" class="detalhes-card">
+  <h4>{{tituloDetalhes}}</h4>
+  <ul>
+    <li *ngFor="let d of detalhes">
+      <p-text>
+        Início: {{d.inicio | date:'short'}}<br>
+        Fim: {{d.fim | date:'short'}}<br>
+        Horas: {{d.horas}}<br>
+        Quilómetros: {{d.quilometros | number:'1.2-2'}} km
+      </p-text>
+    </li>
+  </ul>
+  <p-button (click)="fecharDetalhes()" size="small">Fechar</p-button>
+</p-card>

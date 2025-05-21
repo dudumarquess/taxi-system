@@ -382,7 +382,7 @@ exports.subtotaisKmPorMotoristaNoTaxi = async (req, res) => {
 
 exports.getDetalhesViagensPorMotoristaNoTaxi = async (req, res) => {
   try {
-    const { taxiId, motoristaId } = req.query;
+    const { taxiId, motoristaId } = req.params;
     let { inicio, fim } = req.query;
 
     console.log('taxiId:', taxiId, 'motoristaId:', motoristaId, 'inicio:', inicio, 'fim:', fim);
