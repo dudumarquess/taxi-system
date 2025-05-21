@@ -14,6 +14,8 @@ export class TaxiEstatisticaComponent implements OnInit {
   dataFim!: string;
   estatisticas: any = null;
   erro: string | null = null;
+  subtotais: any[] = [];
+  mostrarSubtotais = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,35 +30,47 @@ export class TaxiEstatisticaComponent implements OnInit {
     this.buscarEstatisticas();
   }
 
+  onMostrarSubtotaisHoras() {
+    this.mostrarSubtotais = true;
+    this.relatorioService.getSubtotaisHorasPorMotoristaNoTaxi(
+      this.taxiId,
+      this.dataInicio,
+      this.dataFim
+    ).subscribe({
+      next: (res) => this.subtotais = res,
+      error: (err) => this.erro = 'Erro ao buscar subtotais: ' + err.message
+    });
+  }
+
   buscarEstatisticas() {
-  this.erro = null;
-  const hoje = new Date();
+    this.erro = null;
+    const hoje = new Date();
 
-  const inicioDate = new Date(this.dataInicio);
-  const fimDate = new Date(this.dataFim);
+    const inicioDate = new Date(this.dataInicio);
+    const fimDate = new Date(this.dataFim);
 
-  if (inicioDate > fimDate) {
-    this.erro = 'A data inicial deve ser anterior ou igual à data final.';
-    this.estatisticas = null;
-    return;
+    if (inicioDate > fimDate) {
+      this.erro = 'A data inicial deve ser anterior ou igual à data final.';
+      this.estatisticas = null;
+      return;
+    }
+
+    if (inicioDate > hoje || fimDate > hoje) {
+      this.erro = 'Nenhuma das datas pode ser maior que hoje.';
+      this.estatisticas = null;
+      return;
+    }
+
+    console.log('Buscando estatísticas para o taxiId:', this.taxiId);
+    this.relatorioService.getEstatisticaInicialTaxi(
+      this.taxiId,
+      this.dataInicio,
+      this.dataFim
+    ).subscribe({
+      next: (res) => this.estatisticas = res.totais || res,
+      error: (err) => this.erro = 'Erro ao buscar estatísticas: ' + err.message
+    });
+    console.log('dataInicio:', this.dataInicio);
+    console.log('dataFim:', this.dataFim);
   }
-
-  if (inicioDate > hoje || fimDate > hoje) {
-    this.erro = 'Nenhuma das datas pode ser maior que hoje.';
-    this.estatisticas = null;
-    return;
-  }
-
-  console.log('Buscando estatísticas para o taxiId:', this.taxiId);
-  this.relatorioService.getEstatisticaInicialTaxi(
-    this.taxiId,
-    this.dataInicio,
-    this.dataFim
-  ).subscribe({
-    next: (res) => this.estatisticas = res.totais || res,
-    error: (err) => this.erro = 'Erro ao buscar estatísticas: ' + err.message
-  });
-  console.log('dataInicio:', this.dataInicio);
-  console.log('dataFim:', this.dataFim);
-}
 }

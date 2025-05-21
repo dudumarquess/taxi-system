@@ -90,3 +90,53 @@ exports.estatisticaInicialTaxi = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.subtotaisHorasPorMotoristaNoTaxi = async (req, res) => {
+  try {
+    const { taxiId } = req.params;
+    let { inicio, fim } = req.query;
+
+    // Mesma lógica de datas dos outros métodos
+    const hoje = new Date();
+    if (!inicio || !fim) {
+      inicio = new Date(hoje.setHours(0,0,0,0));
+      fim = new Date(hoje.setHours(23,59,59,999));
+    } else {
+      inicio = new Date(inicio + 'T00:00:00');
+      fim = new Date(fim + 'T23:59:59');
+    }
+
+    // Buscar viagens do taxi no período
+    const viagens = await Viagem.find({
+      'fim.data': { $gte: inicio, $lte: fim }
+    }).populate('turno');
+
+    // Filtrar viagens do taxi
+    const viagensDoTaxi = viagens.filter(v => v.turno && v.turno.taxi.toString() === taxiId);
+
+    // Agrupar por motorista
+    const horasPorMotorista = {};
+    viagensDoTaxi.forEach(v => {
+      const id = v.motorista.toString();
+      const horas = (v.inicio && v.fim && v.inicio.data && v.fim.data)
+        ? (new Date(v.fim.data) - new Date(v.inicio.data)) / 3600000
+        : 0;
+      if (!horasPorMotorista[id]) horasPorMotorista[id] = 0;
+      horasPorMotorista[id] += horas;
+    });
+
+    // Buscar nomes dos motoristas
+    const Motorista = require('../models/motoristaModel');
+    const lista = await Promise.all(Object.entries(horasPorMotorista).map(async ([id, horas]) => {
+      const m = await Motorista.findById(id);
+      return { motoristaId: id, nome: m ? m.nome : 'Desconhecido', horas: Number(horas.toFixed(2)) };
+    }));
+
+    // Ordenar decrescente
+    lista.sort((a, b) => b.horas - a.horas);
+
+    res.json(lista);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

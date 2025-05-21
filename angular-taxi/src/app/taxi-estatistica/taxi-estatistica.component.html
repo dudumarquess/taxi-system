@@ -13,10 +13,32 @@
   <div *ngIf="estatisticas">
     <h3>Período: {{dataInicio}} a {{dataFim}}</h3>
     <ul>
-      <li>Total de viagens: {{estatisticas.viagens}}</li>
-      <li>Total de horas: {{estatisticas.horas}}</li>
-      <li>Total de quilómetros: {{estatisticas.quilometros}}</li>
+      <li>
+        Total de viagens: {{estatisticas.viagens}}
+        <!-- Exemplo: botão para subtotais de viagens por motorista -->
+        <!-- <button (click)="onMostrarSubtotaisViagens()">Ver subtotais</button> -->
+      </li>
+      <li>
+        Total de horas: {{estatisticas.horas}}
+        <button (click)="onMostrarSubtotaisHoras()">Ver subtotais por motorista</button>
+      </li>
+      <li>
+        Total de quilómetros: {{estatisticas.quilometros}}
+        <!-- Exemplo: botão para subtotais de km por motorista -->
+        <!-- <button (click)="onMostrarSubtotaisKm()">Ver subtotais</button> -->
+      </li>
     </ul>
   </div>
+
+  <div *ngIf="mostrarSubtotais">
+    <h4>Horas por motorista</h4>
+    <ul>
+      <li *ngFor="let s of subtotais">
+        {{s.nome}}: {{s.horas}} horas
+      </li>
+    </ul>
+    <button (click)="mostrarSubtotais = false">Fechar</button>
+  </div>
+
   <div *ngIf="erro" class="erro">{{erro}}</div>
 </div>
