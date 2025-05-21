@@ -30,18 +30,6 @@
     </ul>
   </div>
 
-  
-
-  <!-- <p-card *ngIf="mostrarSubtotaisHoras" class="subtotais-card">
-    <h4>Horas por táxi</h4>
-    <ul>
-      <li *ngFor="let s of subtotaisHoras">
-        <p-text>{{s.matricula}}: <b>{{s.horas}}</b> horas</p-text>
-        <p-button size="small" (click)="mostrarDetalhesViagensTaxi(s)">Detalhes</p-button>
-      </li>
-    </ul>
-    <p-button (click)="mostrarSubtotaisHoras = false" size="small">Fechar</p-button>
-  </p-card> -->
 
   <p-card *ngIf="mostrarSubtotaisHoras" class="subtotais-card">
   <h4>Horas por táxi</h4>
@@ -58,50 +46,6 @@
   </ul>
   <p-button (click)="mostrarSubtotaisHoras = false" size="small">Fechar</p-button>
 </p-card>
-
-  <p-card *ngIf="mostrarDetalhesViagens" class="detalhes-card">
-    <h4>{{estatisticas.totalViagens}} viagen(s) do táxi {{ taxiSelecionado?.matricula }} nas {{estatisticas.totalHoras  | number:'1.2-2' }} horas, 
-        ao longo de {{estatisticas.totalKm  | number:'1.2-2' }} km  
-    </h4>
-    <ul>
-      <li *ngFor="let v of detalhesViagens">
-        <p-text>
-          Viagem
-          <br>
-          Início: {{ v.inicio | date:'short' }}<br>
-          Fim: {{ v.fim | date:'short' }}<br>
-          Horas: {{ v.horas }}<br>
-          Km: {{ v.quilometros | number:'1.2-2' }}<br>
-          Origem: {{ v.origem?.rua }}, {{ v.origem?.cidade }}<br>
-          Destino: {{ v.destino?.rua }}, {{ v.destino?.cidade }}
-        </p-text>
-      </li>
-    </ul>
-    <p-button (click)="mostrarDetalhesViagens = false" size="small">Fechar</p-button>
-  </p-card>
-
-  <!-- <p-card *ngIf="mostrarSubtotaisViagens" class="subtotais-card">
-    <h4>Viagens por táxi</h4>
-    <ul>
-      <li *ngFor="let s of subtotaisViagens">
-        <p-text>{{s.matricula}}: <b>{{s.viagens}}</b> viagens</p-text>
-      </li>
-    </ul>
-    <p-button (click)="mostrarSubtotaisViagens = false" size="small">Fechar</p-button>
-  </p-card> -->
-
-  <!-- <p-card *ngIf="mostrarSubtotaisKm" class="subtotais-card">
-    <h4>Quilómetros por táxi</h4>
-    <ul>
-      <li *ngFor="let s of subtotaisKm">
-        <p-text>{{s.matricula}}: <b>{{s.quilometros}}</b> km</p-text>
-      </li>
-    </ul>
-    <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
-  </p-card>
-</p-card> -->
-
-
 
 <!-- Subtotais de viagens por táxi -->
 <p-card *ngIf="mostrarSubtotaisViagens" class="subtotais-card">
@@ -136,3 +80,25 @@
   </ul>
   <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
 </p-card>
+
+
+<p-card *ngIf="mostrarDetalhesViagens" class="detalhes-card">
+    <h4>{{estatisticas.totalViagens}} viagen(s) do táxi {{ taxiSelecionado?.matricula }} nas {{estatisticas.totalHoras  | number:'1.2-2' }} horas, 
+        ao longo de {{estatisticas.totalKm  | number:'1.2-2' }} km  
+    </h4>
+    <ul>
+      <li *ngFor="let v of detalhesViagens">
+        <p-text>
+          Viagem
+          <br>
+          Início: {{ v.inicio | date:'short' }}<br>
+          Fim: {{ v.fim | date:'short' }}<br>
+          Horas: {{ v.horas }}<br>
+          Km: {{ v.quilometros | number:'1.2-2' }}<br>
+          Origem: {{ v.origem?.rua }}, {{ v.origem?.cidade }}<br>
+          Destino: {{ v.destino?.rua }}, {{ v.destino?.cidade }}
+        </p-text>
+      </li>
+    </ul>
+    <p-button (click)="mostrarDetalhesViagens = false" size="small">Fechar</p-button>
+  </p-card>
