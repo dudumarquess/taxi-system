@@ -3,3 +3,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #000; /* Black color for headers */
     margin: 10px 0;
 }
+
+p-button {
+    margin-right: 5px;
+}

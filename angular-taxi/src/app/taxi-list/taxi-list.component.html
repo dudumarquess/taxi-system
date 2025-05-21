@@ -15,7 +15,6 @@
   </p-table-head>
   <p-table-body>
     <p-table-row *ngFor="let taxi of taxis">
-      <button (click)="onEstatisticas(taxi)">Estatísticas</button>
       <p-table-cell>{{ taxi.matricula }}</p-table-cell>
       <p-table-cell>{{ taxi.marca }}</p-table-cell>
       <p-table-cell>{{ taxi.modelo }}</p-table-cell>
@@ -24,6 +23,7 @@
       <p-table-cell>
         <p-button (click)="onEdit(taxi)">Editar</p-button>
         <p-button (click)="onRemove(taxi)" [disabled]="taxi.temTurno">Remover</p-button>
+        <p-button (click)="onEstatisticas(taxi)">Estatísticas</p-button>
       </p-table-cell>
     </p-table-row>
   </p-table-body>

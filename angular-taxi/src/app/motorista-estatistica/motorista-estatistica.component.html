@@ -1,53 +1,62 @@
-<h2>Estatísticas do Motorista</h2>
-<label>Período:
-  <input type="date" [(ngModel)]="inicio">
-  a
-  <input type="date" [(ngModel)]="fim">
-</label>
-<button (click)="carregarEstatisticas()">Buscar</button>
+<p-card class="estatistica-card">
+  <h2>Estatísticas do Motorista</h2>
+  <form class="filtros" (submit)="carregarEstatisticas(); $event.preventDefault()">
+    <p-text-field-wrapper label="Início">
+      <input type="date" [(ngModel)]="inicio" name="inicio" />
+    </p-text-field-wrapper>
+    <p-text-field-wrapper label="Fim">
+      <input type="date" [(ngModel)]="fim" name="fim" />
+    </p-text-field-wrapper>
+    <p-button type="submit">Buscar</p-button>
+  </form>
 
-<div *ngIf="erro" class="erro">{{ erro }}</div>
+  <div *ngIf="erro" class="erro">{{ erro }}</div>
 
-<div *ngIf="estatisticas && !erro">
-  <p>Total de viagens: {{ estatisticas.totalViagens }}
-      <button (click)="onMostrarSubtotaisViagens()">Ver viagens por Taxi</button>
-  </p>
-
-  <p>Total de horas: {{ estatisticas.totalHoras | number:'1.2-2' }}
-  <button (click)="onMostrarSubtotaisHoras()">Ver horas por Taxi</button>
-  </p>
-
-  <p>Total de km: {{ estatisticas.totalKm | number:'1.2-2' }}
-      <button (click)="onMostrarSubtotaisKm()">Ver km por Taxi</button>
-  </p>
-</div>
-
- <div *ngIf="mostrarSubtotaisHoras">
-    <h4>Horas por taxi</h4>
-    <ul>
-      <li *ngFor="let s of subtotaisHoras">
-        {{s.matricula}}: {{s.horas}} horas
+  <div *ngIf="estatisticas && !erro" class="estatisticas-resumo">
+    <p-text><b>Período:</b> {{inicio}} a {{fim}}</p-text>
+    <ul class="estatisticas-lista">
+      <li>
+        <p-text>Total de viagens: <b>{{ estatisticas.totalViagens }}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisViagens()" size="small">Viagens por táxi</p-button>
+      </li>
+      <li>
+        <p-text>Total de horas: <b>{{ estatisticas.totalHoras | number:'1.2-2' }}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisHoras()" size="small">Horas por táxi</p-button>
+      </li>
+      <li>
+        <p-text>Total de km: <b>{{ estatisticas.totalKm | number:'1.2-2' }}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisKm()" size="small">Km por táxi</p-button>
       </li>
     </ul>
-    <button (click)="mostrarSubtotaisHoras = false">Fechar</button>
   </div>
 
-  <div *ngIf="mostrarSubtotaisViagens">
-    <h4>Viagens por taxi</h4>
+  <p-card *ngIf="mostrarSubtotaisViagens" class="subtotais-card">
+    <h4>Viagens por táxi</h4>
     <ul>
       <li *ngFor="let s of subtotaisViagens">
-        {{s.matricula}}: {{s.viagens}} viagens
+        <p-text>{{s.matricula}}: <b>{{s.viagens}}</b> viagens</p-text>
       </li>
     </ul>
-    <button (click)="mostrarSubtotaisViagens = false">Fechar</button>
-  </div>
+    <p-button (click)="mostrarSubtotaisViagens = false" size="small">Fechar</p-button>
+  </p-card>
 
-  <div *ngIf="mostrarSubtotaisKm">
-    <h4>Quilómetros por taxi</h4>
+  <p-card *ngIf="mostrarSubtotaisHoras" class="subtotais-card">
+    <h4>Horas por táxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisHoras">
+        <p-text>{{s.matricula}}: <b>{{s.horas}}</b> horas</p-text>
+      </li>
+    </ul>
+    <p-button (click)="mostrarSubtotaisHoras = false" size="small">Fechar</p-button>
+  </p-card>
+
+  <p-card *ngIf="mostrarSubtotaisKm" class="subtotais-card">
+    <h4>Quilómetros por táxi</h4>
     <ul>
       <li *ngFor="let s of subtotaisKm">
-        {{s.matricula}}: {{s.quilometros}} quilometros
+        <p-text>{{s.matricula}}: <b>{{s.quilometros}}</b> km</p-text>
       </li>
     </ul>
-    <button (click)="mostrarSubtotaisKm = false">Fechar</button>
-  </div>
+    <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
+  </p-card>
+</p-card>
