@@ -71,6 +71,6 @@ export class RelatorioService {
     let params: any = { taxiId, motoristaId };
     if (inicio) params.inicio = inicio;
     if (fim) params.fim = fim;
-    return this.http.get(`${this.taxiUrl}/detalhes-viagens-motorista`, { params });
+    return this.http.get(`${this.taxiUrl}/${taxiId}/detalhes-viagens-motorista`, { params });
   }
 }
