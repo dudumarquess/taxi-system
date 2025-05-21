@@ -66,4 +66,11 @@ export class RelatorioService {
     if (fim) params.fim = fim;
     return this.http.get(`${this.taxiUrl}/${taxiId}/subtotais-km-motorista`, { params });
   }
+
+  getDetalhesViagensPorMotoristaNoTaxi(taxiId: string, motoristaId: string, inicio?: string, fim?: string): Observable<any> {
+    let params: any = { taxiId, motoristaId };
+    if (inicio) params.inicio = inicio;
+    if (fim) params.fim = fim;
+    return this.http.get(`${this.taxiUrl}/detalhes-viagens-motorista`, { params });
+  }
 }

@@ -12,14 +12,21 @@ export class TaxiEstatisticaComponent implements OnInit {
   taxiId!: string;
   dataInicio!: string;
   dataFim!: string;
-  estatisticas: any = null;
+  estatisticas: any;
   erro: string | null = null;
+
+  // Subtotais
   subtotais: any[] = [];
   mostrarSubtotais = false;
   subtotaisViagens: any[] = [];
-  subtotaisKm: any[] = [];
   mostrarSubtotaisViagens = false;
+  subtotaisKm: any[] = [];
   mostrarSubtotaisKm = false;
+
+  // Detalhes
+  detalhes: any[] = [];
+  mostrarDetalhes = false;
+  tituloDetalhes = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +41,20 @@ export class TaxiEstatisticaComponent implements OnInit {
     this.buscarEstatisticas();
   }
 
+  buscarEstatisticas() {
+    this.erro = null;
+    this.relatorioService.getEstatisticaInicialTaxi(
+      this.taxiId,
+      this.dataInicio,
+      this.dataFim
+    ).subscribe({
+      next: (res) => {
+        this.estatisticas = res.totais ? res.totais : res;
+      },
+      error: (err) => this.erro = 'Erro ao buscar estatísticas: ' + err.message
+    });
+  }
+
   onMostrarSubtotaisHoras() {
     this.mostrarSubtotais = true;
     this.relatorioService.getSubtotaisHorasPorMotoristaNoTaxi(
@@ -46,59 +67,87 @@ export class TaxiEstatisticaComponent implements OnInit {
     });
   }
 
-  buscarEstatisticas() {
-    this.erro = null;
-    const hoje = new Date();
-
-    const inicioDate = new Date(this.dataInicio);
-    const fimDate = new Date(this.dataFim);
-
-    if (inicioDate > fimDate) {
-      this.erro = 'A data inicial deve ser anterior ou igual à data final.';
-      this.estatisticas = null;
-      return;
-    }
-
-    if (inicioDate > hoje || fimDate > hoje) {
-      this.erro = 'Nenhuma das datas pode ser maior que hoje.';
-      this.estatisticas = null;
-      return;
-    }
-
-    console.log('Buscando estatísticas para o taxiId:', this.taxiId);
-    this.relatorioService.getEstatisticaInicialTaxi(
+  onMostrarSubtotaisViagens() {
+    this.mostrarSubtotaisViagens = true;
+    this.relatorioService.getSubtotaisViagensPorMotoristaNoTaxi(
       this.taxiId,
       this.dataInicio,
       this.dataFim
     ).subscribe({
-      next: (res) => this.estatisticas = res.totais || res,
-      error: (err) => this.erro = 'Erro ao buscar estatísticas: ' + err.message
+      next: (res) => this.subtotaisViagens = res,
+      error: (err) => this.erro = 'Erro ao buscar subtotais: ' + err.message
     });
-    console.log('dataInicio:', this.dataInicio);
-    console.log('dataFim:', this.dataFim);
   }
 
-  onMostrarSubtotaisViagens() {
-  this.mostrarSubtotaisViagens = true;
-  this.relatorioService.getSubtotaisViagensPorMotoristaNoTaxi(
-    this.taxiId,
-    this.dataInicio,
-    this.dataFim
-  ).subscribe({
-    next: (res) => this.subtotaisViagens = res,
-    error: (err) => this.erro = 'Erro ao buscar subtotais: ' + err.message
-  });
-}
+  onMostrarSubtotaisKm() {
+    this.mostrarSubtotaisKm = true;
+    this.relatorioService.getSubtotaisKmPorMotoristaNoTaxi(
+      this.taxiId,
+      this.dataInicio,
+      this.dataFim
+    ).subscribe({
+      next: (res) => this.subtotaisKm = res,
+      error: (err) => this.erro = 'Erro ao buscar subtotais: ' + err.message
+    });
+  }
 
-onMostrarSubtotaisKm() {
-  this.mostrarSubtotaisKm = true;
-  this.relatorioService.getSubtotaisKmPorMotoristaNoTaxi(
-    this.taxiId,
-    this.dataInicio,
-    this.dataFim
-  ).subscribe({
-    next: (res) => this.subtotaisKm = res,
-    error: (err) => this.erro = 'Erro ao buscar subtotais: ' + err.message
-  });
-}
+  // Detalhes de horas por motorista
+  mostrarDetalhesHorasMotorista(subtotal: any) {
+    this.tituloDetalhes = `Horas em viagens de ${subtotal.nome}`;
+    this.mostrarDetalhes = true;
+    this.relatorioService.getDetalhesViagensPorMotoristaNoTaxi(
+      this.taxiId,
+      subtotal.motoristaId,
+      this.dataInicio,
+      this.dataFim
+    ).subscribe({
+      next: (res) => {
+        // Ordenar por horas decrescente
+        this.detalhes = res.sort((a: any, b: any) => Number(b.horas) - Number(a.horas));
+      },
+      error: (err) => this.erro = 'Erro ao buscar detalhes: ' + err.message
+    });
+  }
+
+  // Detalhes de viagens por motorista
+  mostrarDetalhesViagensMotorista(subtotal: any) {
+    this.tituloDetalhes = `Viagens de ${subtotal.nome}`;
+    this.mostrarDetalhes = true;
+    this.relatorioService.getDetalhesViagensPorMotoristaNoTaxi(
+      this.taxiId,
+      subtotal.motoristaId,
+      this.dataInicio,
+      this.dataFim
+    ).subscribe({
+      next: (res) => {
+        // Ordenar por data de fim decrescente
+        this.detalhes = res.sort((a: any, b: any) => new Date(b.fim).getTime() - new Date(a.fim).getTime());
+      },
+      error: (err) => this.erro = 'Erro ao buscar detalhes: ' + err.message
+    });
+  }
+
+  // Detalhes de km por motorista
+  mostrarDetalhesKmMotorista(subtotal: any) {
+    this.tituloDetalhes = `Quilómetros em viagens de ${subtotal.nome}`;
+    this.mostrarDetalhes = true;
+    this.relatorioService.getDetalhesViagensPorMotoristaNoTaxi(
+      this.taxiId,
+      subtotal.motoristaId,
+      this.dataInicio,
+      this.dataFim
+    ).subscribe({
+      next: (res) => {
+        // Ordenar por km decrescente
+        this.detalhes = res.sort((a: any, b: any) => Number(b.quilometros) - Number(a.quilometros));
+      },
+      error: (err) => this.erro = 'Erro ao buscar detalhes: ' + err.message
+    });
+  }
+
+  fecharDetalhes() {
+    this.mostrarDetalhes = false;
+    this.detalhes = [];
+    this.tituloDetalhes = '';
+  }
 }

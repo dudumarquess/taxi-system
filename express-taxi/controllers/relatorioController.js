@@ -379,3 +379,44 @@ exports.subtotaisKmPorMotoristaNoTaxi = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getDetalhesViagensPorMotoristaNoTaxi = async (req, res) => {
+  try {
+    const { taxiId, motoristaId } = req.query;
+    let { inicio, fim } = req.query;
+
+    console.log('taxiId:', taxiId, 'motoristaId:', motoristaId, 'inicio:', inicio, 'fim:', fim);
+
+    const hoje = new Date();
+    if (!inicio || !fim) {
+      inicio = new Date(hoje.setHours(0,0,0,0));
+      fim = new Date(hoje.setHours(23,59,59,999));
+    } else {
+      inicio = new Date(inicio + 'T00:00:00');
+      fim = new Date(fim + 'T23:59:59');
+    }
+
+    const viagens = await Viagem.find({
+      motorista: motoristaId,
+      'fim.data': { $gte: inicio, $lte: fim }
+    }).populate('turno');
+
+    // Protege contra viagens sem turno ou sem taxi
+    const viagensDoTaxi = viagens.filter(v => v.turno && v.turno.taxi && v.turno.taxi.toString() === taxiId);
+
+    viagensDoTaxi.sort((a, b) => new Date(b.fim.data) - new Date(a.fim.data));
+
+    const detalhes = viagensDoTaxi.map(v => ({
+      viagemId: v._id,
+      inicio: v.inicio?.data,
+      fim: v.fim?.data,
+      horas: v.inicio?.data && v.fim?.data ? ((new Date(v.fim.data) - new Date(v.inicio.data)) / 3600000).toFixed(2) : 0,
+      quilometros: v.quilometros || 0
+    }));
+
+    res.json(detalhes);
+  } catch (err) {
+    console.error('Erro no getDetalhesViagensPorMotoristaNoTaxi:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
