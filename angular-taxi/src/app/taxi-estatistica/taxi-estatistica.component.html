@@ -15,19 +15,27 @@
     <ul>
       <li>
         Total de viagens: {{estatisticas.viagens}}
-        <!-- Exemplo: botão para subtotais de viagens por motorista -->
-        <!-- <button (click)="onMostrarSubtotaisViagens()">Ver subtotais</button> -->
+        <button (click)="onMostrarSubtotaisViagens()">Viagens por motorista</button>
       </li>
       <li>
         Total de horas: {{estatisticas.horas}}
-        <button (click)="onMostrarSubtotaisHoras()">Ver subtotais por motorista</button>
+        <button (click)="onMostrarSubtotaisHoras()">Horas por motorista</button>
       </li>
       <li>
         Total de quilómetros: {{estatisticas.quilometros}}
-        <!-- Exemplo: botão para subtotais de km por motorista -->
-        <!-- <button (click)="onMostrarSubtotaisKm()">Ver subtotais</button> -->
+        <button (click)="onMostrarSubtotaisKm()">Quilometros por motorista</button>
       </li>
     </ul>
+  </div>
+
+  <div *ngIf="mostrarSubtotaisViagens">
+    <h4>Viagens por motorista</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisViagens">
+        {{s.nome}}: {{s.viagens}} viagens
+      </li>
+    </ul>
+    <button (click)="mostrarSubtotaisViagens = false">Fechar</button>
   </div>
 
   <div *ngIf="mostrarSubtotais">
@@ -38,6 +46,16 @@
       </li>
     </ul>
     <button (click)="mostrarSubtotais = false">Fechar</button>
+  </div>
+
+  <div *ngIf="mostrarSubtotaisKm">
+    <h4>Quilómetros por motorista</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisKm">
+        {{s.nome}}: {{s.quilometros}} km
+      </li>
+    </ul>
+    <button (click)="mostrarSubtotaisKm = false">Fechar</button>
   </div>
 
   <div *ngIf="erro" class="erro">{{erro}}</div>

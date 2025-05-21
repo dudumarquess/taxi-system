@@ -140,3 +140,96 @@ exports.subtotaisHorasPorMotoristaNoTaxi = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.subtotaisViagensPorMotoristaNoTaxi = async (req, res) => {
+  try {
+    const { taxiId } = req.params;
+    let { inicio, fim } = req.query;
+
+    const hoje = new Date();
+    if (!inicio || !fim) {
+      inicio = new Date(hoje.setHours(0,0,0,0));
+      fim = new Date(hoje.setHours(23,59,59,999));
+    } else {
+      inicio = new Date(inicio + 'T00:00:00');
+      fim = new Date(fim + 'T23:59:59');
+    }
+
+    // Buscar viagens do taxi no período
+    const viagens = await Viagem.find({
+      'fim.data': { $gte: inicio, $lte: fim }
+    }).populate('turno');
+
+    // Filtrar viagens do taxi
+    const viagensDoTaxi = viagens.filter(v => v.turno && v.turno.taxi.toString() === taxiId);
+
+    // Agrupar por motorista (contar viagens)
+    const viagensPorMotorista = {};
+    viagensDoTaxi.forEach(v => {
+      const id = v.motorista.toString();
+      if (!viagensPorMotorista[id]) viagensPorMotorista[id] = 0;
+      viagensPorMotorista[id] += 1;
+    });
+
+    // Buscar nomes dos motoristas
+    const Motorista = require('../models/motoristaModel');
+    const lista = await Promise.all(Object.entries(viagensPorMotorista).map(async ([id, total]) => {
+      const m = await Motorista.findById(id);
+      return { motoristaId: id, nome: m ? m.nome : 'Desconhecido', viagens: total };
+    }));
+
+    // Ordenar decrescente
+    lista.sort((a, b) => b.viagens - a.viagens);
+
+    res.json(lista);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.subtotaisKmPorMotoristaNoTaxi = async (req, res) => {
+  try {
+    const { taxiId } = req.params;
+    let { inicio, fim } = req.query;
+
+    const hoje = new Date();
+    if (!inicio || !fim) {
+      inicio = new Date(hoje.setHours(0,0,0,0));
+      fim = new Date(hoje.setHours(23,59,59,999));
+    } else {
+      inicio = new Date(inicio + 'T00:00:00');
+      fim = new Date(fim + 'T23:59:59');
+    }
+
+    // Buscar viagens do taxi no período
+    const viagens = await Viagem.find({
+      'fim.data': { $gte: inicio, $lte: fim }
+    }).populate('turno');
+
+    // Filtrar viagens do taxi
+    const viagensDoTaxi = viagens.filter(v => v.turno && v.turno.taxi.toString() === taxiId);
+
+    // Agrupar por motorista (somar km)
+    const kmPorMotorista = {};
+    viagensDoTaxi.forEach(v => {
+      const id = v.motorista.toString();
+      const km = v.quilometros || 0;
+      if (!kmPorMotorista[id]) kmPorMotorista[id] = 0;
+      kmPorMotorista[id] += km;
+    });
+
+    // Buscar nomes dos motoristas
+    const Motorista = require('../models/motoristaModel');
+    const lista = await Promise.all(Object.entries(kmPorMotorista).map(async ([id, km]) => {
+      const m = await Motorista.findById(id);
+      return { motoristaId: id, nome: m ? m.nome : 'Desconhecido', quilometros: Number(km.toFixed(2)) };
+    }));
+
+    // Ordenar decrescente
+    lista.sort((a, b) => b.quilometros - a.quilometros);
+
+    res.json(lista);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

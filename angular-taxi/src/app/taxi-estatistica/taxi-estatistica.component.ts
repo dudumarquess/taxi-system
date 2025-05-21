@@ -16,6 +16,10 @@ export class TaxiEstatisticaComponent implements OnInit {
   erro: string | null = null;
   subtotais: any[] = [];
   mostrarSubtotais = false;
+  subtotaisViagens: any[] = [];
+  subtotaisKm: any[] = [];
+  mostrarSubtotaisViagens = false;
+  mostrarSubtotaisKm = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -73,4 +77,28 @@ export class TaxiEstatisticaComponent implements OnInit {
     console.log('dataInicio:', this.dataInicio);
     console.log('dataFim:', this.dataFim);
   }
+
+  onMostrarSubtotaisViagens() {
+  this.mostrarSubtotaisViagens = true;
+  this.relatorioService.getSubtotaisViagensPorMotoristaNoTaxi(
+    this.taxiId,
+    this.dataInicio,
+    this.dataFim
+  ).subscribe({
+    next: (res) => this.subtotaisViagens = res,
+    error: (err) => this.erro = 'Erro ao buscar subtotais: ' + err.message
+  });
+}
+
+onMostrarSubtotaisKm() {
+  this.mostrarSubtotaisKm = true;
+  this.relatorioService.getSubtotaisKmPorMotoristaNoTaxi(
+    this.taxiId,
+    this.dataInicio,
+    this.dataFim
+  ).subscribe({
+    next: (res) => this.subtotaisKm = res,
+    error: (err) => this.erro = 'Erro ao buscar subtotais: ' + err.message
+  });
+}
 }

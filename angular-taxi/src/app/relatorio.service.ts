@@ -30,4 +30,18 @@ export class RelatorioService {
     if (fim) params.fim = fim;
     return this.http.get(`${this.taxiUrl}/${taxiId}/subtotais-horas-motorista`, { params });
   }
+
+  getSubtotaisViagensPorMotoristaNoTaxi(taxiId: string, inicio?: string, fim?: string): Observable<any> {
+    let params: any = {};
+    if (inicio) params.inicio = inicio;
+    if (fim) params.fim = fim;
+    return this.http.get(`${this.taxiUrl}/${taxiId}/subtotais-viagens-motorista`, { params });
+  }
+
+  getSubtotaisKmPorMotoristaNoTaxi(taxiId: string, inicio?: string, fim?: string): Observable<any> {
+    let params: any = {};
+    if (inicio) params.inicio = inicio;
+    if (fim) params.fim = fim;
+    return this.http.get(`${this.taxiUrl}/${taxiId}/subtotais-km-motorista`, { params });
+  }
 }
