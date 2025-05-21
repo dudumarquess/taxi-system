@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RelatorioService } from '../relatorio.service';
+import { MotoristaService } from '../motorista.service'  
+
 
 @Component({
   selector: 'app-motorista-estatisticas',
@@ -25,21 +27,31 @@ export class MotoristaEstatisticaComponent implements OnInit {
   mostrarDetalhesViagens = false;
   taxiSelecionado: any = null;
 
+  motorista: any = {};
+
   constructor(
     private route: ActivatedRoute,
-    private relatorioService: RelatorioService
+    private relatorioService: RelatorioService,
+    private motoristaService: MotoristaService
   ) {}
 
   ngOnInit() {
     this.motoristaId = this.route.snapshot.paramMap.get('id')!;
     this.setPeriodoHoje();
     this.carregarEstatisticas();
+    this.carregarMotorista();
+
   }
 
   setPeriodoHoje() {
     const hoje = new Date().toISOString().slice(0, 10);
     this.inicio = hoje;
     this.fim = hoje;
+  }
+
+  carregarMotorista() {
+    this.motoristaService.getMotoristaById(this.motoristaId)
+      .subscribe(m => this.motorista = m);
   }
 
   carregarEstatisticas() {
