@@ -61,9 +61,16 @@ exports.estatisticaInicialTaxi = async (req, res) => {
 
     
     // Buscar viagens concluídas desse táxi no período
-    const viagensDoTaxi = await Viagem.find({
+    const viagens = await Viagem.find({
       'fim.data': { $gte: inicio, $lte: fim },
-    })
+    }).populate({
+        path: 'turno',
+        match: { taxi: taxiId }
+      });
+
+
+    // Filtrar apenas viagens cujo turno corresponde ao taxiId
+    const viagensDoTaxi = viagens.filter(v => v.turno);
 
     console.log('Viagens do táxi:', viagensDoTaxi);
 
