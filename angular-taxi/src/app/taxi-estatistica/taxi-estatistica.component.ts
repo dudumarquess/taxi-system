@@ -31,7 +31,6 @@ export class TaxiEstatisticaComponent implements OnInit {
   buscarEstatisticas() {
   this.erro = null;
   const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0);
 
   const inicioDate = new Date(this.dataInicio);
   const fimDate = new Date(this.dataFim);
