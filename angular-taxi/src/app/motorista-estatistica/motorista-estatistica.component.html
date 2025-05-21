@@ -9,7 +9,25 @@
 <div *ngIf="erro" class="erro">{{ erro }}</div>
 
 <div *ngIf="estatisticas && !erro">
-  <p>Total de viagens: {{ estatisticas.totalViagens }}</p>
-  <p>Total de horas: {{ estatisticas.totalHoras | number:'1.2-2' }}</p>
-  <p>Total de km: {{ estatisticas.totalKm | number:'1.2-2' }}</p>
+  <p>Total de viagens: {{ estatisticas.totalViagens }}
+      <button (click)="onMostrarSubtotaisViagens()">Ver viagens por Taxi</button>
+  </p>
+
+  <p>Total de horas: {{ estatisticas.totalHoras | number:'1.2-2' }}
+  <button (click)="onMostrarSubtotaisHoras()">Ver horas por Taxi</button>
+  </p>
+  
+  <p>Total de km: {{ estatisticas.totalKm | number:'1.2-2' }}
+      <button (click)="onMostrarSubtotaisKm()">Ver km por Taxi</button>
+  </p>
 </div>
+
+ <div *ngIf="mostrarSubtotais">
+    <h4>Horas por taxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotais">
+        {{s.matricula}}: {{s.horas}} horas
+      </li>
+    </ul>
+    <button (click)="mostrarSubtotais = false">Fechar</button>
+  </div>

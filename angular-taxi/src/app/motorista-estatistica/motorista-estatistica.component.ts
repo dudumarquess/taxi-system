@@ -14,6 +14,8 @@ export class MotoristaEstatisticaComponent implements OnInit {
   inicio!: string; 
   fim!: string;
   erro: string | null = null; // <-- Adicione esta linha
+  subtotais: any[] = [];
+  mostrarSubtotais = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,5 +50,29 @@ export class MotoristaEstatisticaComponent implements OnInit {
 
     this.relatorioService.getEstatisticaInicialMotorista(this.motoristaId, this.inicio, this.fim)
       .subscribe((est: any) => this.estatisticas = est);
+  }
+
+  onMostrarSubtotaisHoras() {
+  this.relatorioService.getSubtotaisHorasPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
+    .subscribe(res => {
+      this.subtotais = res;
+      this.mostrarSubtotais = true;
+    });
+  }
+
+  onMostrarSubtotaisViagens() {
+  this.relatorioService.getSubtotaisViagensPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
+    .subscribe(res => {
+      this.subtotais = res;
+      this.mostrarSubtotais = true;
+    });
+  }
+
+  onMostrarSubtotaisKm() {
+    this.relatorioService.getSubtotaisKmPorTaxiDoMotorista(this.motoristaId, this.inicio, this.fim)
+      .subscribe(res => {
+        this.subtotais = res;
+        this.mostrarSubtotais = true;
+      });
   }
 }
