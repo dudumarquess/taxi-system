@@ -36,8 +36,8 @@ export interface PedidoCliente {
 })
 export class ClienteService {
 
-  private pedidosUrl = 'http://localhost:3000/api/pedidoCliente';
-  private clientesUrl = 'http://localhost:3000/clientes';
+  private pedidosUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/api/pedidoCliente';
+  private clientesUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/clientes';
 
   constructor(private http: HttpClient) {}
 

@@ -11,8 +11,8 @@ import {Turno} from "./turno";
 })
 export class MotoristaService {
 
-  private motoristaUrl = 'http://localhost:3000/motoristas'
-  private pedidosUrl = 'http://localhost:3000/motorista/pedidos';
+  private motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/motoristas'
+  private pedidosUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/motorista/pedidos';
 
   constructor(private http: HttpClient) {}
 

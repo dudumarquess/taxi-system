@@ -8,7 +8,7 @@ import { Taxi } from './taxi';
 })
 export class TaxiService {
 
-  private taxisUrl = 'http://localhost:3000/taxis'
+  private taxisUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/taxis'
 
   constructor(private http: HttpClient) {}
 

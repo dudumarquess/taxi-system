@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ViagemService {
-  private apiUrl = 'http://localhost:3000/viagens';
+  private apiUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/viagens';
 
   constructor(private http: HttpClient) { }
 

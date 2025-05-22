@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RelatorioService {
-  private motoristaUrl = 'http://localhost:3000/motoristas';
-  private taxiUrl = 'http://localhost:3000/taxis';
+  private motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/motoristas';
+  private taxiUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/taxis';
 
 
   constructor(private http: HttpClient) {}

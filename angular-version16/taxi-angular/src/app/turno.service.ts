@@ -8,7 +8,7 @@ import { Turno } from './turno';
 })
 export class TurnoService {
 
-  private turnosUrl = 'http://localhost:3000/turnos';
+  private turnosUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/turnos';
 
   constructor(private http: HttpClient) {}
 

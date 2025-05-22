@@ -8,7 +8,7 @@ import { Preco } from './preco'
 })
 
 export class PrecoService {
-  private precosUrl = 'http://localhost:3000/precos';
+  private precosUrl = 'http://appserver.alunos.di.fc.ul.pt:3074/precos';
 
   constructor(private http: HttpClient) { }
 

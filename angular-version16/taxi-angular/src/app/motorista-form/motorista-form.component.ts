@@ -47,7 +47,7 @@ export class MotoristaFormComponent {
       this.localidadeError = 'O campo "Código Postal" é obrigatório e deve estar no formato "1234-567"';
       return;
     }
-    this.http.get<{localidade: string}>(`http://localhost:3000/localidade/${codigoPostal}`).subscribe((resultado) => {
+    this.http.get<{localidade: string}>(`http://appserver.alunos.di.fc.ul.pt:3074/${codigoPostal}`).subscribe((resultado) => {
       this.localidade = resultado.localidade;
     }, (err) => {
       this.localidadeError = 'Não encontrada';
