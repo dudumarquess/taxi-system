@@ -1,0 +1,38 @@
+<div *ngIf="carregou">
+  <div *ngIf="pedido; else noPedido">
+    <h2>Meu Pedido</h2>
+    <p-text>Origem: {{ pedido.origem.rua }}, {{ pedido.origem.cidade }}</p-text>
+    <p-text>Destino: {{ pedido.destino.rua }}, {{ pedido.destino.cidade }}</p-text>
+    <p-text>Status: {{ getStatusLabel(pedido.status) }}</p-text>
+    <p-text>Nível de Conforto: {{ pedido.nivelConforto }}</p-text>
+    <p-text>Número de Pessoas:{{ pedido.numeroPessoas }}</p-text>
+    <p-text>Data do Pedido:{{ pedido.dataPedido | date }}</p-text>
+
+    <!-- Mostrar botões se o status for 'pendente_cliente' -->
+    <div *ngIf="pedido.status === 'pendente_cliente'">
+      <h3>Motorista Aceitou a Viagem</h3>
+      <p-text>Você deseja aceitar ou recusar?</p-text>
+      <p-text>Motorista: {{ pedido.motorista?.nome }}</p-text>
+      <p-text>Distância: {{pedido.distancia}}</p-text>
+      <p-text>Tempo Estimado: {{ calcularTempoEstimado() | number: '1.2-2' }}</p-text>
+      <p-text>Preço: {{pedido.request?.preco}}</p-text>
+      <p-text>Taxi:</p-text>
+      <p-text>Matricula: {{ pedido.request?.taxi?.matricula }}</p-text>
+      <p-text>Marca: {{ pedido.request?.taxi?.marca }}</p-text>
+      <p-text>Modelo: {{ pedido.request?.taxi?.modelo }}</p-text>
+      <p-text>Ano de Compra: {{ pedido.request?.taxi?.ano_compra }}</p-text>
+      <p-text>Nível de Conforto: {{ pedido.request?.taxi?.nivel_conforto }}</p-text>
+      <p-button (click)="aceitarPedido()">Aceitar</p-button>
+      <p-button (click)="recusarPedido()">Recusar</p-button>
+    </div>
+
+    <!-- Mostrar botão de cancelar se o status não for 'pendente_cliente' -->
+    <div *ngIf="pedido.status === 'pendente_motorista'">
+      <p-button (click)="cancelarPedido()">Cancelar Pedido</p-button>
+    </div>
+  </div>
+
+  <ng-template #noPedido>
+    <p>Você ainda não tem pedidos registrados.</p>
+  </ng-template>
+</div>

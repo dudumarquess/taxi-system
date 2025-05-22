@@ -1,0 +1,18 @@
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espaço entre logo e título */
+    margin-bottom: 16px;
+}
+
+.logo {
+    width: 40px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+}
+
+/* Font for headers */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Porsche Next', sans-serif; /* Use Porsche-inspired font */
+    color: #000; /* Black color for headers */
+    margin: 10px 0;
+}

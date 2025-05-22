@@ -1,0 +1,35 @@
+<h2>Motoristas</h2>
+<p-link>
+  <a [routerLink]="'novo'">Adicionar Motorista</a>
+</p-link>
+<p-table>
+  <p-table-head>
+    <p-table-head-row>
+      <p-table-head-cell>Nome</p-table-head-cell>
+      <p-table-head-cell>Género</p-table-head-cell>
+      <p-table-head-cell>NIF</p-table-head-cell>
+      <p-table-head-cell>Ano de Nascimento</p-table-head-cell>
+      <p-table-head-cell>Carta de Condução</p-table-head-cell>
+      <p-table-head-cell>Morada</p-table-head-cell>
+      <p-table-head-cell>Ações</p-table-head-cell>
+    </p-table-head-row>
+  </p-table-head>
+  <p-table-body>
+    <p-table-row *ngFor="let motorista of motoristas">
+      <p-table-cell>{{ motorista.nome }}</p-table-cell>
+      <p-table-cell>{{ motorista.genero }}</p-table-cell>
+      <p-table-cell>{{ motorista.nif }}</p-table-cell>
+      <p-table-cell>{{ motorista.anoNascimento }}</p-table-cell>
+      <p-table-cell>{{ motorista.numeroCartaConducao }}</p-table-cell>
+      <p-table-cell>
+        {{ motorista.morada.rua }}, nº {{ motorista.morada.numeroPorta }}, 
+        {{ motorista.morada.localidade }}, {{ motorista.morada.codigoPostal }}
+      </p-table-cell>
+      <p-table-cell>
+        <p-button (click)="onEdit(motorista)">Editar</p-button>
+        <p-button (click)="onRemove(motorista)" [disabled]="motorista.jaRequisitou">Remover</p-button>
+        <p-button (click)="onEstatisticas(motorista)">Estatísticas</p-button> 
+      </p-table-cell>
+    </p-table-row>
+  </p-table-body>
+</p-table>

@@ -1,0 +1,110 @@
+<p-card class="estatistica-card">
+  <h2>Estatísticas do Motorista {{motorista.nome}}</h2>
+  <form class="filtros" (submit)="carregarEstatisticas(); $event.preventDefault()">
+    <p-text-field-wrapper label="Início">
+      <input type="date" name="inicio" [value]="inicio" (change)="onDataInicioChange($event)" />
+    </p-text-field-wrapper>
+    <p-text-field-wrapper label="Fim">
+      <input type="date" name="fim" [value]="fim" (change)="onDataFimChange($event)" />
+    </p-text-field-wrapper>
+    <p-button type="submit">Buscar</p-button>
+  </form>
+
+  <div *ngIf="erro" class="erro">{{ erro }}</div>
+
+  <div *ngIf="estatisticas && !erro" class="estatisticas-resumo">
+    <p-text><b>Período:</b> {{inicio}} a {{fim}}</p-text>
+    <ul class="estatisticas-lista">
+      <li>
+        <p-text>Total de viagens: <b>{{ estatisticas.totalViagens }}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisViagens()" size="small">Viagens por táxi</p-button>
+      </li>
+      <li>
+        <p-text>Total de horas: <b>{{ estatisticas.totalHoras | number:'1.2-2' }}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisHoras()" size="small">Horas por táxi</p-button>
+      </li>
+      <li>
+        <p-text>Total de km: <b>{{ estatisticas.totalKm | number:'1.2-2' }}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisKm()" size="small">Km por táxi</p-button>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- Modal de subtotais de horas por táxi -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisHoras">
+  <div class="modal">
+    <h4>Horas por táxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisHoras">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasTaxi(s.taxiId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.matricula}}
+          </a>: {{s.horas}} horas
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesViagensTaxi(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisHoras = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal de subtotais de viagens por táxi -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisViagens">
+  <div class="modal">
+    <h4>Viagens por táxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisViagens">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasTaxi(s.taxiId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.matricula}}
+          </a>: {{s.viagens}} viagens
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesViagensTaxi(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisViagens = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+    
+  </div>
+</div>
+
+<!-- Modal de subtotais de km por táxi -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisKm">
+  <div class="modal">
+    <h4>Quilómetros por táxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisKm">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasTaxi(s.taxiId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.matricula}}
+          </a>: {{s.quilometros}} Kms
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesViagensTaxi(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Modal de detalhes das viagens -->
+<div class="modal-backdrop" *ngIf="mostrarDetalhesViagens">
+  <div class="modal">
+    <h4>Viagen(s) do táxi</h4>
+    <ul>
+      <li *ngFor="let v of detalhesViagens">
+        <p-text>
+          Viagem
+          <br>
+          Início: {{ v.inicio | date:'short' }}<br>
+          Fim: {{ v.fim | date:'short' }}<br>
+          Horas: {{ v.horas }}<br>
+          Km: {{ v.quilometros | number:'1.2-2' }}<br>
+          Origem: {{ v.origem?.rua }}, {{ v.origem?.cidade }}<br>
+          Destino: {{ v.destino?.rua }}, {{ v.destino?.cidade }}
+        </p-text>
+      </li>
+    </ul>
+    <p-button (click)="mostrarDetalhesViagens = false" size="small">Fechar</p-button>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Porsche Next', sans-serif; /* Use Porsche-inspired font */
+  color: #000; /* Black color for headers */
+  margin: 10px 0;
+}
+
+/* Reduce the size of inputs */
+p-text-field-wrapper,
+p-select,
+p-select-wrapper {
+  display: block;
+  margin-bottom: 10px; /* Add spacing between inputs */
+  max-width: 300px; /* Limit the width of inputs */
+}
+
+.submit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.submit p-button {
+  margin-top: 10px;
+}

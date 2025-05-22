@@ -1,0 +1,7 @@
+p-text-field-wrapper,
+p-select,
+p-select-wrapper {
+  display: block;
+  margin-bottom: 10px; /* Add spacing between inputs */
+  max-width: 300px; /* Limit the width of inputs */
+}

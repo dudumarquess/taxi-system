@@ -1,0 +1,30 @@
+p-text-field-wrapper,
+p-select,
+p-select-wrapper {
+  display: block;
+  margin-bottom: 10px; /* Add spacing between inputs */
+  max-width: 300px; /* Limit the width of inputs */
+}
+
+.button-container {
+    display: flex;
+    align-items: center; /* Alinha os botões verticalmente */
+    margin-top: 20px; /* Espaçamento superior */
+  }
+  
+  .button-container p-button {
+    margin-right: 10px; /* Espaçamento entre o botão "Entrar" e o botão "Voltar" */
+  }
+  
+  .button-container p-link a {
+    text-decoration: none; /* Remove sublinhado do link */
+    color: #000; /* Cor do texto */
+    padding: 8px 12px; /* Padding para o botão */
+    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #f0f0f0; /* Fundo do botão */
+    transition: background-color 0.3s ease; /* Transição suave */
+  }
+  
+  .button-container p-link a:hover {
+    background-color: #ddd; /* Cor de fundo ao passar o mouse */
+  }

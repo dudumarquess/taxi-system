@@ -1,0 +1,36 @@
+<form (submit)="onSubmit($event)">
+  <p-select-wrapper name="nivelConforto" label="Nível de Conforto *">
+    <select name="nivelConforto">
+      <option value="">Selecione o nível</option>
+      <option *ngFor="let nivel of niveisConforto" [value]="nivel">{{ nivel }}</option>
+    </select>
+  </p-select-wrapper>
+
+  <p-text-field-wrapper label="Início - Data *">
+    <input type="date" name="inicioData" />
+  </p-text-field-wrapper>
+
+  <p-text-field-wrapper label="Início - Hora *">
+    <input type="time" name="inicioHora" />
+  </p-text-field-wrapper>
+
+  <p-text-field-wrapper label="Fim - Data *">
+    <input type="date" name="fimData" />
+  </p-text-field-wrapper>
+
+
+  <p-text-field-wrapper label="Fim - Hora *">
+    <input type="time" name="fimHora" />
+  </p-text-field-wrapper>
+
+  <div class="submit">
+    <p-button type="submit">Calcular Preço</p-button> 
+    <p-text [size]="'small'" *ngIf="erro">{{erro}}</p-text>
+    <div *ngIf="custoTotal" class="success">
+      <strong>Custo Total:</strong> {{ custoTotal }}
+    </div>
+  </div>
+
+  
+
+</form>

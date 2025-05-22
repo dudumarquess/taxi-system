@@ -1,0 +1,37 @@
+<form (submit)="onLogin($event)">
+  <!-- Campo NIF -->
+  <p-text-field-wrapper label="Digite o seu NIF">
+    <input
+      type="number"
+      name="nif"
+      placeholder="Ex: 123456789"
+    />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
+
+  <!-- Selecionar motorista -->
+  <p-select-wrapper name="motoristaSelecionado" label="Ou selecione sua conta">
+    <select name="motoristaSelecionado">
+      <option value="" selected>Escolha um motorista</option>
+      <option *ngFor="let motorista of motoristas" [value]="motorista.nif.toString()">
+        {{ motorista.nome }} ({{ motorista.nif }})
+      </option>
+    </select>
+  </p-select-wrapper>
+  <p-text [size]="'small'" *ngIf="selecionadoError" class="error">
+    {{ selecionadoError }}
+  </p-text>
+
+  <!-- Botão e erros -->
+  <div class="submit">
+    <div class="button-container">
+      <p-button type="submit">Entrar</p-button>
+      <p-link>
+        <a [routerLink]="''">Voltar</a>
+      </p-link>
+    </div>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">
+      {{ generalError }}
+    </p-text>
+  </div>
+</form>

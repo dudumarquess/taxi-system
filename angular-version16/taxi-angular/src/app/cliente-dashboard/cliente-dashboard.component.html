@@ -1,0 +1,12 @@
+<nav>
+  <div class="menu-toggle" (click)="toggleMenu()">☰</div>
+  <div class="menu" [class.open]="isMenuOpen">
+    <a routerLink="/cliente/pedir-taxi" routerLinkActive="active" (click)="toggleMenu()">Pedir Táxi</a>
+    <a routerLink="/cliente/pedido" routerLinkActive="active" (click)="toggleMenu()">Ver Pedido</a>
+  </div>
+  <div class="logout logout-desktop">
+    <a routerLink="">Logout</a>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

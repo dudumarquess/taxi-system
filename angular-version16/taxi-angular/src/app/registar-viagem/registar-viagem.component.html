@@ -1,0 +1,32 @@
+<div *ngIf="pedidoAtual; else semPedidos">
+  <h2>Registar Viagem</h2>
+  <p-text>Cliente: {{ pedidoAtual.cliente.nome }}</p-text>
+  <p-text>Origem: {{ pedidoAtual.origem.rua }}, {{ pedidoAtual.origem.cidade }}</p-text>
+  <p-text>Destino: {{ pedidoAtual.destino.rua }}, {{ pedidoAtual.destino.cidade }}</p-text>
+  <p-text>Número de Pessoas: {{ pedidoAtual.numeroPessoas }}</p-text>
+  <p-text>Nível de Conforto: {{ pedidoAtual.nivelConforto }}</p-text>
+
+  <!-- Mostrar informações da viagem se estiver em andamento -->
+  <div *ngIf="viagemAtual">
+    <h3>Viagem em Andamento</h3>
+    <p-text>Início: {{ viagemAtual.inicio.data | date:'medium' }}</p-text>
+    <p-text>Número da Viagem: {{ viagemAtual.numeroSequencia }}</p-text>
+  </div>
+
+  <!-- Botões de controle -->
+  <div class="viagem-controls">
+    <p-button *ngIf="!viagemAtual" 
+              (click)="iniciarViagem()" 
+              [disabled]="!pedidoAtual">
+      Iniciar Viagem
+    </p-button>
+    <p-button *ngIf="viagemAtual" 
+              (click)="finalizarViagem()">
+      Finalizar Viagem
+    </p-button>
+  </div>
+</div>
+
+<ng-template #semPedidos>
+  <p-text>Não há viagens ativas no momento.</p-text>
+</ng-template>

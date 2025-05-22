@@ -1,0 +1,43 @@
+<form (submit)="onLogin($event)">
+  <!-- Campo Nome -->
+  <p-text-field-wrapper label="Digite o seu Nome">
+    <input
+      type="text"
+      name="nome"
+      placeholder="Ex: João Silva"
+    />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nomeError" class="error">{{ nomeError }}</p-text>
+
+  <!-- Campo NIF -->
+  <p-text-field-wrapper label="Digite o seu NIF">
+    <input
+      type="number"
+      name="nif"
+      placeholder="Ex: 123456789"
+    />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="nifError" class="error">{{ nifError }}</p-text>
+
+  <p-select-wrapper name="genero" label="Género *">
+    <select name="genero">
+      <option value="" selected>Escolha o género</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Feminino">Feminino</option>
+    </select>
+  </p-select-wrapper>
+  <p-text [size]="'small'" *ngIf="generoError" class="error">{{ generoError }}</p-text>
+
+  <!-- Botão e erros -->
+  <div class="submit">
+    <div class="button-container">
+      <p-button type="submit">Entrar</p-button>
+      <p-link>
+        <a [routerLink]="''">Voltar</a>
+      </p-link>
+    </div>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">
+      {{ generalError }}
+    </p-text>
+  </div>
+</form>

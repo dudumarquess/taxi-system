@@ -1,0 +1,45 @@
+<form (submit)="onSubmit($event)">
+  <!-- Localização Atual -->
+  <div>
+    <h3>Origem</h3>
+    <p-text-field-wrapper label="Rua *">
+      <input type="text" name="origemRua" [value]="origemRua" placeholder="Rua de origem" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="origemError" class="error">{{ origemError }}</p-text>
+
+    <p-text-field-wrapper label="Cidade *">
+      <input type="text" name="origemCidade" [value]="origemCidade" placeholder="Cidade de origem" />
+    </p-text-field-wrapper>
+  </div>
+
+  <!-- Destino -->
+  <div>
+    <h3>Destino</h3>
+    <p-text-field-wrapper label="Rua *">
+      <input type="text" name="destinoRua" placeholder="Rua de destino" />
+    </p-text-field-wrapper>
+    <p-text [size]="'small'" *ngIf="destinoError" class="error">{{ destinoError }}</p-text>
+
+    <p-text-field-wrapper label="Cidade *">
+      <input type="text" name="destinoCidade" placeholder="Cidade de destino" />
+    </p-text-field-wrapper>
+  </div>
+
+  <!-- Detalhes da Viagem -->
+  <p-select-wrapper name="nivelConforto" label="Nível de Conforto *">
+  <select name="nivelConforto">
+    <option value="" selected>Escolha o nível de conforto</option>
+    <option value="luxuoso">Luxuoso</option>
+    <option value="básico">Básico</option>
+  </select>
+</p-select-wrapper>
+
+  <p-text-field-wrapper label="Número de Pessoas *">
+    <input type="number" name="numeroPessoas" min="1" placeholder="Ex: 2" />
+  </p-text-field-wrapper>
+
+  <div class="submit">
+    <p-button type="submit">Pedir Táxi</p-button>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">{{ generalError }}</p-text>
+  </div>
+</form>

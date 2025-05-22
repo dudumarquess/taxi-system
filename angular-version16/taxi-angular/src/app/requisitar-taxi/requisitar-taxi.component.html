@@ -1,0 +1,45 @@
+<form (submit)="onSubmit($event)">
+  <!-- Início do Turno -->
+  <p-text-field-wrapper label="Início - Data">
+    <input type="date" name="inicio" [value]="inicioData" (change)="onDataInicioChange($event)" />
+  </p-text-field-wrapper>
+
+  <p-text-field-wrapper label="Início - Hora">
+    <input type="time" name="inicioHora" [value]="inicioHora" (change)="onHoraInicioChange($event)" />
+  </p-text-field-wrapper>
+
+  <p-text [size]="'small'" *ngIf="inicioError" class="error">{{ inicioError }}</p-text>
+
+  <!-- Fim do Turno -->
+  <p-text-field-wrapper label="Fim - Data">
+    <input type="date" name="fimData" [value]="fimData" (change)="onDataFimChange($event)" />
+  </p-text-field-wrapper>
+
+  <p-text-field-wrapper label="Fim - Hora">
+    <input type="time" name="fimHora" [value]="fimHora" (change)="onHoraFimChange($event)" />
+  </p-text-field-wrapper>
+
+  <p-text [size]="'small'" *ngIf="fimError" class="error">{{ fimError }}</p-text>
+
+  <!-- Botão para verificar táxis disponíveis -->
+  <p-button type="button" (click)="verificarDisponiveis()">Ver Táxis Disponíveis</p-button>
+  <p-text *ngIf="disponiveisError" class="error">{{ disponiveisError }}</p-text>
+
+  <!-- Seleção de Táxi -->
+  <div *ngIf="taxis.length > 0">
+    <p-select-wrapper name="matricula" label="Escolha um Táxi *">
+      <select name="matricula">
+        <option value="" selected>Selecione um táxi</option>
+        <option *ngFor="let taxi of taxis" [value]="taxi.matricula">{{ taxi.matricula }}</option>
+      </select>
+    </p-select-wrapper>
+    <p-text [size]="'small'" *ngIf="taxiSelecionadoError" class="error">{{ taxiSelecionadoError }}</p-text>
+  </div>
+
+  <!-- Botão para requisitar turno -->
+  <div class="submit">
+    <p-button type="submit">Requisitar Taxi</p-button>
+    <p-text [size]="'small'" *ngIf="generalError" class="error">{{ generalError }}</p-text>
+    <p-text [size]="'small'" *ngIf="successMessage" class="success">{{ successMessage }}</p-text>
+  </div>
+</form>

@@ -1,0 +1,33 @@
+/* Estilo para os títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Porsche Next', sans-serif; /* Fonte inspirada na Porsche */
+    color: #000; /* Cor preta para os títulos */
+    margin: 10px 0;
+  }
+  
+  /* Estilo para os textos */
+  p-text {
+    font-family: 'Porsche Next', sans-serif; /* Fonte consistente */
+    color: #333; /* Cor cinza escuro */
+    margin: 5px 0;
+    display: block;
+  }
+  
+  /* Botões */
+  .viagem-controls p-button {
+    font-family: 'Porsche Next', sans-serif; /* Fonte consistente */
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    background-color: #000000; /* Azul */
+    color: #fff; /* Texto branco */
+  }
+  
+  .viagem-controls p-button:disabled {
+    background-color: #6c757d; /* Cinza desabilitado */
+    cursor: not-allowed;
+  }
+  

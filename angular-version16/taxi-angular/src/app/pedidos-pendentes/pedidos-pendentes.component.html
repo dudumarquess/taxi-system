@@ -1,0 +1,17 @@
+<div *ngIf="pedidos.length > 0; else semPedidos">
+  <h2>Pedidos Pendentes</h2>
+  <div style="display: grid; gap: 1rem;">
+    <p-card *ngFor="let pedido of pedidos" compact>
+      <p-text>Origem: {{ pedido.origem.rua }}, {{ pedido.origem.cidade }}</p-text>
+      <p-text>Destino: {{ pedido.destino.rua }}, {{ pedido.destino.cidade }}</p-text>
+      <p-text>Número de Pessoas: {{ pedido.numeroPessoas }}</p-text>
+      <p-text>Distância até a origem: {{ pedido.distancia }}</p-text>
+      <p-text>Nível conforto: {{ pedido.nivelConforto }}</p-text>
+      <p-button (click)="aceitarPedido(pedido._id!)" icon="check" variant="primary">Aceitar</p-button>
+    </p-card>
+  </div>
+</div>
+
+<ng-template #semPedidos>
+  <p-text>Não há pedidos pendentes disponíveis.</p-text>
+</ng-template>

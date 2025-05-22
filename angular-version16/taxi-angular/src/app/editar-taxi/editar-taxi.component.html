@@ -1,0 +1,37 @@
+<form (submit)="onSubmit($event)" #taxiForm="ngForm">
+  <p-text-field-wrapper label="Matrícula *" name="matricula">
+    <input type="text" name="matricula" placeholder="Ex: 12-34-AB ou 1234AB" #matriculaInput [value]="taxi.matricula" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="matriculaError" class="error">{{ matriculaError }}</p-text>
+
+  <p-select-wrapper name="marca" label="Marca *">
+    <select name="marca">
+      <option value="">Escolha uma marca</option>
+      <option *ngFor="let marca of marcas" [value]="marca" [selected]="marca === taxi.marca">{{ marca }}</option>
+    </select>
+  </p-select-wrapper>
+  <p-text [size]="'small'" *ngIf="marcaError" class="error">{{ marcaError }}</p-text>
+
+  <p-select-wrapper name="modelo" label="Modelo *">
+    <select name="modelo">
+      <option value="">Escolha um modelo</option>
+      <option *ngFor="let modelo of modelos" [value]="modelo" [selected]="modelo === taxi.modelo">{{ modelo }}</option>
+    </select>
+  </p-select-wrapper>
+  <p-text [size]="'small'" *ngIf="modeloError" class="error">{{ modeloError }}</p-text>
+
+  <p-text-field-wrapper label="Ano de Compra *" name="ano_compra">
+    <input type="number" name="ano_compra" placeholder="2025" #anoCompraInput [value]="taxi.ano_compra" />
+  </p-text-field-wrapper>
+  <p-text [size]="'small'" *ngIf="anoCompraError" class="error">{{ anoCompraError }}</p-text>
+
+  <p-select-wrapper name="nivel_conforto" label="Conforto *">
+    <select name="nivel_conforto">
+      <option value="básico" [selected]="taxi.nivel_conforto === 'básico'">Básico</option>
+      <option value="luxuoso" [selected]="taxi.nivel_conforto === 'luxuoso'">Luxuoso</option>
+    </select>
+  </p-select-wrapper>
+  <p-text [size]="'small'" *ngIf="nivelConfortoError" class="error">{{ nivelConfortoError }}</p-text>
+
+  <p-button type="submit">Atualizar Táxi</p-button>
+</form>

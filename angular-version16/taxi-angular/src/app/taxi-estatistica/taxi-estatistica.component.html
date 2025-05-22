@@ -1,0 +1,102 @@
+<p-card class="estatistica-card">
+  <h2>Estatísticas do Táxi {{taxi.matricula}}</h2>
+  <form class="filtros" (submit)="buscarEstatisticas(); $event.preventDefault()">
+  <p-text-field-wrapper label="Início - Data *">
+    <input type="date" name="inicioData" [value]="dataInicio" (change)="onDataInicioChange($event)" />
+  </p-text-field-wrapper>
+  <p-text-field-wrapper label="Fim - Data *">
+    <input type="date" name="fimData" [value]="dataFim" (change)="onDataFimChange($event)" />
+  </p-text-field-wrapper>
+  <p-button type="submit">Buscar</p-button>
+</form>
+
+  <div *ngIf="estatisticas" class="estatisticas-resumo">
+    <p-text><b>Período:</b> {{dataInicio}} a {{dataFim}}</p-text>
+    <ul class="estatisticas-lista">
+      <li>
+        <p-text>Total de viagens: <b>{{estatisticas.viagens}}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisViagens()" size="small">Viagens por motorista</p-button>
+      </li>
+      <li>
+        <p-text>Total de horas: <b>{{estatisticas.horas}}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisHoras()" size="small">Horas por motorista</p-button>
+      </li>
+      <li>
+        <p-text>Total de quilómetros: <b>{{estatisticas.quilometros}}</b></p-text>
+        <p-button (click)="onMostrarSubtotaisKm()" size="small">Quilómetros por motorista</p-button>
+      </li>
+    </ul>
+  </div>
+</p-card>
+
+<!-- Modal de subtotais de viagens por motorista -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisViagens">
+  <div class="modal">
+    <h4>Viagens por motorista</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisViagens">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasMotorista(s.motoristaId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.nome}}
+          </a>: {{s.viagens}} viagens
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesViagensMotorista(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisViagens = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal de subtotais de horas por motorista -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotais">
+  <div class="modal">
+    <h4>Horas por motorista</h4>
+    <ul>
+      <li *ngFor="let s of subtotais">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasMotorista(s.motoristaId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.nome}}
+          </a>: <b>{{s.horas}}</b> horas
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesHorasMotorista(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotais = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal de subtotais de quilómetros por motorista -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisKm">
+  <div class="modal">
+    <h4>Quilómetros por motorista</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisKm">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasMotorista(s.motoristaId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.nome}}
+          </a>: <b>{{s.quilometros}}</b> km
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesKmMotorista(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal de detalhes -->
+<div class="modal-backdrop" *ngIf="mostrarDetalhes">
+  <div class="modal">
+    <h4>{{tituloDetalhes}}</h4>
+    <ul>
+      <li *ngFor="let d of detalhes">
+        <p-text>
+          Início: {{d.inicio | date:'short'}}<br>
+          Fim: {{d.fim | date:'short'}}<br>
+          Horas: {{d.horas}}<br>
+          Quilómetros: {{d.quilometros | number:'1.2-2'}} km
+        </p-text>
+      </li>
+    </ul>
+    <p-button (click)="fecharDetalhes()" size="small">Fechar</p-button>
+  </div>
+</div>
