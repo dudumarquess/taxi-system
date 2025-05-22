@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RelatorioService } from '../relatorio.service';
-import { MotoristaService } from '../motorista.service'  
+import { MotoristaService } from '../motorista.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class MotoristaEstatisticaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private relatorioService: RelatorioService,
-    private motoristaService: MotoristaService
+    private motoristaService: MotoristaService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -107,6 +109,10 @@ export class MotoristaEstatisticaComponent implements OnInit {
       this.detalhesViagens = res;
       this.mostrarDetalhesViagens = true;
     });
+  }
+
+  irParaEstatisticasTaxi(taxiId: string) {
+    this.router.navigate(['/gestor/taxis', taxiId, 'estatisticas']);
   }
 }
 

@@ -31,59 +31,69 @@
   </div>
 
 
-  <p-card *ngIf="mostrarSubtotaisHoras" class="subtotais-card">
-  <h4>Horas por táxi</h4>
-  <ul>
-    <li *ngFor="let s of subtotaisHoras">
-      {{s.matricula}}: 
-      <span
-        style="cursor:pointer; color:#1976d2; text-decoration:underline"
-        (click)="mostrarDetalhesViagensTaxi(s)"
-      >
-        <b>{{s.horas}}</b>
-      </span> horas
-  </li>
-  </ul>
-  <p-button (click)="mostrarSubtotaisHoras = false" size="small">Fechar</p-button>
-</p-card>
+  <!-- Modal de subtotais de horas por táxi -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisHoras">
+  <div class="modal">
+    <h4>Horas por táxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisHoras">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasTaxi(s.taxiId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.matricula}}
+          </a>: {{s.horas}} horas
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesViagensTaxi(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisHoras = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+  </div>
+</div>
 
-<!-- Subtotais de viagens por táxi -->
-<p-card *ngIf="mostrarSubtotaisViagens" class="subtotais-card">
-  <h4>Viagens por táxi</h4>
-  <ul>
-    <li *ngFor="let s of subtotaisViagens">
-      {{s.matricula}}:
-      <span
-        style="cursor:pointer; color:#1976d2; text-decoration:underline"
-        (click)="mostrarDetalhesViagensTaxi(s)"
-      >
-        <b>{{s.viagens}}</b>
-      </span> viagens
-    </li>
-  </ul>
-  <p-button (click)="mostrarSubtotaisViagens = false" size="small">Fechar</p-button>
-</p-card>
+<!-- Modal de subtotais de viagens por táxi -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisViagens">
+  <div class="modal">
+    <h4>Viagens por táxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisViagens">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasTaxi(s.taxiId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.matricula}}
+          </a>: {{s.viagens}} viagens
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesViagensTaxi(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisViagens = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+    
+  </div>
+</div>
 
-<!-- Subtotais de km por táxi -->
-<p-card *ngIf="mostrarSubtotaisKm" class="subtotais-card">
-  <h4>Quilómetros por táxi</h4>
-  <ul>
-    <li *ngFor="let s of subtotaisKm">
-      {{s.matricula}}:
-      <span
-        style="cursor:pointer; color:#1976d2; text-decoration:underline"
-        (click)="mostrarDetalhesViagensTaxi(s)"
-      >
-        <b>{{s.quilometros | number:'1.2-2'}}</b>
-      </span> km
-    </li>
-  </ul>
-  <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
-</p-card>
+<!-- Modal de subtotais de km por táxi -->
+<div class="modal-backdrop" *ngIf="mostrarSubtotaisKm">
+  <div class="modal">
+    <h4>Quilómetros por táxi</h4>
+    <ul>
+      <li *ngFor="let s of subtotaisKm">
+        <p-text>
+          <a class="matricula-link" (click)="irParaEstatisticasTaxi(s.taxiId)" style="cursor:pointer; text-decoration:underline;">
+            {{s.matricula}}
+          </a>: {{s.quilometros}} Kms
+        </p-text>
+        <p-button size="small" (click)="mostrarDetalhesViagensTaxi(s)">Detalhes</p-button>
+        <p-button (click)="mostrarSubtotaisKm = false" size="small">Fechar</p-button>
+      </li>
+    </ul>
+  </div>
+</div>
 
 
-<p-card *ngIf="mostrarDetalhesViagens" class="detalhes-card">
-    <h4>{{estatisticas.totalViagens}} viagen(s) do táxi {{ taxiSelecionado?.matricula }} nas {{estatisticas.totalHoras  | number:'1.2-2' }} horas, 
+<!-- Modal de detalhes das viagens -->
+<div class="modal-backdrop" *ngIf="mostrarDetalhesViagens">
+  <div class="modal">
+    <h4>{{estatisticas.totalViagens}} viagen(s) do táxi 
+      <a class="matricula-link" (click)="irParaEstatisticasTaxi(taxiSelecionado?.taxiId)" style="cursor:pointer; text-decoration:underline;">
+          {{taxiSelecionado?.matricula}}
+        </a> nas {{estatisticas.totalHoras  | number:'1.2-2' }} horas, 
         ao longo de {{estatisticas.totalKm  | number:'1.2-2' }} km  
     </h4>
     <ul>
@@ -101,4 +111,5 @@
       </li>
     </ul>
     <p-button (click)="mostrarDetalhesViagens = false" size="small">Fechar</p-button>
-  </p-card>
+  </div>
+</div>

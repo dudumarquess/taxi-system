@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RelatorioService } from '../relatorio.service';
+import { Taxi } from '../taxi';
+import { TaxiService } from '../taxi.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-taxi-estatistica',
@@ -10,6 +13,7 @@ import { RelatorioService } from '../relatorio.service';
 })
 export class TaxiEstatisticaComponent implements OnInit {
   taxiId!: string;
+  taxi: any = {};
   dataInicio!: string;
   dataFim!: string;
   estatisticas: any;
@@ -30,11 +34,17 @@ export class TaxiEstatisticaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private relatorioService: RelatorioService
+    private relatorioService: RelatorioService,
+    private taxiService: TaxiService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.taxiId = this.route.snapshot.paramMap.get('id')!;
+    this.taxiService.getTaxiById(this.taxiId).subscribe({
+      next: (taxi) => this.taxi = taxi,
+      error: (err) => this.erro = 'Erro ao buscar táxi: ' + err.message
+    });
     const hoje = new Date();
     this.dataInicio = hoje.toISOString().substring(0, 10);
     this.dataFim = hoje.toISOString().substring(0, 10);
@@ -150,5 +160,9 @@ export class TaxiEstatisticaComponent implements OnInit {
     this.mostrarDetalhes = false;
     this.detalhes = [];
     this.tituloDetalhes = '';
+  }
+
+  irParaEstatisticasMotorista(motoristaId: string) {
+    this.router.navigate(['/gestor/motoristas', motoristaId, 'estatisticas']);
   }
 }
