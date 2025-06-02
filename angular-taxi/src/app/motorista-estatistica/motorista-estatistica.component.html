@@ -17,15 +17,30 @@
     <ul class="estatisticas-lista">
       <li>
         <p-text>Total de viagens: <b>{{ estatisticas.totalViagens }}</b></p-text>
-        <p-button (click)="onMostrarSubtotaisViagens()" size="small">Viagens por táxi</p-button>
+        <p-button 
+          *ngIf="estatisticas.totalViagens > 0"
+          (click)="onMostrarSubtotaisViagens()" 
+          size="small">
+          Viagens por táxi
+        </p-button>
       </li>
       <li>
         <p-text>Total de horas: <b>{{ estatisticas.totalHoras | number:'1.2-2' }}</b></p-text>
-        <p-button (click)="onMostrarSubtotaisHoras()" size="small">Horas por táxi</p-button>
+        <p-button 
+          *ngIf="estatisticas.totalViagens > 0"
+          (click)="onMostrarSubtotaisHoras()" 
+          size="small">
+          Horas por táxi
+        </p-button>
       </li>
       <li>
         <p-text>Total de km: <b>{{ estatisticas.totalKm | number:'1.2-2' }}</b></p-text>
-        <p-button (click)="onMostrarSubtotaisKm()" size="small">Km por táxi</p-button>
+        <p-button 
+          *ngIf="estatisticas.totalViagens > 0"
+          (click)="onMostrarSubtotaisKm()" 
+          size="small">
+          Km por táxi
+        </p-button>
       </li>
     </ul>
   </div>

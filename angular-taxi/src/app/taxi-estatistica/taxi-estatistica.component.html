@@ -15,15 +15,30 @@
     <ul class="estatisticas-lista">
       <li>
         <p-text>Total de viagens: <b>{{estatisticas.viagens}}</b></p-text>
-        <p-button (click)="onMostrarSubtotaisViagens()" size="small">Viagens por motorista</p-button>
+        <p-button 
+          *ngIf="estatisticas.viagens > 0"
+          (click)="onMostrarSubtotaisViagens()" 
+          size="small">
+          Viagens por motorista
+        </p-button>
       </li>
       <li>
         <p-text>Total de horas: <b>{{estatisticas.horas}}</b></p-text>
-        <p-button (click)="onMostrarSubtotaisHoras()" size="small">Horas por motorista</p-button>
+        <p-button 
+          *ngIf="estatisticas.viagens > 0"
+          (click)="onMostrarSubtotaisHoras()" 
+          size="small">
+          Horas por motorista
+        </p-button>        
       </li>
       <li>
         <p-text>Total de quilómetros: <b>{{estatisticas.quilometros}}</b></p-text>
-        <p-button (click)="onMostrarSubtotaisKm()" size="small">Quilómetros por motorista</p-button>
+        <p-button 
+          *ngIf="estatisticas.viagens > 0"
+          (click)="onMostrarSubtotaisKm()" 
+          size="small">
+          Quilómetros por motorista
+        </p-button>
       </li>
     </ul>
   </div>
